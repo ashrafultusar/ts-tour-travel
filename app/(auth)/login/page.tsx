@@ -44,7 +44,6 @@ export default function LoginPage() {
 
           <form action={dispatch} className="mt-8 space-y-6">
             <div className="space-y-5">
-              {/* Email Field */}
               <div>
                 <label htmlFor="email" className="sr-only">
                   Email address

@@ -1,4 +1,4 @@
-
+import Image from "next/image";
 import styles from "./OurUniversities.module.css";
 
 const universities = [
@@ -23,21 +23,29 @@ const OurUniversities = () => {
           {/* First set of images */}
           {universities.map((uni) => (
             <div key={`first-${uni.id}`} className={styles.logoItem}>
-              <img 
-                src={uni.img} 
-                alt={uni.name} 
-                className={styles.universityLogo} 
-              />
+              <div className="relative w-32 h-16 sm:w-40 sm:h-20">
+                <Image
+                  src={uni.img}
+                  alt={uni.name}
+                  fill
+                  className={`${styles.universityLogo} object-contain`}
+                  sizes="(max-width: 640px) 128px, 160px"
+                />
+              </div>
             </div>
           ))}
           {/* Duplicate set for seamless looping */}
           {universities.map((uni) => (
             <div key={`second-${uni.id}`} className={styles.logoItem}>
-              <img 
-                src={uni.img} 
-                alt={uni.name} 
-                className={styles.universityLogo} 
-              />
+              <div className="relative w-32 h-16 sm:w-40 sm:h-20">
+                <Image
+                  src={uni.img}
+                  alt={uni.name}
+                  fill
+                  className={`${styles.universityLogo} object-contain`}
+                  sizes="(max-width: 640px) 128px, 160px"
+                />
+              </div>
             </div>
           ))}
         </div>
