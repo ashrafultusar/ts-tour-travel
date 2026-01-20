@@ -1,9 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useActionState } from "react";
 import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { register } from "@/actions/auth";
+import { useFormStatus } from "react-dom";
+
+function RegisterButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      className="group relative flex w-full justify-center rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-300 hover:shadow-xl active:scale-[0.98] aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+      aria-disabled={pending}
+    >
+      {pending ? "Creating account..." : "Create account"}
+    </button>
+  );
+}
 
 export default function RegisterPage() {
+  const [state, dispatch] = useActionState(register, undefined);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -30,7 +47,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Form */}
-          <form className="mt-8 space-y-6">
+          <form action={dispatch} className="mt-8 space-y-6">
             <div className="space-y-5">
               {/* Full Name */}
               <div>
@@ -54,6 +71,7 @@ export default function RegisterPage() {
                     placeholder="Full name"
                   />
                 </div>
+                {state?.error?.name && <p className="text-sm text-red-500">{state.error.name}</p>}
               </div>
 
               {/* Email */}
@@ -78,6 +96,7 @@ export default function RegisterPage() {
                     placeholder="you@example.com"
                   />
                 </div>
+                {state?.error?.email && <p className="text-sm text-red-500">{state.error.email}</p>}
               </div>
 
               {/* Password */}
@@ -113,6 +132,7 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
+                {state?.error?.password && <p className="text-sm text-red-500">{state.error.password}</p>}
               </div>
 
               {/* Confirm Password */}
@@ -129,7 +149,7 @@ export default function RegisterPage() {
                   </div>
                   <input
                     id="confirm-password"
-                    name="confirm-password"
+                    name="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
                     autoComplete="new-password"
                     required
@@ -148,6 +168,7 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
+                {state?.error?.confirmPassword && <p className="text-sm text-red-500">{state.error.confirmPassword}</p>}
               </div>
 
               {/* Terms checkbox */}
@@ -184,12 +205,18 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="group relative flex w-full justify-center rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-300 hover:shadow-xl active:scale-[0.98]"
-              >
-                Create account
-              </button>
+              <RegisterButton />
+            </div>
+            <div
+              className="flex h-8 items-end space-x-1"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {state?.message && (
+                <>
+                  <p className="text-sm text-red-500">{state.message}</p>
+                </>
+              )}
             </div>
           </form>
 

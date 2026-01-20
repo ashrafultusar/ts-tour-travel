@@ -5,10 +5,17 @@ export const metadata: Metadata = {
   description: "Main page",
 };
 
+import Navbar from "@/components/Navbar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className={` antialiased`}>{children}</main>;
+  return (
+    <main className={` antialiased`}>
+      <Navbar />
+      {children}
+    </main>
+  );
 }

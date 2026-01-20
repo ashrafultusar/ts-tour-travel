@@ -1,6 +1,25 @@
+"use client";
 import { Mail, Lock } from "lucide-react";
+import { useActionState } from "react";
+import { authenticate } from "@/actions/auth";
+import { useFormStatus } from "react-dom";
+
+function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      className="group relative flex w-full justify-center rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-300 hover:shadow-xl active:scale-[0.98] aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+      aria-disabled={pending}
+    >
+      {pending ? "Signing in..." : "Sign in"}
+    </button>
+  );
+}
 
 export default function LoginPage() {
+  const [errorMessage, dispatch] = useActionState(authenticate, undefined);
   return (
     <div className="relative min-h-screen bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950">
       {/* Subtle background pattern */}
@@ -12,7 +31,7 @@ export default function LoginPage() {
           <div className="text-center">
             <div className="mx-auto h-14 w-14 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 p-0.5 shadow-lg">
               <div className="flex h-full w-full items-center justify-center rounded-xl bg-white dark:bg-gray-900 text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-               TS
+                TS
               </div>
             </div>
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -23,8 +42,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Form */}
-          <form className="mt-8 space-y-6">
+          <form action={dispatch} className="mt-8 space-y-6">
             <div className="space-y-5">
               {/* Email Field */}
               <div>
@@ -100,12 +118,18 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="group relative flex w-full justify-center rounded-lg bg-linear-to-r from-indigo-600 to-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-300 hover:shadow-xl active:scale-[0.98]"
-              >
-                Sign in
-              </button>
+              <LoginButton />
+            </div>
+            <div
+              className="flex h-8 items-end space-x-1"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {errorMessage && (
+                <>
+                  <p className="text-sm text-red-500">{errorMessage}</p>
+                </>
+              )}
             </div>
           </form>
 

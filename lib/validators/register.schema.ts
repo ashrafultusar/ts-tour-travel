@@ -1,20 +1,26 @@
 import { z } from "zod";
 
+const ROLES = ["user", "admin"] as const;
+
 export const registerSchema = z.object({
   name: z
     .string()
-    .min(3, "Title must be at least 3 characters")
-    .max(150, "Title too long"),
+    .trim()
+    .min(3, "Name must be at least 3 characters")
+    .max(50, "Name cannot exceed 50 characters"),
 
   email: z
     .string()
-    .min(20, "Content must be at least 20 characters")
-    .max(50, "Content too long"),
+    .trim()
+    .lowercase()
+    .email("Invalid email address"),
 
   password: z
     .string()
-    .min(6, "Author name too short")
-    .max(50, "Author name too long"),
+    .min(8, "Password must be at least 8 characters")
+    .max(32, "Password cannot exceed 32 characters"),
+
+  role: z.enum(ROLES).default("user"),
 });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
