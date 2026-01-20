@@ -1,0 +1,90 @@
+.sliderWrapper {
+    width: 100%;
+    padding: 60px 0;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  
+  .sliderContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Gradient overlays for smooth fade-in/out effect */
+  .sliderContainer::before,
+  .sliderContainer::after {
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 150px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .sliderContainer::before {
+    left: 0;
+    background: linear-gradient(to right, white 0%, transparent 100%);
+  }
+  
+  .sliderContainer::after {
+    right: 0;
+    background: linear-gradient(to left, white 0%, transparent 100%);
+  }
+  
+  .sliderTrack {
+    display: flex;
+    width: max-content;
+    animation: scroll 40s linear infinite;
+  }
+  
+  .logoItem {
+    flex-shrink: 0;
+    padding: 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .universityLogo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.4s ease;
+  }
+  
+  .logoItem:hover .universityLogo {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Pause animation on hover */
+  .sliderTrack:hover {
+    animation-play-state: paused;
+  }
+  
+  /* Mobile Adjustments */
+  @media (max-width: 768px) {
+    .universityLogo {
+      height: 35px;
+    }
+    .logoItem {
+      padding: 0 30px;
+    }
+    .sliderWrapper {
+      padding: 40px 0;
+    }
+  }
