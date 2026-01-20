@@ -3,5 +3,5 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className={` antialiased`}>{children}</div>;
+  return <main className={` antialiased`}>{children}</main>;
 }
