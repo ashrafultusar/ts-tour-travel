@@ -7,54 +7,60 @@ import User from "@/models/User";
 import { connectDB } from "@/db/dbConfig";
 
 async function getUser(email: string) {
-    try {
-        await connectDB();
-        const user = await User.findOne({ email }).select("+password");
-        return user;
-    } catch (error) {
-        console.error("Failed to fetch user:", error);
-        throw new Error("Failed to fetch user.");
-    }
+  try {
+    await connectDB();
+    const user = await User.findOne({ email }).select("+password");
+    return user;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    throw new Error("Failed to fetch user.");
+  }
 }
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
-    ...authConfig,
-    providers: [
-        Credentials({
-            async authorize(credentials) {
-                const parsedCredentials = z
-                    .object({ email: z.string().email(), password: z.string().min(6) })
-                    .safeParse(credentials);
+  ...authConfig,
+  providers: [
+    Credentials({
+      async authorize(credentials) {
+        const parsedCredentials = z
+          .object({ email: z.string().email(), password: z.string().min(6) })
+          .safeParse(credentials);
 
-                if (parsedCredentials.success) {
-                    const { email, password } = parsedCredentials.data;
-                    const user = await getUser(email);
-                    if (!user) return null;
+        if (parsedCredentials.success) {
+          const { email, password } = parsedCredentials.data;
+          const user = await getUser(email);
+          if (!user) return null;
 
-                    const passwordsMatch = await bcrypt.compare(password, user.password);
-                    if (passwordsMatch) return { id: user._id.toString(), name: user.name, email: user.email, role: user.role };
-                }
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+          if (passwordsMatch)
+            return {
+              id: user._id.toString(),
+              name: user.name,
+              email: user.email,
+              role: user.role,
+            };
+        }
 
-                console.log("Invalid credentials");
-                return null;
-            },
-        }),
-    ],
-    callbacks: {
-        async jwt({ token, user }: any) {
-            if (user) {
-                token.role = user.role;
-                token.id = user.id;
-            }
-            return token;
-        },
-        async session({ session, token }: any) {
-            if (token) {
-                session.user.role = token.role;
-                session.user.id = token.id;
-            }
-            return session;
-        },
+        console.log("Invalid credentials");
+        return null;
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.role = user.role;
+        token.id = user.id;
+      }
+      return token;
     },
-    secret: process.env.AUTH_SECRET,
+    async session({ session, token }: any) {
+      if (token) {
+        session.user.role = token.role;
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
+  secret: process.env.AUTH_SECRET,
 });
