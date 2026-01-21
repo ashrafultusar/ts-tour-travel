@@ -6,6 +6,9 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import { connectDB } from "@/db/dbConfig";
+import LoginAttempt from "@/models/LoginAttempt";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const RegisterSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -60,10 +63,26 @@ export async function authenticate(
     prevState: any,
     formData: FormData,
 ) {
+    const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+    const email = formData.get("email") as string;
+
+    await connectDB();
+
+    // 1. Check Rate Limit
+    const limitResult = await checkRateLimit(email, ip);
+    if (!limitResult.allowed) {
+        return `Too many attempts. Please try again later.`;
+    }
+
     try {
         await signIn("credentials", formData);
+        // If successful, reset attempts
+        await resetRateLimit(email, ip);
     } catch (error) {
         if (error instanceof AuthError) {
+            // Track failed attempt
+            await incrementRateLimit(email, ip);
+
             switch (error.type) {
                 case "CredentialsSignin":
                     return "Invalid credentials.";
@@ -71,8 +90,49 @@ export async function authenticate(
                     return "Something went wrong.";
             }
         }
+        // Rethrow redirect error
         throw error;
     }
+}
+
+async function checkRateLimit(email: string, ip: string) {
+    const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+    const MAX_ATTEMPTS = 5;
+
+    const attempt = await LoginAttempt.findOne({
+        $or: [{ email }, { ip }]
+    }).sort({ lastAttempt: -1 });
+
+    if (!attempt) return { allowed: true };
+
+    const timePassed = Date.now() - new Date(attempt.lastAttempt).getTime();
+
+    if (timePassed < WINDOW_MS && attempt.attempts >= MAX_ATTEMPTS) {
+        return { allowed: false };
+    }
+
+    // Reset if window passed
+    if (timePassed > WINDOW_MS) {
+        await LoginAttempt.deleteMany({ $or: [{ email }, { ip }] });
+        return { allowed: true };
+    }
+
+    return { allowed: true };
+}
+
+async function incrementRateLimit(email: string, ip: string) {
+    const attempt = await LoginAttempt.findOne({ $or: [{ email }, { ip }] });
+    if (attempt) {
+        attempt.attempts += 1;
+        attempt.lastAttempt = new Date();
+        await attempt.save();
+    } else {
+        await LoginAttempt.create({ email, ip, attempts: 1 });
+    }
+}
+
+async function resetRateLimit(email: string, ip: string) {
+    await LoginAttempt.deleteMany({ $or: [{ email }, { ip }] });
 }
 
 export async function logout() {
