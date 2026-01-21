@@ -116,7 +116,7 @@ const SuccessStories: React.FC = () => {
             You could be our next successful student
           </p>
           <button
-            className="w-full sm:w-auto inline-flex items-center justify-center px-8 md:px-10 py-3 md:py-4 rounded-xl bg-[#14919B] text-white font-bold text-base md:text-lg shadow-xl shadow-blue-900/10 hover:bg-[#14919B] transition-all duration-300 cursor-pointer hover:-translate-y-1 active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center px-8 md:px-10 py-3 md:py-4  bg-gradient-to-r from-[#0369A1] to-[#0891B2] hover:opacity-90 text-white font-bold  rounded-xl transition-all  gap-2"
           >
             Contact Us Today
           </button>
