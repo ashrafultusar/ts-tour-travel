@@ -30,7 +30,7 @@ const services = [
   { name: "Tourist Visa", href: "/tourist-visa", icon: Plane },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname(); // বর্তমান URL পাথ পেতে
 
@@ -63,7 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <GraduationCap className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-white font-bold text-[17px] tracking-tight leading-none">EduConsult</h1>
+                <h1 className="text-white font-bold text-[17px] tracking-tight leading-none">TS Tour Travel</h1>
                 <p className="text-[#64748b] text-[11px] font-medium mt-1">Admin Panel</p>
               </div>
             </div>
@@ -152,14 +152,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Bell className="w-5 h-5" />
             </button>
             <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold border border-blue-200">
-              AD
+            TS
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
-          {children}
-        </main>
       </div>
     </div>
   );
