@@ -1,3 +1,4 @@
+import AboutUs from "@/components/home/aboutUs/AboutUs";
 import HeroSection from "@/components/home/heroSection/HeroSection";
 import OurUniversities from "@/components/home/ourUniversities/OurUniversities";
 import { Suspense } from "react";
@@ -15,6 +16,11 @@ export default function Home() {
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <OurUniversities />
+      </Suspense>
+      <Suspense
+        fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
+      >
+        <AboutUs />
       </Suspense>
     </div>
   );
