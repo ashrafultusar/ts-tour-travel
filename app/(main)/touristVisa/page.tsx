@@ -172,9 +172,9 @@ const TouristVisa = () => {
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full bg-[#1a8a81] hover:bg-[#0d4a7e] text-white rounded-lg h-12">
-                  Apply Now
-                </Button>
+                <Button className="w-full bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e] hover:opacity-90 text-white rounded-full h-12 font-semibold shadow-md transition-all">
+  Apply Now
+</Button>
               </div>
             ))}
           </div>
@@ -236,57 +236,6 @@ const TouristVisa = () => {
         </div>
       </section>
 
-      {/* Application Form Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-50">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#0d4a7e] mb-8 text-center">
-              Apply for Visa
-            </h2>
-            <form className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81]"
-                />
-                <input
-                  type="tel"
-                  placeholder="Mobile Number"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81]"
-                />
-              </div>
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81]"
-              />
-              <select className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1a8a81]">
-                <option value="">Select Destination Country</option>
-                <option value="malaysia">Malaysia</option>
-                <option value="singapore">Singapore</option>
-                <option value="thailand">Thailand</option>
-                <option value="dubai">Dubai</option>
-              </select>
-              <select className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1a8a81]">
-                <option value="">Purpose of Visit</option>
-                <option value="tourism">Tourism</option>
-                <option value="business">Business</option>
-                <option value="medical">Medical</option>
-              </select>
-              <textarea
-                placeholder="Additional Message (Optional)"
-                rows={3}
-                className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81] resize-none"
-              />
-              <Button className="w-full h-14 bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] text-white font-bold text-lg rounded-xl flex gap-2">
-                Submit Application
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </form>
-          </div>
-        </div>
-      </section>
 
       {/* Footer CTA Section */}
       <section className="py-20 bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]">
@@ -298,10 +247,10 @@ const TouristVisa = () => {
             Call us now for a free consultation or message us on WhatsApp.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button className="bg-[#facc15] hover:bg-white text-[#0d4a7e] font-black px-12 py-8 text-xl rounded-xl shadow-2xl transition-all transform hover:scale-105">
-              Call Now
+            <Button className="bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]    hover:opacity-90 text-white font-black px-12 py-8 text-xl rounded-xl shadow-2xl transition-all transform hover:scale-105">
+            Consultation
             </Button>
-            <Button className="bg-[#25d366] hover:opacity-90 text-white font-black px-12 py-8 text-xl rounded-xl shadow-2xl transition-all transform hover:scale-105">
+            <Button className=" bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]    hover:opacity-90 text-white font-black px-12 py-8 text-xl rounded-xl shadow-2xl transition-all transform hover:scale-105">
               WhatsApp
             </Button>
           </div>
