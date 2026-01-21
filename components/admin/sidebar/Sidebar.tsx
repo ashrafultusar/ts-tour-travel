@@ -18,10 +18,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const navigation = [
-  { name: "ড্যাশবোর্ড", href: "/", icon: LayoutDashboard },
-  { name: "স্টুডেন্ট/লিড", href: "/students", icon: Users },
-  { name: "অ্যাপ্লিকেশন", href: "/applications", icon: FileText },
-  { name: "ইনকোয়ারি", href: "/inquiries", icon: MessageSquare },
+  { name: "Dashboard", href: "", icon: LayoutDashboard },
+    { name: "Applications", href: "/ts-staff-portal/applications", icon: FileText },
+  { name: "Review", href: "/ts-staff-portal/review", icon: MessageSquare },
   { name: "রিভিউ", href: "/reviews", icon: Star },
 ];
 
@@ -125,9 +124,9 @@ export default function Sidebar() {
 
           {/* ফুটার */}
           <div className="p-4 border-t border-white/5 space-y-1">
-            <button className="flex items-center gap-3 w-full px-4 py-3 rounded-[12px] text-[#94a3b8] hover:bg-red-500/10 hover:text-red-400 transition-all">
+            <button className="flex items-center gap-3 w-full px-4 py-3 rounded-[12px] text-[#94a3b8] hover:bg-red-500/10 bg-[] hover:text-red-400 transition-all cursor-pointer">
               <LogOut className="w-5 h-5" />
-              <span className="text-[14px] font-medium">লগআউট</span>
+              <span className="text-[14px] font-medium">Logout</span>
             </button>
           </div>
         </div>
