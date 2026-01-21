@@ -71,7 +71,7 @@ export default async function Navbar() {
           </div>
 
           {/* 3. Right Side: Profile/Actions + Mobile Menu Toggle */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 ">
             {/* Desktop Profile Section */}
             <div className="hidden sm:flex items-center">
               {session?.user ? (
@@ -118,15 +118,10 @@ export default async function Navbar() {
                 </div>
               ) : (
                 <div className="flex items-center gap-4">
+                 
                   <Link
-                    href="/login"
-                    className="text-sm font-bold text-[#1e293b] hover:text-[#1665a1]"
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="rounded-xl bg-gradient-to-r from-[#1665a1] to-[#0891B2] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:opacity-90"
+                  href="/login"
+                    className="rounded-xl bg-gradient-to-r mr-2 from-[#1665a1] to-[#0891B2] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:opacity-90"
                   >
                     Login
                   </Link>
