@@ -1,6 +1,8 @@
 import AboutUs from "@/components/home/aboutUs/AboutUs";
 import HeroSection from "@/components/home/heroSection/HeroSection";
 import OurUniversities from "@/components/home/ourUniversities/OurUniversities";
+import SuccessStories from "@/components/home/successStories/SuccessStories";
+import WhyChooseUs from "@/components/home/whyChooseUs/WhyChooseUs";
 import { Suspense } from "react";
 
 export default function Home() {
@@ -21,6 +23,16 @@ export default function Home() {
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <AboutUs />
+      </Suspense>
+      <Suspense
+        fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
+      >
+        <WhyChooseUs />
+      </Suspense>
+      <Suspense
+        fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
+      >
+        <SuccessStories />
       </Suspense>
     </div>
   );
