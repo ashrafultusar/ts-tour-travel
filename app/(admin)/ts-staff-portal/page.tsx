@@ -1,7 +1,7 @@
 const Dashboard = () => {
     return (
         <div>
-            This is dashboard
+            This is a dashboard portal
         </div>
     );
 };
