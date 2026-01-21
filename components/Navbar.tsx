@@ -10,8 +10,9 @@ export default async function Navbar() {
         { name: "Home", href: "/", icon: Home },
         { name: "About Us", href: "/aboutUs", icon: Info },
         { name: "Study in Malaysia", href: "/studyInMalaysia", icon: Briefcase },
-        { name: "Tours", href: "/tours", icon: Map },
-        { name: "Contact", href: "/contact", icon: Mail },
+        { name: "Tourist Visa", href: "/touristVisa", icon: Map },
+        { name: "Blog", href: "/blog", icon: Mail },
+        { name: "Contact Us", href: "/contactUs", icon: Mail },
     ];
 
     return (
