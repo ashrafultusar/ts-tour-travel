@@ -9,7 +9,7 @@ export default async function Navbar() {
     const navLinks = [
         { name: "Home", href: "/", icon: Home },
         { name: "About Us", href: "/aboutUs", icon: Info },
-        { name: "Services", href: "/services", icon: Briefcase },
+        { name: "Study in Malaysia", href: "/studyInMalaysia", icon: Briefcase },
         { name: "Tours", href: "/tours", icon: Map },
         { name: "Contact", href: "/contact", icon: Mail },
     ];
