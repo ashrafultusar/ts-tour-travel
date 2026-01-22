@@ -1,5 +1,7 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { auth } from "@/auth";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import {
   Menu,
@@ -13,10 +15,12 @@ import {
   UserCircle,
   User,
   Settings,
+  LogOut,
 } from "lucide-react";
 
-export default async function Navbar() {
-  const session = await auth();
+export default function Navbar({ session }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "/", icon: Home },
@@ -28,185 +32,162 @@ export default async function Navbar() {
   ];
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
-      {/* Logic Inputs */}
-      <input
-        type="checkbox"
-        id="mobile-menu-toggle"
-        className="hidden peer/menu"
-      />
-      <input
-        type="checkbox"
-        id="profile-dropdown-toggle"
-        className="hidden peer/profile"
-      />
+    <nav className="bg-white/90 backdrop-blur sticky top-0 z-50 border-b border-slate-100">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="h-20 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center">
+              <span className="text-white font-extrabold">TS</span>
+            </div>
+            <span className="font-bold text-xl">
+              Tour & <span className="text-[#1665a1]">Travel</span>
+            </span>
+          </Link>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 justify-between items-center relative">
-          {/* 1. Left Side: Logo */}
-          <div className="flex flex-shrink-0 items-center">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center shadow-md">
-                <span className="text-white font-extrabold text-lg tracking-tighter">
-                  TS
-                </span>
-              </div>
-              <span className="font-bold text-xl text-[#0F172A] tracking-tight">
-                Tour & <span className="text-[#1665a1]">Travel</span>
-              </span>
-            </Link>
-          </div>
-
-          {/* 2. Middle: Desktop Links (lg devices e center e thakbe) */}
-          <div className="hidden lg:flex lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:space-x-8">
-            {navLinks.map((link) => (
+          {/* Desktop Nav (Middle) */}
+          <div className="hidden lg:flex gap-8">
+            {navLinks.map((l) => (
               <Link
-                key={link.name}
-                href={link.href}
-                className="text-[15px] font-medium text-slate-600 hover:text-[#1665a1] transition-colors"
+                key={l.name}
+                href={l.href}
+                className="text-sm font-medium text-slate-600 hover:text-[#1665a1] transition-colors"
               >
-                {link.name}
+                {l.name}
               </Link>
             ))}
           </div>
 
-          {/* 3. Right Side: Profile/Actions + Mobile Menu Toggle */}
-          <div className="flex items-center gap-4 ">
-            {/* Desktop Profile Section */}
-            <div className="hidden sm:flex items-center">
-              {session?.user ? (
-                <div className="relative">
-                  <label
-                    htmlFor="profile-dropdown-toggle"
-                    className="flex items-center gap-1 cursor-pointer p-1 rounded-full hover:bg-slate-50 transition-colors"
-                  >
-                    <UserCircle className="w-9 h-9 text-[#1665a1]" />
-                  </label>
+          {/* Right Side (Profile/Login) */}
+          <div className="flex items-center gap-4">
+            {session?.user ? (
+              <div className="relative hidden lg:block">
+                <button
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className="p-1 rounded-full hover:bg-slate-100 transition-all"
+                >
+                  <UserCircle className="w-9 h-9 text-[#1665a1]" />
+                </button>
 
-                  {/* Dropdown Menu */}
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-xl invisible opacity-0 peer-checked/profile:visible peer-checked/profile:opacity-100 transition-all duration-200 z-50 overflow-hidden">
-                    <div className="p-4 border-b border-slate-50 bg-slate-50/50">
-                      <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">
-                        Signed in as
-                      </p>
-                      <p className="text-sm font-bold text-[#0F172A] truncate">
-                        {session.user.name}
-                      </p>
+                {profileOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border overflow-hidden animate-in fade-in zoom-in duration-200">
+                    <div className="p-4 border-b bg-slate-50/50">
+                      <p className="text-xs text-slate-500">Signed in as</p>
+                      <p className="text-sm font-bold truncate">{session.user.name}</p>
                     </div>
-                    <div className="py-2">
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
-                      >
-                        <User className="w-4 h-4 text-slate-400" /> Profile
-                      </Link>
-                      <Link
-                        href="/settings"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
-                      >
-                        <Settings className="w-4 h-4 text-slate-400" /> Settings
-                      </Link>
-                    </div>
-                    <div className="border-t border-slate-50 p-2">
-                      <LogoutButton className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors" />
+                    <Link href="/profile" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-slate-50">
+                      <User size={16} /> Profile
+                    </Link>
+                    <Link href="/settings" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-slate-50">
+                      <Settings size={16} /> Settings
+                    </Link>
+                    <div className="p-2 border-t">
+                      <LogoutButton className="w-full text-red-600 text-sm justify-start" />
                     </div>
                   </div>
-                  <label
-                    htmlFor="profile-dropdown-toggle"
-                    className="fixed inset-0 hidden peer-checked/profile:block z-[-1]"
-                  />
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden sm:block px-6 py-2 rounded-xl bg-gradient-to-r from-[#1665a1] to-[#0891B2] text-white font-bold text-sm hover:shadow-lg transition-all active:scale-95"
+              >
+                Login
+              </Link>
+            )}
+
+            {/* Mobile Menu Button (Visible on Mobile/Tab) */}
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
+            >
+              <Menu size={26} className="text-slate-700" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ===== MOBILE SIDEBAR ===== */}
+      
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 bg-black/60 z-[90] transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setMobileOpen(false)}
+      />
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-[100] shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Sidebar Header */}
+        <div className="p-6 flex justify-between items-center border-b">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-[#1665a1] flex items-center justify-center">
+              <span className="text-white text-xs font-bold">TS</span>
+            </div>
+            <span className="font-bold text-slate-800">Menu</span>
+          </div>
+          <button 
+            onClick={() => setMobileOpen(false)}
+            className="p-2 rounded-full hover:bg-slate-100 transition-transform active:rotate-90"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="flex-1 overflow-y-auto py-4">
+          {navLinks.map((l) => (
+            <Link
+              key={l.name}
+              href={l.href}
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-between px-6 py-4 hover:bg-blue-50 transition-colors group"
+            >
+              <div className="flex items-center gap-4">
+                <l.icon className="w-5 h-5 text-slate-400 group-hover:text-[#1665a1]" />
+                <span className="font-medium text-slate-700 group-hover:text-[#1665a1]">{l.name}</span>
+              </div>
+              <ChevronRight size={16} className="text-slate-300 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          ))}
+        </div>
+
+        {/* Mobile Sidebar Footer (Logout/Profile section) */}
+        <div className="p-6 border-t bg-slate-50/50">
+          {session?.user ? (
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 px-2">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <UserCircle className="w-8 h-8 text-[#1665a1]" />
                 </div>
-              ) : (
-                <div className="flex items-center gap-4">
-                 
-                  <Link
-                  href="/login"
-                    className="rounded-xl bg-gradient-to-r mr-2 from-[#1665a1] to-[#0891B2] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:opacity-90"
-                  >
-                    Login
-                  </Link>
+                <div className="overflow-hidden">
+                  <p className="text-sm font-bold text-slate-800 truncate">{session.user.name}</p>
+                  <p className="text-xs text-slate-500 truncate">{session.user.email}</p>
                 </div>
-              )}
-              <div className="bg-gradient-to-r from-[#0369A1] to-[#0891B2] hover:opacity-90 text-white font-bold  rounded-xl transition-all  gap-2 px-4 sm:px-6 py-2.5 text-xs sm:text-sm ">
-                Consultation
+              </div>
+              <div className="grid grid-cols-1 gap-2">
+                 <Link 
+                   href="/profile" 
+                   onClick={() => setMobileOpen(false)}
+                   className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-white rounded-lg border border-transparent hover:border-slate-200"
+                 >
+                   <User size={18} /> My Profile
+                 </Link>
+                 <div className="pt-2">
+                   <LogoutButton className="w-full flex items-center justify-center gap-2 bg-red-50 text-red-600 py-3 rounded-xl font-bold hover:bg-red-100 transition-colors" />
+                 </div>
               </div>
             </div>
-
-            {/* Mobile Menu Toggle Button */}
-            <label
-              htmlFor="mobile-menu-toggle"
-              className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer lg:hidden"
-            >
-              <Menu className="h-7 w-7" />
-            </label>
-          </div>
+          ) : (
+            <LogoutButton className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors" />
+          )}
         </div>
       </div>
-
-      {/* Mobile Side Nav Drawer (Left Aligned Fix) */}
-      <div className="fixed inset-0 z-[100] invisible opacity-0 peer-checked/menu:visible peer-checked/menu:opacity-100 transition-all duration-300">
-        <label
-          htmlFor="mobile-menu-toggle"
-          className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm cursor-pointer"
-        />
-        <div className="absolute top-0 left-0 h-full w-[280px] bg-white shadow-2xl -translate-x-full peer-checked/menu:translate-x-0 transition-transform duration-300 ease-in-out border-r border-slate-100">
-          <div className="flex flex-col h-full">
-            <div className="p-5 border-b border-slate-100 flex justify-between items-center">
-              <span className="font-bold text-[#1665a1]">Menu Navigation</span>
-              <label
-                htmlFor="mobile-menu-toggle"
-                className="p-2 text-slate-400 hover:text-slate-600 rounded-full bg-slate-50 cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </label>
-            </div>
-            <div className="flex-1 overflow-y-auto py-4">
-              {session?.user && (
-                <div className="px-6 py-4 mb-2 bg-slate-50/80 border-y border-slate-100/50">
-                  <div className="flex items-center gap-3 mb-3">
-                    <UserCircle className="w-10 h-10 text-[#1665a1]" />
-                    <div className="flex flex-col">
-                      <span className="font-bold text-[#0F172A] text-sm">
-                        {session.user.name}
-                      </span>
-                      <span className="text-xs text-slate-500">Member</span>
-                    </div>
-                  </div>
-                  <Link
-                    href="/profile"
-                    className="flex items-center gap-2 text-xs font-bold text-[#1665a1]"
-                  >
-                    Go to Profile <ChevronRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              )}
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="flex items-center justify-between px-6 py-4 text-slate-700 hover:bg-slate-50 hover:text-[#1665a1] group"
-                >
-                  <div className="flex items-center gap-3">
-                    <link.icon className="w-5 h-5 text-slate-400 group-hover:text-[#1665a1]" />
-                    <span className="font-medium">{link.name}</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-slate-300" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-                #mobile-menu-toggle:checked ~ div { visibility: visible; opacity: 1; }
-                #mobile-menu-toggle:checked ~ div > div:last-child { transform: translateX(0); }
-                #profile-dropdown-toggle:checked ~ div .peer-checked\\/profile\\:visible { visibility: visible; opacity: 1; }
-            `,
-        }}
-      />
     </nav>
   );
 }
