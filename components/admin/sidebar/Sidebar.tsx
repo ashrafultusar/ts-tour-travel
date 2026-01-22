@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import  { useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -46,8 +46,8 @@ export default function Sidebar() {
           </div>
           <span className="text-sm font-semibold">TS Tour Travel</span>
         </div>
-        <button onClick={() => setIsMobileOpen(!isMobileOpen)}>
-          {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
+        <button className="cursor-pointer" onClick={() => setIsMobileOpen(!isMobileOpen)}>
+          {isMobileOpen ? <X  size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
@@ -57,7 +57,7 @@ export default function Sidebar() {
           fixed inset-y-0 left-0 z-50
           bg-[#1e2634] text-gray-400
           transition-all duration-300
-          ${isOpen ? "w-64" : "w-20"}
+          ${isOpen ? "w-96" : "w-20"}
           ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 lg:static
         `}
@@ -66,14 +66,14 @@ export default function Sidebar() {
           {/* ===== LOGO ===== */}
           <div className="relative flex items-center gap-3 px-4 py-4">
             <div className="bg-blue-500 p-2 rounded-md shrink-0">
-              <GraduationCap size={20} className="text-white" />
+              <GraduationCap size={30} className="text-white" />
             </div>
 
             <div className={`${!isOpen && "lg:hidden opacity-0"}`}>
-              <h1 className="text-sm font-semibold text-white leading-none">
+              <h1 className="text-md font-semibold text-white leading-none">
                 TS Tour Travel
               </h1>
-              <p className="text-[10px] text-gray-500">Admin Panel</p>
+              <p className="text-[13px] text-gray-500">Admin Panel</p>
             </div>
 
             {/* Collapse Button */}
@@ -81,7 +81,7 @@ export default function Sidebar() {
               onClick={() => setIsOpen(!isOpen)}
               className="hidden lg:flex absolute -right-3 top-6
                 bg-[#1e2634] border border-gray-700
-                rounded-full p-1 hover:text-white"
+                rounded-full p-1 hover:text-white cursor-pointer"
             >
               {isOpen ? (
                 <ChevronLeft size={14} />
@@ -104,44 +104,13 @@ export default function Sidebar() {
 
             <nav className="space-y-1">
               {mainMenuItems.map((item) => (
-                <Link
+                <Link onClick={()=>setIsMobileOpen(false)}
                   key={item.name}
                   href={item.href}
                   className="
                     flex items-center gap-3
                     px-3 py-2
-                    text-sm
-                    rounded-md
-                    hover:bg-white/5 hover:text-white
-                    transition
-                  "
-                >
-                  <item.icon size={18} className="shrink-0" />
-                  <span className={`${!isOpen && "lg:hidden opacity-0"}`}>
-                    {item.name}
-                  </span>
-                </Link>
-              ))}
-            </nav>
-
-            {/* Services */}
-            <p
-              className={`text-[9px] uppercase tracking-wide text-gray-500 mb-2 mt-6 ${
-                !isOpen && "lg:hidden"
-              }`}
-            >
-              সার্ভিস
-            </p>
-
-            <nav className="space-y-1">
-              {serviceMenuItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="
-                    flex items-center gap-3
-                    px-3 py-2
-                    text-sm
+                    text-md uppercase
                     rounded-md
                     hover:bg-white/5 hover:text-white
                     transition
