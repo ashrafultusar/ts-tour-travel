@@ -1,162 +1,187 @@
-'use client'
+"use client";
+
 import React, { useState } from "react";
-import { usePathname } from "next/navigation"; 
 import {
   LayoutDashboard,
   Users,
   FileText,
   MessageSquare,
   Star,
+  GraduationCap,
+  Plane,
   LogOut,
   Menu,
   X,
-  GraduationCap,
-  Plane,
-  Bell,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { cn } from "@/lib/utils"; 
 import Link from "next/link";
 
-const navigation = [
-  { name: "Dashboard", href: "", icon: LayoutDashboard },
-    { name: "Applications", href: "/ts-staff-portal/applications", icon: FileText },
-  { name: "Review", href: "/ts-staff-portal/review", icon: MessageSquare },
-  { name: "রিভিউ", href: "/reviews", icon: Star },
+/* ===== MENU DATA ===== */
+const mainMenuItems = [
+  { name: "Dashboard", icon: LayoutDashboard, href: "/ts-staff-portal" },
+  { name: "students", icon: Users, href: "/students" },
+  { name: "applications", icon: FileText, href: "/ts-staff-portal/applications" },
+  { name: "inquiry", icon: MessageSquare, href: "/ts-staff-portal/inquiry" },
+  { name: "reviews", icon: Star, href: "/ts-staff-portal/reviews" },
+  { name: "blog", icon: Star, href: "/ts-staff-portal/blog" },
 ];
 
-const services = [
-  { name: "Student Visa", href: "/student-visa", icon: GraduationCap },
-  { name: "Tourist Visa", href: "/tourist-visa", icon: Plane },
+const serviceMenuItems = [
+  { name: "Student Visa", icon: GraduationCap, href: "/student-visa" },
+  { name: "Tourist Visa", icon: Plane, href: "/tourist-visa" },
 ];
 
 export default function Sidebar() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const pathname = usePathname(); // বর্তমান URL পাথ পেতে
-
-  // অ্যাক্টিভ চেক করার ফাংশন
-  const isActive = (path: string) => pathname === path;
+  const [isOpen, setIsOpen] = useState(true);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC] antialiased">
-      
-      {/* ১. মোবাইল ব্যাকড্রপ */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+    <>
+      {/* ================= MOBILE HEADER ================= */}
+      <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-[#1e2634] text-white">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-500 p-1.5 rounded-md">
+            <GraduationCap size={18} />
+          </div>
+          <span className="text-sm font-semibold">TS Tour Travel</span>
+        </div>
+        <button onClick={() => setIsMobileOpen(!isMobileOpen)}>
+          {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
 
-      {/* ২. সাইডবার */}
+      {/* ================= SIDEBAR ================= */}
       <aside
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 w-[280px] bg-[#1e2634] transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        )}
+        className={`
+          fixed inset-y-0 left-0 z-50
+          bg-[#1e2634] text-gray-400
+          transition-all duration-300
+          ${isOpen ? "w-64" : "w-20"}
+          ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0 lg:static
+        `}
       >
-        <div className="flex flex-col h-full shadow-2xl">
-          {/* লোগো সেকশন */}
-          <div className="p-6 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#3b82f6] flex items-center justify-center shadow-lg shadow-blue-500/30">
-                <GraduationCap className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-white font-bold text-[17px] tracking-tight leading-none">TS Tour Travel</h1>
-                <p className="text-[#64748b] text-[11px] font-medium mt-1">Admin Panel</p>
-              </div>
+        <div className="flex flex-col h-full">
+          {/* ===== LOGO ===== */}
+          <div className="relative flex items-center gap-3 px-4 py-4">
+            <div className="bg-blue-500 p-2 rounded-md shrink-0">
+              <GraduationCap size={20} className="text-white" />
             </div>
-            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-gray-400 hover:text-white">
-              <X className="w-6 h-6" />
+
+            <div className={`${!isOpen && "lg:hidden opacity-0"}`}>
+              <h1 className="text-sm font-semibold text-white leading-none">
+                TS Tour Travel
+              </h1>
+              <p className="text-[10px] text-gray-500">Admin Panel</p>
+            </div>
+
+            {/* Collapse Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="hidden lg:flex absolute -right-3 top-6
+                bg-[#1e2634] border border-gray-700
+                rounded-full p-1 hover:text-white"
+            >
+              {isOpen ? (
+                <ChevronLeft size={14} />
+              ) : (
+                <ChevronRight size={14} />
+              )}
             </button>
           </div>
 
-          {/* নেভিগেশন লিংক */}
-          <nav className="flex-1 px-4 py-4 space-y-8 overflow-y-auto">
-            <div>
-              <h3 className="px-4 text-[11px] font-bold text-gray-500 uppercase tracking-[0.15em] mb-4">
-                প্রধান মেনু
-              </h3>
-              <div className="space-y-1.5">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href} // Next.js এ to এর বদলে href হয়
-                    onClick={() => setSidebarOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-[11px] rounded-[14px] transition-all duration-200 group",
-                      isActive(item.href)
-                        ? "bg-[#3b82f6] text-white shadow-md shadow-blue-500/20"
-                        : "text-[#94a3b8] hover:bg-white/5 hover:text-white"
-                    )}
-                  >
-                    <item.icon className={cn("w-5 h-5", isActive(item.href) ? "text-white" : "text-[#64748b] group-hover:text-white")} />
-                    <span className="text-[14.5px] font-medium">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
+          {/* ===== MENU ===== */}
+          <div className="flex-1 overflow-y-auto px-3">
+            {/* Main Menu */}
+            <p
+              className={`text-[9px] uppercase tracking-wide text-gray-500 mb-2 mt-4 ${
+                !isOpen && "lg:hidden"
+              }`}
+            >
+              প্রধান মেনু
+            </p>
 
-            <div>
-              <h3 className="px-4 text-[11px] font-bold text-gray-500 uppercase tracking-[0.15em] mb-4">
-                সার্ভিস
-              </h3>
-              <div className="space-y-1.5">
-                {services.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setSidebarOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-[11px] rounded-[14px] transition-all duration-200 group",
-                      isActive(item.href)
-                        ? "bg-[#3b82f6] text-white"
-                        : "text-[#94a3b8] hover:bg-white/5 hover:text-white"
-                    )}
-                  >
-                    <item.icon className={cn("w-5 h-5", isActive(item.href) ? "text-white" : "text-[#64748b] group-hover:text-white")} />
-                    <span className="text-[14.5px] font-medium">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </nav>
+            <nav className="space-y-1">
+              {mainMenuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="
+                    flex items-center gap-3
+                    px-3 py-2
+                    text-sm
+                    rounded-md
+                    hover:bg-white/5 hover:text-white
+                    transition
+                  "
+                >
+                  <item.icon size={18} className="shrink-0" />
+                  <span className={`${!isOpen && "lg:hidden opacity-0"}`}>
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
+            </nav>
 
-          {/* ফুটার */}
-          <div className="p-4 border-t border-white/5 space-y-1">
-            <button className="flex items-center gap-3 w-full px-4 py-3 rounded-[12px] text-[#94a3b8] hover:bg-red-500/10 bg-[] hover:text-red-400 transition-all cursor-pointer">
-              <LogOut className="w-5 h-5" />
-              <span className="text-[14px] font-medium">Logout</span>
+            {/* Services */}
+            <p
+              className={`text-[9px] uppercase tracking-wide text-gray-500 mb-2 mt-6 ${
+                !isOpen && "lg:hidden"
+              }`}
+            >
+              সার্ভিস
+            </p>
+
+            <nav className="space-y-1">
+              {serviceMenuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="
+                    flex items-center gap-3
+                    px-3 py-2
+                    text-sm
+                    rounded-md
+                    hover:bg-white/5 hover:text-white
+                    transition
+                  "
+                >
+                  <item.icon size={18} className="shrink-0" />
+                  <span className={`${!isOpen && "lg:hidden opacity-0"}`}>
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* ===== LOGOUT ===== */}
+          <div className="px-3 py-3 border-t border-white/5">
+            <button
+              className="
+                w-full flex items-center gap-3
+                px-3 py-2
+                text-sm
+                rounded-md
+                hover:bg-red-500/10 hover:text-red-400
+                transition
+              "
+            >
+              <LogOut size={18} />
+              <span className={`${!isOpen && "lg:hidden"}`}>লগআউট</span>
             </button>
           </div>
         </div>
       </aside>
 
-      {/* ৩. মেইন কন্টেন্ট এরিয়া */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* টপ হেডার */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
-            >
-              <Menu className="w-6 h-6 text-gray-600" />
-            </button>
-            <h2 className="text-[16px] font-bold text-gray-800 hidden sm:block">Ts Admin Portal</h2>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full">
-              <Bell className="w-5 h-5" />
-            </button>
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold border border-blue-200">
-            TS
-            </div>
-          </div>
-        </header>
-
-      </div>
-    </div>
+      {/* ===== MOBILE OVERLAY ===== */}
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+    </>
   );
 }
