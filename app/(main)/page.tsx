@@ -1,6 +1,8 @@
 import AboutUs from "@/components/home/aboutUs/AboutUs";
+import AirlinePartners from "@/components/home/airlinePartners/AirlinePartners";
 import ContactSection from "@/components/home/contactSection/ContactSection";
 import HeroSection from "@/components/home/heroSection/HeroSection";
+import MeetOurCounselors from "@/components/home/meetOurCounselors/MeetOurCounselors";
 import OurUniversities from "@/components/home/ourUniversities/OurUniversities";
 import SuccessStories from "@/components/home/successStories/SuccessStories";
 import WhyChooseUs from "@/components/home/whyChooseUs/WhyChooseUs";
@@ -20,21 +22,28 @@ export default function Home() {
       >
         <OurUniversities />
       </Suspense>
+
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <AboutUs />
       </Suspense>
+
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <WhyChooseUs />
       </Suspense>
+
+      <MeetOurCounselors />
+
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <SuccessStories />
       </Suspense>
+
+      <AirlinePartners/>
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
