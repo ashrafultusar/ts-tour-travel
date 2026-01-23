@@ -23,7 +23,7 @@ const mainMenuItems = [
   { name: "students", icon: Users, href: "/students" },
   { name: "applications", icon: FileText, href: "/ts-staff-portal/applications" },
   { name: "inquiry", icon: MessageSquare, href: "/ts-staff-portal/inquiry" },
-  { name: "reviews", icon: Star, href: "/ts-staff-portal/reviews" },
+  { name: "universities", icon: Star, href: "/ts-staff-portal/universities" },
   { name: "blog", icon: Star, href: "/ts-staff-portal/blog" },
   { name: "Success Stories", icon: Star, href: "/ts-staff-portal/successStories" },
 ];
