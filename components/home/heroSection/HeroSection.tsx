@@ -109,13 +109,11 @@ py-12 lg:py-16 flex items-center overflow-hidden"
                   <Building2 className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
                 </div>
                 <div>
-                  <p className="text-xl lg:text-3xl font-bold leading-none">
-                    39+
-                  </p>
-                  <p className="text-[9px] lg:text-[11px] font-medium opacity-90">
-                    Partner Universities
-                  </p>
-                </div>
+    <p className="text-xl lg:text-3xl font-bold leading-none">
+      <span className={`${styles.counterAnim} ${styles.partnerCount}`}></span>+
+    </p>
+    <p className="...">Partner Universities</p>
+  </div>
               </div>
 
               {/* STAT CARD 2 (Successful Visas) */}
@@ -127,13 +125,11 @@ py-12 lg:py-16 flex items-center overflow-hidden"
                   <Plane className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
                 </div>
                 <div>
-                  <p className="text-xl lg:text-3xl font-bold leading-none">
-                    820+
-                  </p>
-                  <p className="text-[9px] lg:text-[11px] font-medium opacity-90">
-                    Successful Visas
-                  </p>
-                </div>
+    <p className="text-xl lg:text-3xl font-bold leading-none">
+      <span className={`${styles.counterAnim} ${styles.visaCount}`}></span>+
+    </p>
+    <p className="...">Successful Visas</p>
+  </div>
               </div>
 
               {/* STAT CARD 3 (Student Visa Application) */}

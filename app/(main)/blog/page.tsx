@@ -1,3 +1,5 @@
+'use client'
+import React, { useState } from "react";
 import { Calendar, User, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -28,7 +30,7 @@ const posts = [
     author: "Karim Uddin",
     date: "Dec 28, 2024",
     readTime: "5 min",
-    category: "Admission Tips",
+    category: "Education",
   },
   {
     title: "Cost of Living in Malaysia 2025",
@@ -55,7 +57,7 @@ const posts = [
     author: "Farhana Rahman",
     date: "Dec 10, 2024",
     readTime: "9 min",
-    category: "University",
+    category: "Education",
   },
   {
     title: "Malaysia Student Visa: Document Checklist",
@@ -71,14 +73,20 @@ const posts = [
 const categories = ["All", "Education", "Scholarship", "Visa", "Lifestyle", "Career"];
 
 const Blog = () => {
+  // ১. স্টেট ডিক্লেয়ার করা (ডিফল্ট 'All')
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  // ২. ক্যাটাগরি অনুযায়ী পোস্ট ফিল্টার করা
+  const filteredPosts = activeCategory === "All" 
+    ? posts 
+    : posts.filter(post => post.category === activeCategory);
+
   return (
     <div className="bg-[#f8fafc]">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Our Blog
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Our Blog</h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto font-light">
             Essential information about higher education, visas, and lifestyle in Malaysia.
           </p>
@@ -86,15 +94,16 @@ const Blog = () => {
       </section>
 
       {/* Categories Filter */}
-      <section className="py-8 bg-white border-b border-gray-100">
+      <section className="py-8 bg-white border-b border-gray-100 sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-3 justify-center">
             {categories.map((category, index) => (
               <button
                 key={index}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  index === 0
-                    ? "bg-[#1a8a81] text-white shadow-md"
+                onClick={() => setActiveCategory(category)} // ৩. ক্লিকে স্টেট চেঞ্জ হবে
+                className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  activeCategory === category
+                    ? "bg-[#1a8a81] text-white shadow-lg scale-105"
                     : "bg-gray-50 text-gray-600 hover:bg-[#1a8a81]/10 border border-gray-200"
                 }`}
               >
@@ -105,80 +114,71 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Featured Post */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-gray-50 flex flex-col lg:row-reverse lg:flex-row min-h-[450px]">
-            <div className="lg:w-1/2 relative h-[300px] lg:h-auto">
-              <img
-                src={featuredPost.image}
-                alt={featuredPost.title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </div>
-            <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center">
-              <span className="inline-block px-4 py-1 rounded-full bg-[#f0fdfa] text-[#1a8a81] text-sm font-bold w-fit mb-6 border border-[#ccfbf1]">
-                {featuredPost.category}
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e] mb-6 leading-tight">
-                {featuredPost.title}
-              </h2>
-              <p className="text-gray-500 mb-8 text-lg leading-relaxed">{featuredPost.excerpt}</p>
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400 mb-8">
-                <span className="flex items-center gap-2"><User className="w-4 h-4 text-[#25a18e]" /> {featuredPost.author}</span>
-                <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#25a18e]" /> {featuredPost.date}</span>
-                <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#25a18e]" /> {featuredPost.readTime}</span>
+      {/* Featured Post - শুধুমাত্র 'All' এ দেখাবে অথবা প্রথমবার দেখাবে */}
+      {activeCategory === "All" && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-gray-50 flex flex-col lg:flex-row min-h-[450px]">
+              <div className="lg:w-1/2 relative h-[300px] lg:h-auto">
+                <img src={featuredPost.image} alt={featuredPost.title} className="absolute inset-0 w-full h-full object-cover" />
               </div>
-              <Button className="w-fit bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] hover:opacity-90 text-white px-8 py-6 rounded-xl text-lg flex gap-2 transition-all shadow-lg shadow-blue-900/10">
-                Read More <ArrowRight className="w-5 h-5" />
-              </Button>
+              <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center">
+                <span className="inline-block px-4 py-1 rounded-full bg-[#f0fdfa] text-[#1a8a81] text-sm font-bold w-fit mb-6 border border-[#ccfbf1]">
+                  {featuredPost.category}
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e] mb-6 leading-tight">{featuredPost.title}</h2>
+                <p className="text-gray-500 mb-8 text-lg leading-relaxed">{featuredPost.excerpt}</p>
+                <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400 mb-8">
+                  <span className="flex items-center gap-2"><User className="w-4 h-4 text-[#25a18e]" /> {featuredPost.author}</span>
+                  <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#25a18e]" /> {featuredPost.date}</span>
+                  <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#25a18e]" /> {featuredPost.readTime}</span>
+                </div>
+                <Button className="w-fit bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] text-white px-8 py-6 rounded-xl text-lg flex gap-2">
+                  Read More <ArrowRight className="w-5 h-5" />
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Blog Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post, index) => (
-              <article
-                key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all duration-300"
-              >
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <span className="inline-block px-3 py-1 rounded-full bg-[#f0fdfa] text-[#1a8a81] text-xs font-bold mb-4 border border-[#ccfbf1]">
-                    {post.category}
-                  </span>
-                  <h3 className="text-xl font-bold text-[#0d4a7e] mb-3 group-hover:text-[#1a8a81] transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed">{post.excerpt}</p>
-                  <div className="pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
-                    <span className="flex items-center gap-1"><User className="w-3.5 h-3.5 text-[#25a18e]" /> {post.author}</span>
-                    <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-[#25a18e]" /> {post.readTime}</span>
+          {/* যদি কোনো পোস্ট না থাকে তার জন্য মেসেজ */}
+          {filteredPosts.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-400 text-xl italic">No posts found in this category.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500">
+              {filteredPosts.map((post, index) => (
+                <article
+                  key={index}
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+                >
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="text-center mt-16">
-            <Button variant="outline" size="lg" className="rounded-full px-12 border-[#1a8a81] text-[#1a8a81] hover:bg-[#1a8a81] hover:text-white transition-all font-bold h-14">
-              View More Posts
-            </Button>
-          </div>
+                  <div className="p-6">
+                    <span className="inline-block px-3 py-1 rounded-full bg-[#f0fdfa] text-[#1a8a81] text-xs font-bold mb-4 border border-[#ccfbf1]">
+                      {post.category}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#0d4a7e] mb-3 group-hover:text-[#1a8a81] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed">{post.excerpt}</p>
+                    <div className="pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
+                      <span className="flex items-center gap-1"><User className="w-3.5 h-3.5 text-[#25a18e]" /> {post.author}</span>
+                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-[#25a18e]" /> {post.readTime}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
-
-     
     </div>
   );
 };
