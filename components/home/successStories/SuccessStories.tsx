@@ -114,12 +114,7 @@ const SuccessStories: React.FC = () => {
           </div>
         </div>
 
-        {/* CTA Button */}
-        <div className="text-center mt-12">
-          <button className="px-10 py-4 bg-gradient-to-r from-[#0369A1] to-[#0891B2] hover:from-[#0891B2] hover:to-[#0369A1] text-white font-extrabold rounded-2xl transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/20 active:scale-95">
-            Join Our Success Community
-          </button>
-        </div>
+  
       </div>
 
       {/* Animation Styles */}
