@@ -8,7 +8,7 @@ import {
   MessageSquare,
   Star,
   GraduationCap,
-  Plane,
+  
   LogOut,
   Menu,
   X,
@@ -21,7 +21,7 @@ import Link from "next/link";
 const mainMenuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/ts-staff-portal" },
   { name: "Admin Management", icon: Users, href: "/ts-staff-portal/admin" },
-  { name: "applications", icon: FileText, href: "/ts-staff-portal/applications" },
+  { name: "Professional Team", icon: FileText, href: "/ts-staff-portal/professionalTeam" },
   { name: "inquiry", icon: MessageSquare, href: "/ts-staff-portal/inquiry" },
   { name: "universities", icon: Star, href: "/ts-staff-portal/universities" },
   { name: "blog", icon: Star, href: "/ts-staff-portal/blog" },
