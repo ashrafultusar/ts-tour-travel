@@ -22,7 +22,7 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const pathName = usePathname();
 
-  // ডামি সেশন ডাটা (লগআউট মোড টেস্ট করতে চাইলে এটাকে null করে দিন)
+
   const session = {
     user: {
       name: "Ashraful Tusar",
@@ -33,6 +33,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "/", icon: Home },
+    { name: "Universities", href: "/universities", icon: Info },
     { name: "About Us", href: "/aboutUs", icon: Info },
     { name: "Study in Malaysia", href: "/studyInMalaysia", icon: Briefcase },
     { name: "Tourist Visa", href: "/touristVisa", icon: Map },
@@ -45,7 +46,6 @@ export default function Navbar() {
       <nav className="bg-white/90 backdrop-blur sticky top-0 z-50 border-b border-slate-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-20 flex items-center justify-between">
-            
             {/* 1. Mobile Menu Button */}
             <button
               onClick={() => setMobileOpen(true)}
@@ -103,11 +103,11 @@ export default function Navbar() {
                   {profileOpen && (
                     <>
                       {/* Overlay to close dropdown when clicking outside */}
-                      <div 
-                        className="fixed inset-0 z-10" 
+                      <div
+                        className="fixed inset-0 z-10"
                         onClick={() => setProfileOpen(false)}
                       ></div>
-                      
+
                       <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
                         <div className="p-4 border-b bg-slate-50/50">
                           <p className="text-sm font-bold truncate text-slate-800">
@@ -173,13 +173,17 @@ export default function Navbar() {
                 pathName === link.href ? "bg-blue-50" : ""
               }`}
             >
-              <link.icon 
-                size={20} 
-                className={pathName === link.href ? "text-[#1665a1]" : "text-slate-400"} 
+              <link.icon
+                size={20}
+                className={
+                  pathName === link.href ? "text-[#1665a1]" : "text-slate-400"
+                }
               />
-              <span className={`font-semibold ${
-                pathName === link.href ? "text-[#1665a1]" : "text-slate-600"
-              }`}>
+              <span
+                className={`font-semibold ${
+                  pathName === link.href ? "text-[#1665a1]" : "text-slate-600"
+                }`}
+              >
                 {link.name}
               </span>
             </Link>
