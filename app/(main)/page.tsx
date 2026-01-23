@@ -15,33 +15,38 @@ export default function Home() {
       >
         <HeroSection />
       </Suspense>
-
+      
+      {/* OurUniversities */}
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <OurUniversities />
       </Suspense>
 
+      {/* AboutUs */}
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <AboutUs />
       </Suspense>
 
+      {/* WhyChooseUs */}
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <WhyChooseUs />
       </Suspense>
 
-
+      {/* SuccessStories */}
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >
         <SuccessStories />
       </Suspense>
 
-      <AirlinePartners/>
+      <AirlinePartners />
+
+      {/* ContactSection */}
       <Suspense
         fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
       >

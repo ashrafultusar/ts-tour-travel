@@ -17,7 +17,7 @@ const UniversityCard = ({ name, location, logo }: { name: string, location: stri
     </div>
     <div className="flex flex-col gap-2 mt-4 md:mt-0 w-full md:w-32">
      
-      <button className="bg-[#1890ff] text-white py-2 px-4 rounded font-semibold hover:bg-blue-600 transition-colors">
+      <button className="bg-[#1a8a81] text-white hover:bg-[#157a72] border border-white/20 font-bold px-1 py-1 text-md rounded-sm shadow-md transition-all transform hover:scale-105 active:scale-95">
         Details
       </button>
     </div>
@@ -28,13 +28,13 @@ export default function UniversitySearch() {
   const levels = ["Diploma", "Bachelor Degree", "Masters Degree", "Doctoral Degree (PhD)", "Advance Diploma", "Certificate", "Foundation / A-level"];
   
   const universities = [
-    { name: "Multimedia University Malaysia (MMU)", location: "Selangor, Malaysia", logo: "/api/placeholder/80/80" },
-    { name: "UCSI University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "/api/placeholder/80/80" },
-    { name: "Taylor's University Malaysia", location: "Selangor, Malaysia", logo: "/api/placeholder/80/80" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "/api/placeholder/80/80" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "/api/placeholder/80/80" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "/api/placeholder/80/80" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "/api/placeholder/80/80" },
+    { name: "Multimedia University Malaysia (MMU)", location: "Selangor, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
+    { name: "UCSI University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
+    { name: "Taylor's University Malaysia", location: "Selangor, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
+    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
+    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
+    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
+    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
   ];
 
   return (
