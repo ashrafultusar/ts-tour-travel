@@ -20,7 +20,7 @@ import Link from "next/link";
 /* ===== MENU DATA ===== */
 const mainMenuItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/ts-staff-portal" },
-  { name: "students", icon: Users, href: "/students" },
+  { name: "Admin Management", icon: Users, href: "/ts-staff-portal/admin" },
   { name: "applications", icon: FileText, href: "/ts-staff-portal/applications" },
   { name: "inquiry", icon: MessageSquare, href: "/ts-staff-portal/inquiry" },
   { name: "universities", icon: Star, href: "/ts-staff-portal/universities" },
@@ -36,7 +36,7 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* ================= MOBILE HEADER ================= */}
+    
       <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-[#1e2634] text-white">
         <div className="flex items-center gap-2">
           <div className="bg-blue-500 p-1.5 rounded-md">
@@ -49,7 +49,7 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {/* ================= SIDEBAR ================= */}
+      
       <aside
         className={`
           fixed inset-y-0 left-0 z-50
@@ -97,7 +97,7 @@ export default function Sidebar() {
                 !isOpen && "lg:hidden"
               }`}
             >
-              প্রধান মেনু
+             Main Menu
             </p>
 
             <nav className="space-y-1">
