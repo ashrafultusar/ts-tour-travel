@@ -13,31 +13,32 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import BookFreeConsultation from "@/components/shared/bookFreeConsultation/BookFreeConsultation";
 
 const universities = [
   {
-    name: "University of Malaya",
-    ranking: "QS World Ranking: 65",
-    location: "Kuala Lumpur",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?w=400",
-  },
-  {
-    name: "Universiti Putra Malaysia",
-    ranking: "QS World Ranking: 158",
-    location: "Serdang",
+    name: "Taylor's University",
+    ranking: "QS World University Rankings #251",
+    location: "Subang Jaya, Selangor",
     image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400",
   },
   {
-    name: "Taylor's University",
-    ranking: "QS World Ranking: 284",
-    location: "Subang Jaya",
-    image: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400",
+    name: "UCSI University",
+    ranking: "QS World University Rankings #300",
+    location: "Kuala Lumpur, Malaysia",
+    image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1000",
   },
   {
-    name: "UCSI University",
-    ranking: "QS World Ranking: 300",
-    location: "Kuala Lumpur",
-    image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400",
+    name: "Universiti Teknologi PETRONAS (UTP)",
+    ranking: "QS World University Rankings #307",
+    location: "Seri Iskandar, Perak",
+    image: "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&q=80&w=1000",
+  },
+  {
+    name: "Sunway University",
+    ranking: "QS World University Rankings #539",
+    location: "Bandar Sunway, Selangor",
+    image: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400",
   },
 ];
 
@@ -203,11 +204,9 @@ const StudyInMalaysia = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-[#1a8a81] font-bold uppercase tracking-widest text-sm">
-              Partner Universities
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e] mt-2">
-              Best Universities in Malaysia
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e]">
+              Best Private Universities in Malaysia
             </h2>
           </div>
 
@@ -270,44 +269,8 @@ const StudyInMalaysia = () => {
             </div>
 
             {/* Counseling Form - Styled from image */}
-            <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
-              <h3 className="text-2xl font-bold text-[#0d4a7e] mb-6 text-center">
-                Get Free Counseling
-              </h3>
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Full Name"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81] transition-all"
-                />
-                <input
-                  type="tel"
-                  placeholder="Mobile Number"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81] transition-all"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81] transition-all"
-                />
-                <select className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1a8a81] appearance-none transition-all">
-                  <option value="">Select Preferred Course</option>
-                  {courses.map((course, index) => (
-                    <option key={index} value={course}>
-                      {course}
-                    </option>
-                  ))}
-                </select>
-                <textarea
-                  placeholder="Your Message (Optional)"
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#1a8a81] resize-none transition-all"
-                />
-                <Button className="w-full h-14 bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] hover:opacity-90 transition-opacity text-white font-bold text-lg rounded-xl">
-                  Submit Now
-                </Button>
-              </form>
-            </div>
+    
+               <BookFreeConsultation />
           </div>
         </div>
       </section>
