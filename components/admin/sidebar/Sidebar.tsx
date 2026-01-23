@@ -25,12 +25,10 @@ const mainMenuItems = [
   { name: "inquiry", icon: MessageSquare, href: "/ts-staff-portal/inquiry" },
   { name: "reviews", icon: Star, href: "/ts-staff-portal/reviews" },
   { name: "blog", icon: Star, href: "/ts-staff-portal/blog" },
+  { name: "Success Stories", icon: Star, href: "/ts-staff-portal/successStories" },
 ];
 
-const serviceMenuItems = [
-  { name: "Student Visa", icon: GraduationCap, href: "/student-visa" },
-  { name: "Tourist Visa", icon: Plane, href: "/tourist-visa" },
-];
+
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);

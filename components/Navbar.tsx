@@ -32,6 +32,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { name: "Dashboard", href: "/ts-staff-portal", icon: Home },
     { name: "Home", href: "/", icon: Home },
     { name: "Universities", href: "/universities", icon: Info },
     { name: "About Us", href: "/aboutUs", icon: Info },
