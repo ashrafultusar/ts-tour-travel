@@ -14,8 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <main className={` antialiased`}>
-      <Navbar />
+      <Navbar   />
       {children}
       <Footer/>
     </main>

@@ -1,6 +1,6 @@
 import Sidebar from '@/components/admin/sidebar/Sidebar';
 
-const DashboardLayout = ({children}) => {
+const DashboardLayout = ({children}:{ children: React.ReactNode }) => {
     return (
         <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100">
           <Sidebar />
