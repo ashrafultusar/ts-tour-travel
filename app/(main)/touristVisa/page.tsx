@@ -133,53 +133,7 @@ const TouristVisa = () => {
         </div>
       </section>
 
-      {/* Popular Visa Options Section */}
-      <section className="py-20 bg-[#f1f5f9]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="text-[#1a8a81] font-bold uppercase tracking-widest text-sm">Visa Packages</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e] mt-2">
-              Popular Visa Options
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {visaTypes.map((visa, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all"
-              >
-                <h3 className="text-xl font-bold text-[#0d4a7e] mb-4">{visa.title}</h3>
-                <div className="space-y-3 mb-6 border-b border-gray-50 pb-6 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Duration:</span>
-                    <span className="font-semibold text-[#0d4a7e]">{visa.duration}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Processing:</span>
-                    <span className="font-semibold text-[#0d4a7e]">{visa.processing}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-500">Service Charge:</span>
-                    <span className="font-bold text-[#1a8a81] text-lg">{visa.price}</span>
-                  </div>
-                </div>
-                <ul className="space-y-2 mb-8">
-                  {visa.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-gray-500">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#25a18e]" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e] hover:opacity-90 text-white rounded-full h-12 font-semibold shadow-md transition-all">
-  Apply Now
-</Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* Destinations Section */}
       <section className="py-20 bg-white">
