@@ -1,10 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { auth } from "@/auth";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import {
   Menu,
   X,
-  ChevronRight,
   Home,
   Info,
   Briefcase,
@@ -12,11 +15,21 @@ import {
   Mail,
   UserCircle,
   User,
-  Settings,
 } from "lucide-react";
 
-export default async function Navbar() {
-  const session = await auth();
+export default function Navbar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const pathName = usePathname();
+
+  // ডামি সেশন ডাটা (লগআউট মোড টেস্ট করতে চাইলে এটাকে null করে দিন)
+  const session = {
+    user: {
+      name: "Ashraful Tusar",
+      email: "tusar@example.com",
+      image: "https://i.pravatar.cc/150?u=tusar",
+    },
+  };
 
   const navLinks = [
     { name: "Home", href: "/", icon: Home },
@@ -28,185 +41,151 @@ export default async function Navbar() {
   ];
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
-      {/* Logic Inputs */}
-      <input
-        type="checkbox"
-        id="mobile-menu-toggle"
-        className="hidden peer/menu"
-      />
-      <input
-        type="checkbox"
-        id="profile-dropdown-toggle"
-        className="hidden peer/profile"
-      />
+    <>
+      <nav className="bg-white/90 backdrop-blur sticky top-0 z-50 border-b border-slate-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-20 flex items-center justify-between">
+            
+            {/* 1. Mobile Menu Button */}
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="lg:hidden p-2"
+            >
+              <Menu size={26} className="text-slate-700 cursor-pointer" />
+            </button>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 justify-between items-center relative">
-          {/* 1. Left Side: Logo */}
-          <div className="flex flex-shrink-0 items-center">
+            {/* 2. Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center shadow-md">
-                <span className="text-white font-extrabold text-lg tracking-tighter">
-                  TS
-                </span>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center shrink-0 shadow-sm">
+                <span className="text-white font-extrabold text-lg">TS</span>
               </div>
-              <span className="font-bold text-xl text-[#0F172A] tracking-tight">
+              <span className="font-bold text-xl text-slate-900 tracking-tight block">
                 Tour & <span className="text-[#1665a1]">Travel</span>
               </span>
             </Link>
-          </div>
 
-          {/* 2. Middle: Desktop Links (lg devices e center e thakbe) */}
-          <div className="hidden lg:flex lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-[15px] font-medium text-slate-600 hover:text-[#1665a1] transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* 3. Right Side: Profile/Actions + Mobile Menu Toggle */}
-          <div className="flex items-center gap-4 ">
-            {/* Desktop Profile Section */}
-            <div className="hidden sm:flex items-center">
-              {session?.user ? (
-                <div className="relative">
-                  <label
-                    htmlFor="profile-dropdown-toggle"
-                    className="flex items-center gap-1 cursor-pointer p-1 rounded-full hover:bg-slate-50 transition-colors"
-                  >
-                    <UserCircle className="w-9 h-9 text-[#1665a1]" />
-                  </label>
-
-                  {/* Dropdown Menu */}
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-xl invisible opacity-0 peer-checked/profile:visible peer-checked/profile:opacity-100 transition-all duration-200 z-50 overflow-hidden">
-                    <div className="p-4 border-b border-slate-50 bg-slate-50/50">
-                      <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">
-                        Signed in as
-                      </p>
-                      <p className="text-sm font-bold text-[#0F172A] truncate">
-                        {session.user.name}
-                      </p>
-                    </div>
-                    <div className="py-2">
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
-                      >
-                        <User className="w-4 h-4 text-slate-400" /> Profile
-                      </Link>
-                      <Link
-                        href="/settings"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
-                      >
-                        <Settings className="w-4 h-4 text-slate-400" /> Settings
-                      </Link>
-                    </div>
-                    <div className="border-t border-slate-50 p-2">
-                      <LogoutButton className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors" />
-                    </div>
-                  </div>
-                  <label
-                    htmlFor="profile-dropdown-toggle"
-                    className="fixed inset-0 hidden peer-checked/profile:block z-[-1]"
-                  />
-                </div>
-              ) : (
-                <div className="flex items-center gap-4">
-                 
-                  <Link
-                  href="/login"
-                    className="rounded-xl bg-gradient-to-r mr-2 from-[#1665a1] to-[#0891B2] px-6 py-2.5 text-sm font-bold text-white shadow-md hover:opacity-90"
-                  >
-                    Login
-                  </Link>
-                </div>
-              )}
-              <div className="bg-gradient-to-r from-[#0369A1] to-[#0891B2] hover:opacity-90 text-white font-bold  rounded-xl transition-all  gap-2 px-4 sm:px-6 py-2.5 text-xs sm:text-sm ">
-                Consultation
-              </div>
-            </div>
-
-            {/* Mobile Menu Toggle Button */}
-            <label
-              htmlFor="mobile-menu-toggle"
-              className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer lg:hidden"
-            >
-              <Menu className="h-7 w-7" />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Side Nav Drawer (Left Aligned Fix) */}
-      <div className="fixed inset-0 z-[100] invisible opacity-0 peer-checked/menu:visible peer-checked/menu:opacity-100 transition-all duration-300">
-        <label
-          htmlFor="mobile-menu-toggle"
-          className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm cursor-pointer"
-        />
-        <div className="absolute top-0 left-0 h-full w-[280px] bg-white shadow-2xl -translate-x-full peer-checked/menu:translate-x-0 transition-transform duration-300 ease-in-out border-r border-slate-100">
-          <div className="flex flex-col h-full">
-            <div className="p-5 border-b border-slate-100 flex justify-between items-center">
-              <span className="font-bold text-[#1665a1]">Menu Navigation</span>
-              <label
-                htmlFor="mobile-menu-toggle"
-                className="p-2 text-slate-400 hover:text-slate-600 rounded-full bg-slate-50 cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </label>
-            </div>
-            <div className="flex-1 overflow-y-auto py-4">
-              {session?.user && (
-                <div className="px-6 py-4 mb-2 bg-slate-50/80 border-y border-slate-100/50">
-                  <div className="flex items-center gap-3 mb-3">
-                    <UserCircle className="w-10 h-10 text-[#1665a1]" />
-                    <div className="flex flex-col">
-                      <span className="font-bold text-[#0F172A] text-sm">
-                        {session.user.name}
-                      </span>
-                      <span className="text-xs text-slate-500">Member</span>
-                    </div>
-                  </div>
-                  <Link
-                    href="/profile"
-                    className="flex items-center gap-2 text-xs font-bold text-[#1665a1]"
-                  >
-                    Go to Profile <ChevronRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              )}
+            {/* 3. Desktop Links */}
+            <div className="hidden lg:flex gap-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="flex items-center justify-between px-6 py-4 text-slate-700 hover:bg-slate-50 hover:text-[#1665a1] group"
+                  className={`text-sm font-semibold transition-colors ${
+                    pathName === link.href
+                      ? "text-[#1665a1]"
+                      : "text-slate-600 hover:text-[#1665a1]"
+                  }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <link.icon className="w-5 h-5 text-slate-400 group-hover:text-[#1665a1]" />
-                    <span className="font-medium">{link.name}</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-slate-300" />
+                  {link.name}
                 </Link>
               ))}
             </div>
+
+            {/* 4. Auth Section */}
+            <div className="flex items-center gap-4">
+              {session?.user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setProfileOpen(!profileOpen)}
+                    className="flex items-center p-1 rounded-full border border-transparent hover:border-slate-200 transition-all outline-none"
+                  >
+                    {session.user?.image ? (
+                      <img
+                        src={session.user.image}
+                        alt="User"
+                        className="w-9 h-9 rounded-full object-cover"
+                      />
+                    ) : (
+                      <UserCircle className="w-9 h-9 text-[#1665a1]" />
+                    )}
+                  </button>
+
+                  {profileOpen && (
+                    <>
+                      {/* Overlay to close dropdown when clicking outside */}
+                      <div 
+                        className="fixed inset-0 z-10" 
+                        onClick={() => setProfileOpen(false)}
+                      ></div>
+                      
+                      <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
+                        <div className="p-4 border-b bg-slate-50/50">
+                          <p className="text-sm font-bold truncate text-slate-800">
+                            {session.user?.name}
+                          </p>
+                          <p className="text-xs text-slate-500 truncate">
+                            {session.user?.email}
+                          </p>
+                        </div>
+                        <Link
+                          href="/profile"
+                          onClick={() => setProfileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50 transition-colors"
+                        >
+                          <User size={16} /> Profile
+                        </Link>
+                        <div className="p-2 border-t">
+                          <LogoutButton className="w-full text-red-600 text-sm py-2 px-3 rounded-lg hover:bg-red-50 transition-colors text-left font-medium" />
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="px-6 py-2.5 rounded-xl bg-[#1665a1] text-white font-bold text-sm hover:bg-[#0e4b7a] transition-all active:scale-95 shadow-md shadow-blue-100"
+                >
+                  Login
+                </Link>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-                #mobile-menu-toggle:checked ~ div { visibility: visible; opacity: 1; }
-                #mobile-menu-toggle:checked ~ div > div:last-child { transform: translateX(0); }
-                #profile-dropdown-toggle:checked ~ div .peer-checked\\/profile\\:visible { visibility: visible; opacity: 1; }
-            `,
-        }}
+      {/* ===== MOBILE SIDEBAR ===== */}
+      <div
+        className={`fixed inset-0 bg-black/60 z-[90] transition-opacity duration-300 ${
+          mobileOpen ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+        onClick={() => setMobileOpen(false)}
       />
-    </nav>
+      <div
+        className={`fixed top-0 left-0 h-full w-[280px] bg-white z-[100] transform transition-transform duration-300 ease-in-out ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-6 flex justify-between items-center border-b">
+          <span className="font-bold text-slate-800">Menu</span>
+          <button onClick={() => setMobileOpen(false)}>
+            <X size={22} className="text-slate-600 cursor-pointer" />
+          </button>
+        </div>
+
+        <div className="py-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors ${
+                pathName === link.href ? "bg-blue-50" : ""
+              }`}
+            >
+              <link.icon 
+                size={20} 
+                className={pathName === link.href ? "text-[#1665a1]" : "text-slate-400"} 
+              />
+              <span className={`font-semibold ${
+                pathName === link.href ? "text-[#1665a1]" : "text-slate-600"
+              }`}>
+                {link.name}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
