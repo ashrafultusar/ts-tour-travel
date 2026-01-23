@@ -203,11 +203,9 @@ const StudyInMalaysia = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-[#1a8a81] font-bold uppercase tracking-widest text-sm">
-              Partner Universities
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e] mt-2">
-              Best Universities in Malaysia
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e]">
+              Best Private Universities in Malaysia
             </h2>
           </div>
 
