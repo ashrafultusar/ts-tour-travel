@@ -26,7 +26,7 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Facebook,  href: "https://www.facebook.com/tsstudysolutionmalaysia", label: "Facebook" },
     { icon: Instagram, href: "#", label: "Instagram" },
     { icon: Youtube, href: "#", label: "YouTube" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
@@ -56,6 +56,7 @@ const Footer = () => {
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
+                target="_blank"
                   key={social.label}
                   href={social.href}
                   className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"

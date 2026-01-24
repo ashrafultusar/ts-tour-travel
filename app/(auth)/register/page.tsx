@@ -5,6 +5,10 @@ import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { register } from "@/actions/auth";
 import { useFormStatus } from "react-dom";
 
+interface RegisterPageProps {
+  onCancel?: () => void;
+}
+
 function RegisterButton() {
   const { pending } = useFormStatus();
 
@@ -19,7 +23,8 @@ function RegisterButton() {
   );
 }
 
-export default function RegisterPage() {
+
+export default function RegisterPage({onCancel}:RegisterPageProps) {
   const [state, dispatch] = useActionState(register, undefined);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

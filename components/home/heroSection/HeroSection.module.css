@@ -114,3 +114,31 @@
     margin-top: 2rem;
   }
 }
+
+
+
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+/* Page load hoye gele auto animate hobar jonno keyframe */
+@keyframes countUp {
+  from { --num: 0; }
+  to { --num: var(--final-num); }
+}
+
+.counterAnim {
+  /* Dynamic value set korar jonno CSS variable use kora hoyeche */
+  animation: countUp 3s cubic-bezier(0, 0.5, 0, 1) forwards;
+  counter-set: num var(--num);
+}
+
+.counterAnim::after {
+  content: counter(num);
+}
+
+/* Prottek card er jonno alada final value */
+.partnerCount { --final-num: 41; }
+.visaCount { --final-num: 820; }

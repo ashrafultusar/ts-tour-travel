@@ -10,7 +10,7 @@ const AboutUs = () => {
           features: ["University Selection", "Scholarship Guidance", "Document Processing"],
           iconBg: "bg-[#EBF2FA]", 
           iconColor: "text-[#1E56A0]",
-          dotColor: "bg-[#1E56A0]", // ডটের জন্য কালার
+          dotColor: "bg-[#1E56A0]",
         },
         {
           icon: FileCheck,
@@ -78,23 +78,17 @@ const AboutUs = () => {
                 {service.description}
               </p>
               
-              <ul className="space-y-3 mb-10 w-full">
+              <ul className="space-y-3  w-full">
                 {service.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-3 text-sm font-semibold text-gray-600">
-                    {/* এখানে ডট বা বুলেট পয়েন্টটি দেওয়া হয়েছে */}
+                    
                     <span className={`w-2 h-2 rounded-full ${service.dotColor} shrink-0`} />
                     {feature}
                   </li>
                 ))}
               </ul>
               
-              <Button 
-                variant="ghost" 
-                className="mt-auto p-0 h-auto hover:bg-transparent text-[#1E56A0] font-bold text-sm flex items-center gap-2 group/btn cursor-pointer"
-              >
-                Learn More
-                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
-              </Button>
+            
             </div>
           ))}
         </div>
