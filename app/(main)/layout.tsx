@@ -7,6 +7,7 @@ export const metadata: Metadata = {
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
@@ -14,11 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
+    <SessionProvider>  
     <main className={` antialiased`}>
       <Navbar   />
-      {children}
+        {children}
       <Footer/>
-    </main>
+    </main></SessionProvider>
   );
 }

@@ -128,16 +128,17 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-background/60">
-                  House #12, Road #5, Dhanmondi, Dhaka-1205
+                House No:67,Shahid Moslem Uddin Chattrabas Goli,Central Road,Paira Chattar, Rangpur, Bangladesh, 5400
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-background/60">+880 1XXX-XXXXXX</span>
+                <span className="text-background/60">+880 1341-462233</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-background/60">info@eduvisabd.com</span>
+                <span className="text-background/60">
+                info@tstourtravels.com</span>
               </li>
             </ul>
           </div>
@@ -145,15 +146,12 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-background/10 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-background/40 text-sm">
-              © 2025 EduVisa BD. All rights reserved.
+         
+            <p className="text-background/40 text-sm text-center">
+              © 2026 TS Tour & Travel. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-background/40 hover:text-background">Privacy Policy</a>
-              <a href="#" className="text-background/40 hover:text-background">Terms of Service</a>
-            </div>
-          </div>
+            
+         
         </div>
       </div>
     </footer>
