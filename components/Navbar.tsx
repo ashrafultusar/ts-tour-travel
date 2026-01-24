@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 import {
   Menu,
@@ -16,20 +15,20 @@ import {
   UserCircle,
   User,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Navbar() {
+  const { data: session }= useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const pathName = usePathname();
 
+  
 
-  const session = {
-    user: {
-      name: "Ashraful Tusar",
-      email: "tusar@example.com",
-      image: "https://i.pravatar.cc/150?u=tusar",
-    },
-  };
+
+
+
 
   const navLinks = [
     { name: "Dashboard", href: "/ts-staff-portal", icon: Home },
@@ -84,39 +83,32 @@ export default function Navbar() {
 
             {/* 4. Auth Section */}
             <div className="flex items-center gap-4">
-              {session?.user ? (
+            {session?.user ? (
                 <div className="relative">
                   <button
                     onClick={() => setProfileOpen(!profileOpen)}
                     className="flex items-center p-1 rounded-full border border-transparent hover:border-slate-200 transition-all outline-none"
                   >
                     {session.user?.image ? (
-                      <img
+                      <Image
                         src={session.user.image}
                         alt="User"
+                        width={36}
+                        height={36}
                         className="w-9 h-9 rounded-full object-cover"
                       />
                     ) : (
-                      <UserCircle className="w-9 h-9 text-[#1665a1]" />
+                      <UserCircle size={36} className="text-[#1665a1]" />
                     )}
                   </button>
 
                   {profileOpen && (
                     <>
-                      {/* Overlay to close dropdown when clicking outside */}
-                      <div
-                        className="fixed inset-0 z-10"
-                        onClick={() => setProfileOpen(false)}
-                      ></div>
-
+                      <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)}></div>
                       <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50">
                         <div className="p-4 border-b bg-slate-50/50">
-                          <p className="text-sm font-bold truncate text-slate-800">
-                            {session.user?.name}
-                          </p>
-                          <p className="text-xs text-slate-500 truncate">
-                            {session.user?.email}
-                          </p>
+                          <p className="text-sm font-bold truncate text-slate-800">{session.user?.name}</p>
+                          <p className="text-xs text-slate-500 truncate">{session.user?.email}</p>
                         </div>
                         <Link
                           href="/profile"

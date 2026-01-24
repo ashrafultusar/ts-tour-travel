@@ -75,9 +75,10 @@ export async function authenticate(
     }
 
     try {
-        await signIn("credentials", formData);
+        await signIn("credentials",{ formData,redirect:'/'});
         // If successful, reset attempts
         await resetRateLimit(email, ip);
+        
     } catch (error) {
         if (error instanceof AuthError) {
             // Track failed attempt
