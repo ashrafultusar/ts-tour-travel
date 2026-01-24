@@ -21,7 +21,8 @@ const Pagination = ({ currentPage, totalPages, baseUrl, searchParams = {} }: Pag
         return `${baseUrl}?${params.toString()}`;
     };
 
-    if (totalPages <= 1) return null;
+    // Temporarily show pagination even with 1 page for debugging
+    // if (totalPages <= 1) return null;
 
     // Logic to show limited page numbers (e.g., 1, 2, 3 ... 10)
     const getPageNumbers = () => {
@@ -88,8 +89,8 @@ const Pagination = ({ currentPage, totalPages, baseUrl, searchParams = {} }: Pag
                             size="sm"
                             asChild
                             className={`min-w-[40px] ${currentPage === page
-                                    ? "bg-[#1a8a81] hover:bg-[#157a72] text-white font-bold"
-                                    : "hover:bg-[#f0fdfa] hover:text-[#1a8a81]"
+                                ? "bg-[#1a8a81] hover:bg-[#157a72] text-white font-bold"
+                                : "hover:bg-[#f0fdfa] hover:text-[#1a8a81]"
                                 }`}
                         >
                             <Link href={createPageUrl(page)}>

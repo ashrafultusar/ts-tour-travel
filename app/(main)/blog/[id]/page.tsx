@@ -6,15 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from 'next';
 
-export const dynamic = "force-dynamic";
-
 interface BlogDetailsProps {
     params: { id: string };
 }
 
 // SEO Metadata Generation
 export async function generateMetadata({ params }: BlogDetailsProps): Promise<Metadata> {
-    const { blog } = await getBlogById(params.id);
+    const { id } = await params;
+    const { blog } = await getBlogById(id);
+
     if (!blog) return { title: 'Blog Not Found' };
 
     return {
@@ -27,7 +27,9 @@ export async function generateMetadata({ params }: BlogDetailsProps): Promise<Me
 }
 
 const BlogDetailsPage = async ({ params }: BlogDetailsProps) => {
-    const { blog } = await getBlogById(params.id);
+    const { id } = await params;
+    const { blog } = await getBlogById(id);
+
 
     if (!blog) {
         notFound();

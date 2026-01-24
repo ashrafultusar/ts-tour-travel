@@ -5,8 +5,6 @@ import { getBlogs } from "@/lib/data/blog";
 import Link from "next/link";
 import Pagination from "@/components/shared/Pagination";
 
-export const dynamic = "force-dynamic";
-
 const categories = ["All", "Education", "Scholarship", "Visa", "Lifestyle", "Career"];
 
 interface BlogPageProps {
@@ -56,8 +54,8 @@ const Blog = async ({ searchParams }: BlogPageProps) => {
                 key={index}
                 href={cat === "All" ? "/blog" : `/blog?category=${cat}`}
                 className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${category === cat
-                    ? "bg-[#1a8a81] text-white shadow-lg scale-105"
-                    : "bg-gray-50 text-gray-600 hover:bg-[#1a8a81]/10 border border-gray-200"
+                  ? "bg-[#1a8a81] text-white shadow-lg scale-105"
+                  : "bg-gray-50 text-gray-600 hover:bg-[#1a8a81]/10 border border-gray-200"
                   }`}
               >
                 {cat}
@@ -94,9 +92,11 @@ const Blog = async ({ searchParams }: BlogPageProps) => {
                 {/* Link to detail page intentionally removed/placeholder as detail page wasn't in scope but structure implies it exists or will exist. 
                     User asked for filtering/pagination on list page.
                 */}
-                <Button className="w-fit bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] text-white px-8 py-6 rounded-xl text-lg flex gap-2">
-                  Read More <ArrowRight className="w-5 h-5" />
-                </Button>
+                <Link href={`/blog/${featuredPost._id}`}>
+                  <Button className="w-fit bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] text-white px-8 py-6 rounded-xl text-lg flex gap-2">
+                    Read More <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -113,42 +113,43 @@ const Blog = async ({ searchParams }: BlogPageProps) => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500">
               {gridPosts.map((post, index) => (
-                <article
-                  key={post._id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
-                >
-                  <div className="aspect-[16/10] overflow-hidden bg-gray-100">
-                    <img
-                      src={post.image || "https://placehold.co/600x400?text=No+Image"}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="inline-block px-3 py-1 rounded-full bg-[#f0fdfa] text-[#1a8a81] text-xs font-bold border border-[#ccfbf1]">
-                        {post.category}
-                      </span>
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
-                        <Calendar className="w-3 h-3" /> {new Date(post.createdAt).toLocaleDateString()}
-                      </span>
+                <Link key={post._id} href={`/blog/${post._id}`} className="block">
+                  <article
+                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 cursor-pointer"
+                  >
+                    <div className="aspect-[16/10] overflow-hidden bg-gray-100">
+                      <img
+                        src={post.image || "https://placehold.co/600x400?text=No+Image"}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
+                    <div className="p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <span className="inline-block px-3 py-1 rounded-full bg-[#f0fdfa] text-[#1a8a81] text-xs font-bold border border-[#ccfbf1]">
+                          {post.category}
+                        </span>
+                        <span className="text-xs text-gray-400 flex items-center gap-1">
+                          <Calendar className="w-3 h-3" /> {new Date(post.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
 
-                    <h3 className="text-xl font-bold text-[#0d4a7e] mb-3 group-hover:text-[#1a8a81] transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
+                      <h3 className="text-xl font-bold text-[#0d4a7e] mb-3 group-hover:text-[#1a8a81] transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
 
-                    {/* Using raw content substring for excerpt since we don't have explicit excerpt field */}
-                    <div className="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                      {/* Using raw content substring for excerpt since we don't have explicit excerpt field */}
+                      <div className="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: post.content }}></div>
 
-                    <div className="pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
-                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-[#25a18e]" /> {post.readTime} min read</span>
-                      <Button variant="ghost" className="text-[#0d4a7e] hover:text-[#1a8a81] p-0 h-auto font-semibold">
-                        Read more
-                      </Button>
+                      <div className="pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
+                        <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-[#25a18e]" /> {post.readTime} min read</span>
+                        <span className="text-[#0d4a7e] group-hover:text-[#1a8a81] font-semibold flex items-center gap-1">
+                          Read more <ArrowRight className="w-3 h-3" />
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </Link>
               ))}
             </div>
           )}
