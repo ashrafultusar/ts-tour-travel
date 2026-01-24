@@ -24,20 +24,22 @@ const getTeamMembersConfig = unstable_cache(
     { tags: ["professional-team"] }
 );
 
-const getTeamMemberByIdConfig = unstable_cache(
-    async (id: string) => {
-        await connectDB();
-        try {
-            const member = await ProfessionalTeam.findById(id);
-            if (!member) return { success: false, message: "Member not found" };
-            return { success: true, member: serializeDocument(member) };
-        } catch (error) {
-            return { success: false, message: "Invalid ID" };
-        }
-    },
-    ["team-member-details"],
-    { tags: ["professional-team"] }
-);
+const getTeamMemberByIdConfig = async (id: string) => {
+    return await unstable_cache(
+        async () => {
+            await connectDB();
+            try {
+                const member = await ProfessionalTeam.findById(id);
+                if (!member) return { success: false, message: "Member not found" };
+                return { success: true, member: serializeDocument(member) };
+            } catch (error) {
+                return { success: false, message: "Invalid ID" };
+            }
+        },
+        [`team-member-details-${id}`],
+        { tags: ["professional-team", `team-${id}`] }
+    )();
+};
 
 // Request Memoization
 export const getTeamMembers = cache(async (page = 1, limit = 10) => {

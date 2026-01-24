@@ -62,7 +62,7 @@ const getBlogByIdConfig = async (id: string) => {
             }
         },
         [`blog-details-${id}`],
-        { tags: ["blogs"] }
+        { tags: ["blogs", `blog-${id}`] } // Tagged with generic 'blogs' (optionally) and specific ID
     );
 
     return await cachedFn();

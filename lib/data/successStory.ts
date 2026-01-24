@@ -24,20 +24,22 @@ const getSuccessStoriesConfig = unstable_cache(
     { tags: ["success-stories"] }
 );
 
-const getSuccessStoryByIdConfig = unstable_cache(
-    async (id: string) => {
-        await connectDB();
-        try {
-            const story = await SuccessStory.findById(id);
-            if (!story) return { success: false, message: "Story not found" };
-            return { success: true, story: serializeDocument(story) };
-        } catch (error) {
-            return { success: false, message: "Invalid ID" };
-        }
-    },
-    ["success-story-details"],
-    { tags: ["success-stories"] }
-);
+const getSuccessStoryByIdConfig = async (id: string) => {
+    return await unstable_cache(
+        async () => {
+            await connectDB();
+            try {
+                const story = await SuccessStory.findById(id);
+                if (!story) return { success: false, message: "Story not found" };
+                return { success: true, story: serializeDocument(story) };
+            } catch (error) {
+                return { success: false, message: "Invalid ID" };
+            }
+        },
+        [`success-story-details-${id}`],
+        { tags: ["success-stories", `story-${id}`] }
+    )();
+};
 
 // Request Memoization
 export const getSuccessStories = cache(async (page = 1, limit = 10) => {

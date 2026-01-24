@@ -3,7 +3,7 @@
 import { connectDB } from "@/db/dbConfig";
 import { uploadImage } from "@/lib/cloudinary";
 import University from "@/models/University";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 const UniversitySchema = z.object({
@@ -51,7 +51,7 @@ export async function createUniversity(formData: FormData) {
             image: imageUrl,
         });
 
-        revalidatePath("/ts-staff-portal/universities");
+        revalidateTag("universities", "max");
         return { success: true, message: "University created successfully!" };
     } catch (error: any) {
         console.error("Error creating university:", error);
@@ -95,7 +95,8 @@ export async function updateUniversity(id: string, formData: FormData) {
 
         await University.findByIdAndUpdate(id, updateData);
 
-        revalidatePath("/ts-staff-portal/universities");
+        revalidateTag("universities", "max");
+        revalidateTag(`university-${id}`, "max");
         return { success: true, message: "University updated successfully!" };
     } catch (error: any) {
         console.error("Error updating university:", error);
@@ -107,7 +108,8 @@ export async function deleteUniversity(id: string) {
     try {
         await connectDB();
         await University.findByIdAndDelete(id);
-        revalidatePath("/ts-staff-portal/universities");
+        revalidateTag("universities", "max");
+        revalidateTag(`university-${id}`, "max");
         return { success: true, message: "University deleted successfully" };
     } catch (error: any) {
         console.error("Error deleting university:", error);

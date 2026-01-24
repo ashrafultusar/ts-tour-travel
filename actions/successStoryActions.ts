@@ -3,7 +3,7 @@
 import { connectDB } from "@/db/dbConfig";
 import SuccessStory from "@/models/SuccessStory";
 import { uploadImage } from "@/lib/cloudinary";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 const SuccessStorySchema = z.object({
@@ -55,7 +55,7 @@ export async function createSuccessStory(formData: FormData) {
             image: imageUrl,
         });
 
-        revalidatePath("/ts-staff-portal/successStories");
+        revalidateTag("success-stories", "max");
         return { success: true, message: "Success story created successfully!" };
     } catch (error) {
         console.error("Error creating success story:", error);
@@ -108,7 +108,8 @@ export async function updateSuccessStory(id: string, formData: FormData) {
 
         await SuccessStory.findByIdAndUpdate(id, updateData);
 
-        revalidatePath("/ts-staff-portal/successStories");
+        revalidateTag("success-stories", "max");
+        revalidateTag(`story-${id}`, "max");
         return { success: true, message: "Success story updated successfully!" };
     } catch (error) {
         console.error("Error updating success story:", error);
@@ -120,7 +121,8 @@ export async function deleteSuccessStory(id: string) {
     try {
         await connectDB();
         await SuccessStory.findByIdAndDelete(id);
-        revalidatePath("/ts-staff-portal/successStories");
+        revalidateTag("success-stories", "max");
+        revalidateTag(`story-${id}`, "max");
         return { success: true, message: "Success story deleted successfully" };
     } catch (error) {
         console.error("Error deleting success story:", error);

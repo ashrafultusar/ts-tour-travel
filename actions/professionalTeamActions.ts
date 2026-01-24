@@ -3,7 +3,7 @@
 import { connectDB } from "@/db/dbConfig";
 import { uploadImage } from "@/lib/cloudinary";
 import { ProfessionalTeam } from "@/models/ProfessionalTeam";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export async function createTeamMember(data: FormData) {
     try {
@@ -30,7 +30,7 @@ export async function createTeamMember(data: FormData) {
             image: imageUrl,
         });
 
-        revalidatePath("/ts-staff-portal/professionalTeam");
+        revalidateTag("professional-team", "max");
         return { success: true, message: "Member created successfully!" };
     } catch (error: any) {
         console.error("Error creating team member:", error);
@@ -64,7 +64,8 @@ export async function updateTeamMember(id: string, data: FormData) {
 
         await ProfessionalTeam.findByIdAndUpdate(id, updateData);
 
-        revalidatePath("/ts-staff-portal/professionalTeam");
+        revalidateTag("professional-team", "max");
+        revalidateTag(`team-${id}`, "max");
         return { success: true, message: "Member updated successfully!" };
     } catch (error: any) {
         console.error("Error updating team member:", error);
@@ -76,7 +77,8 @@ export async function deleteTeamMember(id: string) {
     try {
         await connectDB();
         await ProfessionalTeam.findByIdAndDelete(id);
-        revalidatePath("/ts-staff-portal/professionalTeam");
+        revalidateTag("professional-team", "max");
+        revalidateTag(`team-${id}`, "max");
         return { success: true, message: "Team member deleted successfully" };
     } catch (error: any) {
         console.error("Error deleting team member:", error);

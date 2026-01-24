@@ -6,8 +6,21 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from 'next';
 
+export const dynamicParams = true; // Allow generating new pages on request
+
 interface BlogDetailsProps {
     params: { id: string };
+}
+
+// Pre-generation of static paths for popular/latest blogs
+export async function generateStaticParams() {
+    // Generate params for the first 5 pages of blogs (approx 50 posts)
+    // This makes the latest blogs instant to load.
+    const { blogs } = await getBlogs(1, 50);
+
+    return blogs.map((blog: any) => ({
+        id: blog._id.toString(),
+    }));
 }
 
 // SEO Metadata Generation
@@ -30,14 +43,11 @@ const BlogDetailsPage = async ({ params }: BlogDetailsProps) => {
     const { id } = await params;
     const { blog } = await getBlogById(id);
 
-
     if (!blog) {
         notFound();
     }
 
     // Fetch related blogs (simple logic: same category, exclude current)
-    // We fetch a few more and filter manually since our data layer doesn't have exclude ID + category query readily exposed publicly 
-    // without making a new function, or we reuse getBlogs with category filter.
     const { blogs: relatedPostsRaw } = await getBlogs(1, 4, undefined, blog.category);
     const relatedPosts = relatedPostsRaw.filter(p => p._id !== blog._id).slice(0, 3);
 
@@ -107,7 +117,6 @@ const BlogDetailsPage = async ({ params }: BlogDetailsProps) => {
 
                 {/* Sidebar / Related */}
                 <aside className="w-full lg:w-1/3 space-y-8 pt-10 lg:pt-0">
-                    {/* Author/CTA Card (Optional placeholder) */}
                     <div className="bg-[#f0fdfa] p-8 rounded-2xl border border-[#ccfbf1]">
                         <h3 className="text-xl font-bold text-[#0d4a7e] mb-2">Need Help with Admission?</h3>
                         <p className="text-gray-600 mb-6">Our experts are ready to guide you through the process.</p>
@@ -123,7 +132,7 @@ const BlogDetailsPage = async ({ params }: BlogDetailsProps) => {
                             <div className="space-y-6">
                                 {relatedPosts.map((post: any) => (
                                     <Link key={post._id} href={`/blog/${post._id}`} className="group flex gap-4 items-start">
-                                        <div className="w-24 h-24 shrink-0 rounded-lg overflow-hidden relative">
+                                        <div className="w-24 h-24 shrink-0 rounded-lg overflow-hidden relative bg-gray-100">
                                             <img
                                                 src={post.image || "https://placehold.co/100"}
                                                 alt={post.title}

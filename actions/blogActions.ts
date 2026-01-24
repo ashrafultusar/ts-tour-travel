@@ -3,7 +3,7 @@
 import { connectDB } from "@/db/dbConfig";
 import Blog from "@/models/Blog";
 import { uploadImage } from "@/lib/cloudinary";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 const BlogSchema = z.object({
@@ -68,7 +68,7 @@ export async function createBlog(formData: FormData) {
             image: imageUrl,
         });
 
-        revalidatePath("/ts-staff-portal/blog");
+        revalidateTag("blogs", "max");
         return { success: true, message: "Blog created successfully!" };
     } catch (error) {
         console.error("Error creating blog:", error);
@@ -120,7 +120,8 @@ export async function updateBlog(id: string, formData: FormData) {
 
         await Blog.findByIdAndUpdate(id, updateData);
 
-        revalidatePath("/ts-staff-portal/blog");
+        revalidateTag("blogs", "max");
+        revalidateTag(`blog-${id}`, "max");
         return { success: true, message: "Blog updated successfully" };
     } catch (error) {
         console.error("Error updating blog:", error);
@@ -132,7 +133,8 @@ export async function deleteBlog(id: string) {
     try {
         await connectDB();
         await Blog.findByIdAndDelete(id);
-        revalidatePath("/ts-staff-portal/blog");
+        revalidateTag("blogs", "max");
+        revalidateTag(`blog-${id}`, "max");
         return { success: true, message: "Blog deleted successfully" };
     } catch (error) {
         console.error("Error deleting blog:", error);

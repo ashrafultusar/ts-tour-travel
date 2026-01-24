@@ -3,7 +3,13 @@ import UniversityFilterSidebar from "@/components/visitor/universities/Universit
 import Link from "next/link";
 import Pagination from "@/components/shared/Pagination";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // Changed to dynamic to ensure searchParams are read correctly in this architecture? 
+// WAIT. If we want Static + On-Demand, we should NOT use force-dynamic.
+// Ideally, searchParams usage forces dynamic rendering in Next.js UNLESS we are okay with it. 
+// Actually, List pages with searchParams usually ARE dynamic. 
+// But the user requested "Use Next.js data cache properly". 
+// If we cache the DATA (unstable_cache), the page can be dynamic shell but data is cached.
+// So let's removing revalidate is correct. Keep it minimal.
 
 const UniversityCard = ({ uni }: { uni: any }) => (
   <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-white border border-gray-100 rounded-lg shadow-sm mb-4 hover:shadow-md transition-shadow group">

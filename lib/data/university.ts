@@ -44,7 +44,7 @@ const getUniversitiesConfig = async (page: number, limit: number, search?: strin
             return { success: true, universities: plainUniversities, total, totalPages: Math.ceil(total / limit) };
         },
         [`universities-list-${page}-${limit}-${search || ""}-${location || ""}-${JSON.stringify(level)}-${JSON.stringify(offerType)}`],
-        { tags: ["university"] }
+        { tags: ["universities"] }
     )();
 };
 
@@ -61,7 +61,7 @@ const getUniversityByIdConfig = async (id: string) => {
             }
         },
         [`university-details-${id}`],
-        { tags: ["university"] }
+        { tags: ["universities", `university-${id}`] }
     )();
 };
 
