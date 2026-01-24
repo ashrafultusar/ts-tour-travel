@@ -9,6 +9,7 @@ interface ImageUploadProps {
     name?: string;
     preview: string | null;
     onImageChange: (file: File | null, preview: string | null) => void;
+    onCompressionStateChange?: (isCompressing: boolean) => void;
     label?: string;
     shape?: "circle" | "rectangle";
     maxSizeMB?: number;
@@ -19,6 +20,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     name = "image",
     preview,
     onImageChange,
+    onCompressionStateChange,
     label = "Upload Image",
     shape = "rectangle",
     maxSizeMB = 1,
@@ -53,13 +55,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
         try {
             setIsCompressing(true);
+            onCompressionStateChange?.(true);
             const toastId = toast.loading("Optimizing image...");
 
             const options = {
                 maxSizeMB: maxSizeMB,
                 maxWidthOrHeight: 1920,
-                useWebWorker: true,
-                initialQuality: 0.8, // ছবির শার্পনেস বজায় রাখার জন্য
+                useWebWorker: false,
+                initialQuality: 0.8,
             };
 
             const compressed = await imageCompression(file, options);
@@ -76,9 +79,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             toast.success("Image optimized!", { id: toastId });
         } catch (err) {
             console.error("Compression Error:", err);
-            toast.error("Compression failed", { id: "compress" });
+            toast.error("Compression failed");
         } finally {
             setIsCompressing(false);
+            onCompressionStateChange?.(false);
         }
     };
 

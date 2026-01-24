@@ -35,12 +35,17 @@ const UniversityForm: React.FC<UniversityFormProps> = ({ mode, initialData }) =>
     const [preview, setPreview] = useState<string | null>(initialData?.image || null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+    const [isCompressing, setIsCompressing] = useState(false);
     const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
     const [selectedLevels, setSelectedLevels] = useState<string[]>(initialData?.level || []);
 
     const handleImageChange = (file: File | null, previewUrl: string | null) => {
         setImageFile(file);
         setPreview(previewUrl);
+    };
+
+    const handleCompressionStateChange = (compressing: boolean) => {
+        setIsCompressing(compressing);
     };
 
     const handleLevelToggle = (level: string) => {
@@ -54,11 +59,26 @@ const UniversityForm: React.FC<UniversityFormProps> = ({ mode, initialData }) =>
         setLoading(true);
         setFieldErrors({});
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData();
 
-        // Add image file if new file was selected
+        // Manually add form fields
+        const nameInput = form.querySelector('[name="universityName"]') as HTMLInputElement;
+        const locationInput = form.querySelector('[name="location"]') as HTMLInputElement;
+        const offerTypeInput = form.querySelector('[name="offerLetterType"]') as HTMLSelectElement;
+        const descInput = form.querySelector('[name="description"]') as HTMLTextAreaElement;
+
+        if (nameInput?.value) formData.append("universityName", nameInput.value);
+        if (locationInput?.value) formData.append("location", locationInput.value);
+        if (offerTypeInput?.value) formData.append("offerLetterType", offerTypeInput.value);
+        if (descInput?.value) formData.append("description", descInput.value);
+
+        // Add selected levels
+        selectedLevels.forEach(level => formData.append("level", level));
+
+        // Add compressed image file if available
         if (imageFile) {
-            formData.set("image", imageFile);
+            formData.append("image", imageFile, imageFile.name);
         }
 
         try {
@@ -93,6 +113,7 @@ const UniversityForm: React.FC<UniversityFormProps> = ({ mode, initialData }) =>
                 name="image"
                 preview={preview}
                 onImageChange={handleImageChange}
+                onCompressionStateChange={handleCompressionStateChange}
                 label="Upload Campus Header Image"
                 shape="rectangle"
             />
@@ -213,18 +234,18 @@ const UniversityForm: React.FC<UniversityFormProps> = ({ mode, initialData }) =>
                 <button
                     type="button"
                     onClick={() => router.push("/ts-staff-portal/universities")}
-                    disabled={loading}
+                    disabled={loading || isCompressing}
                     className="px-8 py-3.5 text-gray-500 font-bold hover:bg-gray-100 rounded-2xl transition disabled:opacity-50"
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    disabled={loading}
-                    className="flex items-center justify-center gap-2 px-10 py-3.5 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all active:scale-95 disabled:bg-blue-400"
+                    disabled={loading || isCompressing}
+                    className="flex items-center justify-center gap-2 px-10 py-3.5 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all active:scale-95 disabled:bg-blue-400 disabled:cursor-not-allowed"
                 >
-                    {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                    {loading ? "Processing..." : mode === "edit" ? "Update University" : "Submit University"}
+                    {loading ? <Loader2 className="animate-spin" size={20} /> : isCompressing ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
+                    {isCompressing ? "Optimizing..." : loading ? "Processing..." : mode === "edit" ? "Update University" : "Submit University"}
                 </button>
             </div>
         </form>

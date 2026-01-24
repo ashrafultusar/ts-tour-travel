@@ -48,7 +48,22 @@ const getUniversitiesConfig = async (page: number, limit: number, search?: strin
     )();
 };
 
-// ... (getUniversityByIdConfig remains same)
+const getUniversityByIdConfig = async (id: string) => {
+    return await unstable_cache(
+        async () => {
+            await connectDB();
+            try {
+                const university = await University.findById(id);
+                if (!university) return { success: false, message: "University not found" };
+                return { success: true, university: serializeDocument(university) };
+            } catch (error) {
+                return { success: false, message: "Invalid ID" };
+            }
+        },
+        [`university-details-${id}`],
+        { tags: ["university"] }
+    )();
+};
 
 // Request Memoization
 export const getUniversities = cache(async (page = 1, limit = 10, search?: string, location?: string, level?: string | string[], offerType?: string | string[]) => {

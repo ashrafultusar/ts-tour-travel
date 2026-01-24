@@ -25,21 +25,38 @@ const SuccessStoryForm: React.FC<SuccessStoryFormProps> = ({ mode, initialData }
     const [preview, setPreview] = useState<string | null>(initialData?.image || null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+    const [isCompressing, setIsCompressing] = useState(false);
 
     const handleImageChange = (file: File | null, previewUrl: string | null) => {
         setImageFile(file);
         setPreview(previewUrl);
     };
 
+    const handleCompressionStateChange = (compressing: boolean) => {
+        setIsCompressing(compressing);
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData();
 
-        // Add image file if new file was selected
+        // Manually add form fields
+        const studentNameInput = form.querySelector('[name="studentName"]') as HTMLInputElement;
+        const subjectInput = form.querySelector('[name="subject"]') as HTMLInputElement;
+        const universityInput = form.querySelector('[name="university"]') as HTMLInputElement;
+        const storyInput = form.querySelector('[name="story"]') as HTMLTextAreaElement;
+
+        if (studentNameInput?.value) formData.append("studentName", studentNameInput.value);
+        if (subjectInput?.value) formData.append("subject", subjectInput.value);
+        if (universityInput?.value) formData.append("university", universityInput.value);
+        if (storyInput?.value) formData.append("story", storyInput.value);
+
+        // Add compressed image file if available
         if (imageFile) {
-            formData.set("image", imageFile);
+            formData.append("image", imageFile, imageFile.name);
         }
 
         try {
@@ -65,6 +82,7 @@ const SuccessStoryForm: React.FC<SuccessStoryFormProps> = ({ mode, initialData }
                 name="image"
                 preview={preview}
                 onImageChange={handleImageChange}
+                onCompressionStateChange={handleCompressionStateChange}
                 label="Upload Student Photo"
                 shape="circle"
             />
@@ -139,18 +157,18 @@ const SuccessStoryForm: React.FC<SuccessStoryFormProps> = ({ mode, initialData }
                 <button
                     type="button"
                     onClick={() => router.push("/ts-staff-portal/successStories")}
-                    disabled={loading}
+                    disabled={loading || isCompressing}
                     className="px-6 py-2.5 text-gray-500 font-medium hover:text-gray-800 transition disabled:opacity-50"
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    disabled={loading}
-                    className="flex items-center gap-2 px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-100 transition active:scale-95 disabled:bg-blue-400"
+                    disabled={loading || isCompressing}
+                    className="flex items-center gap-2 px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-100 transition active:scale-95 disabled:bg-blue-400 disabled:cursor-not-allowed"
                 >
-                    {loading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-                    {loading ? "Saving..." : mode === "edit" ? "Update Story" : "Publish Story"}
+                    {loading ? <Loader2 className="animate-spin" size={18} /> : isCompressing ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                    {isCompressing ? "Optimizing..." : loading ? "Saving..." : mode === "edit" ? "Update Story" : "Publish Story"}
                 </button>
             </div>
         </form>

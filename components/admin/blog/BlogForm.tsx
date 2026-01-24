@@ -33,12 +33,17 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode, initialData }) => {
     const [tags, setTags] = useState<string[]>(initialData?.tags || ["Education", "Visa"]);
     const [tagInput, setTagInput] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isCompressing, setIsCompressing] = useState(false);
     const [preview, setPreview] = useState<string | null>(initialData?.image || null);
     const [imageFile, setImageFile] = useState<File | null>(null);
 
     const handleImageChange = (file: File | null, previewUrl: string | null) => {
         setImageFile(file);
         setPreview(previewUrl);
+    };
+
+    const handleCompressionStateChange = (compressing: boolean) => {
+        setIsCompressing(compressing);
     };
 
     const handleAddTag = () => {
@@ -54,14 +59,34 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode, initialData }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // Prevent submission if image is still compressing
+        const form = e.currentTarget;
+        const hiddenCompressionFlag = form.querySelector('[data-compressing]');
+        if (hiddenCompressionFlag?.getAttribute('data-compressing') === 'true') {
+            return; // Exit if compression is in progress
+        }
+
         setLoading(true);
 
-        const formData = new FormData(e.currentTarget);
+        const formData = new FormData();
+
+        // Manually add all form fields to ensure we have full control
+        const titleInput = form.querySelector('[name="title"]') as HTMLInputElement;
+        const categoryInput = form.querySelector('[name="category"]') as HTMLSelectElement;
+        const readTimeInput = form.querySelector('[name="readTime"]') as HTMLInputElement;
+        const contentInput = form.querySelector('[name="content"]') as HTMLTextAreaElement;
+
+        if (titleInput?.value) formData.append("title", titleInput.value);
+        if (categoryInput?.value) formData.append("category", categoryInput.value);
+        if (readTimeInput?.value) formData.append("readTime", readTimeInput.value);
+        if (contentInput?.value) formData.append("content", contentInput.value);
+
         formData.append("tags", JSON.stringify(tags));
 
-        // Add image file if new file was selected
+        // CRITICAL: Add the compressed image file if available
         if (imageFile) {
-            formData.set("image", imageFile);
+            formData.append("image", imageFile, imageFile.name);
         }
 
         try {
@@ -71,7 +96,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode, initialData }) => {
                     : await createBlog(formData);
 
             const success = handleServerResponse(result, () => {
-                router.refresh(); // Ensure the router cache is refreshed
+                router.refresh();
                 router.push("/ts-staff-portal/blog");
             });
         } catch (error) {
@@ -83,11 +108,15 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode, initialData }) => {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Hidden field to prevent submission during compression */}
+            <input type="hidden" data-compressing={loading ? "false" : "false"} />
+
             {/* Image Upload */}
             <ImageUpload
                 name="image"
                 preview={preview}
                 onImageChange={handleImageChange}
+                onCompressionStateChange={handleCompressionStateChange}
                 label="Upload Featured Image"
                 shape="rectangle"
             />
@@ -204,18 +233,18 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode, initialData }) => {
                 <button
                     type="button"
                     onClick={() => router.push("/ts-staff-portal/blog")}
-                    disabled={loading}
+                    disabled={loading || isCompressing}
                     className="px-6 py-3 text-gray-500 font-medium hover:text-gray-800 transition disabled:opacity-50"
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    disabled={loading}
-                    className="flex items-center gap-2 px-8 py-3 bg-[#1a8a81] text-white font-bold rounded-xl hover:bg-[#146b64] transition-all disabled:opacity-50"
+                    disabled={loading || isCompressing}
+                    className="flex items-center gap-2 px-8 py-3 bg-[#1a8a81] text-white font-bold rounded-xl hover:bg-[#146b64] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {loading ? <Loader2 className="animate-spin" /> : <Send size={18} />}
-                    {loading ? "Saving..." : mode === "edit" ? "Update Blog" : "Publish Blog"}
+                    {loading ? <Loader2 className="animate-spin" /> : isCompressing ? <Loader2 className="animate-spin" /> : <Send size={18} />}
+                    {isCompressing ? "Optimizing..." : loading ? "Saving..." : mode === "edit" ? "Update Blog" : "Publish Blog"}
                 </button>
             </div>
         </form>

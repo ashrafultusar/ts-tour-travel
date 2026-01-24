@@ -26,21 +26,36 @@ const ProfessionalTeamForm: React.FC<ProfessionalTeamFormProps> = ({
     const [preview, setPreview] = useState<string | null>(initialData?.image || null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+    const [isCompressing, setIsCompressing] = useState(false);
 
     const handleImageChange = (file: File | null, previewUrl: string | null) => {
         setImageFile(file);
         setPreview(previewUrl);
     };
 
+    const handleCompressionStateChange = (compressing: boolean) => {
+        setIsCompressing(compressing);
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData();
 
-        // Add image file if new file was selected
+        // Manually add form fields
+        const nameInput = form.querySelector('[name="name"]') as HTMLInputElement;
+        const countryInput = form.querySelector('[name="country"]') as HTMLInputElement;
+        const designationInput = form.querySelector('[name="designation"]') as HTMLInputElement;
+
+        if (nameInput?.value) formData.append("name", nameInput.value);
+        if (countryInput?.value) formData.append("country", countryInput.value);
+        if (designationInput?.value) formData.append("designation", designationInput.value);
+
+        // Add compressed image file if available
         if (imageFile) {
-            formData.set("image", imageFile);
+            formData.append("image", imageFile, imageFile.name);
         }
 
         try {
@@ -66,6 +81,7 @@ const ProfessionalTeamForm: React.FC<ProfessionalTeamFormProps> = ({
                 name="image"
                 preview={preview}
                 onImageChange={handleImageChange}
+                onCompressionStateChange={handleCompressionStateChange}
                 label="Upload Photo"
                 shape="circle"
             />
@@ -128,18 +144,18 @@ const ProfessionalTeamForm: React.FC<ProfessionalTeamFormProps> = ({
                 <button
                     type="button"
                     onClick={() => router.push("/ts-staff-portal/professionalTeam")}
-                    disabled={loading}
+                    disabled={loading || isCompressing}
                     className="px-6 py-2.5 text-gray-500 font-medium hover:text-gray-800 transition disabled:opacity-50"
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    disabled={loading}
-                    className="flex items-center gap-2 px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition disabled:bg-blue-400"
+                    disabled={loading || isCompressing}
+                    className="flex items-center gap-2 px-8 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition disabled:bg-blue-400 disabled:cursor-not-allowed"
                 >
-                    {loading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-                    {loading ? "Saving..." : mode === "edit" ? "Update Member" : "Publish Member"}
+                    {loading ? <Loader2 className="animate-spin" size={18} /> : isCompressing ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                    {isCompressing ? "Optimizing..." : loading ? "Saving..." : mode === "edit" ? "Update Member" : "Publish Member"}
                 </button>
             </div>
         </form>
