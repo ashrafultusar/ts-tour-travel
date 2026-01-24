@@ -4,17 +4,26 @@ import { useState } from "react";
 import { Plus, ArrowLeft, ShieldCheck, UserCog, Trash2, Shield, X } from "lucide-react";
 import RegisterPage from "@/app/(auth)/register/page";
 
+interface Admin {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+
 const AdminManagementPage = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState<number|null>(null);
   
-  const [admins, setAdmins] = useState([
+  const [admins, setAdmins] = useState<Admin[]>([
     { id: 1, name: "Tanvir Ahmed", email: "tanvir@tstour.com", role: "Super Admin", status: "Active" },
     { id: 2, name: "Sarah Khan", email: "sarah@tstour.com", role: "Editor", status: "Active" },
     { id: 3, name: "Rahat Kabir", email: "rahat@tstour.com", role: "Moderator", status: "Inactive" },
   ]);
 
-  const updateRole = (id, newRole) => {
+  const updateRole = (id:number, newRole:string) => {
     setAdmins(admins.map(admin => admin.id === id ? { ...admin, role: newRole } : admin));
     setEditingId(null);
   };

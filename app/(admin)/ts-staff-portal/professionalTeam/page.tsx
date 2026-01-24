@@ -11,6 +11,7 @@ import {
   Flag,
 } from "lucide-react";
 import CreateProfessionalTeam from "@/components/admin/professionalTeam/CreateProfessionalTeam";
+import Image from "next/image";
 
 const ProfessionalTeam = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -76,7 +77,7 @@ const ProfessionalTeam = () => {
             </>
           )}
         </button>
-      </div>
+      </div> 
 
       <hr className="mb-8 border-gray-200" />
 
@@ -93,9 +94,11 @@ const ProfessionalTeam = () => {
               {/* Card Image Header */}
               <div className="relative h-32 bg-gradient-to-r from-blue-600 to-indigo-700">
                 <div className="absolute -bottom-10 left-6">
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
+                    width={100}
+                    height={100}
                     className="h-20 w-20 rounded-2xl border-4 border-white object-cover shadow-md"
                   />
                 </div>
