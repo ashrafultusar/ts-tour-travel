@@ -23,19 +23,19 @@ const universities = [
     image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400",
   },
   {
-    name: "UCSI University",
+    name: "SEGi University",
     ranking: "QS World University Rankings #300",
     location: "Kuala Lumpur, Malaysia",
     image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1000",
   },
   {
-    name: "Universiti Teknologi PETRONAS (UTP)",
+    name: "Asia Pacific University of Technology & Innovation (APU)",
     ranking: "QS World University Rankings #307",
     location: "Seri Iskandar, Perak",
     image: "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&q=80&w=1000",
   },
   {
-    name: "Sunway University",
+    name: "MAHSA University",
     ranking: "QS World University Rankings #539",
     location: "Bandar Sunway, Selangor",
     image: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400",
