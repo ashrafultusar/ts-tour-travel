@@ -26,10 +26,30 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook,  href: "https://www.facebook.com/tsstudysolutionmalaysia", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Youtube, href: "#", label: "YouTube" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    { 
+      icon: Facebook, 
+      href: "https://www.facebook.com/tsstudysolutionmalaysia", 
+      label: "Facebook",
+      brandClass: "bg-[#1877F2] text-white" // Facebook Blue
+    },
+    { 
+      icon: Instagram, 
+      href: "#", 
+      label: "Instagram",
+      brandClass: "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white" // Instagram Gradient
+    },
+    { 
+      icon: Youtube, 
+      href: "#", 
+      label: "YouTube",
+      brandClass: "bg-[#FF0000] text-white" // YouTube Red
+    },
+    { 
+      icon: Linkedin, 
+      href: "#", 
+      label: "LinkedIn",
+      brandClass: "bg-[#0077B5] text-white" // LinkedIn Blue
+    },
   ];
 
   return (
@@ -38,7 +58,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="space-y-5">
-          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center overflow-hidden">
                 <span className="text-white bg-[#1665a1]/50 px-2 py-0.5 font-extrabold text-xl tracking-tighter">
                   TS
@@ -56,10 +76,11 @@ const Footer = () => {
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
-                target="_blank"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   key={social.label}
                   href={social.href}
-                  className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-95 ${social.brandClass}`}
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -69,6 +90,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
+          {/* ... বাকি কোড একই থাকবে ... */}
           <div>
             <h3 className="text-lg font-bold text-background mb-5">
               Quick Links
@@ -87,7 +109,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
             <h3 className="text-lg font-bold text-background mb-5">
               Our Services
@@ -101,7 +122,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h3 className="text-lg font-bold text-background mb-5">Contact</h3>
             <ul className="space-y-4">
@@ -130,18 +150,8 @@ const Footer = () => {
               © 2025 EduVisa BD. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <a
-                href="#"
-                className="text-background/40 hover:text-background transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-background/40 hover:text-background transition-colors"
-              >
-                Terms of Service
-              </a>
+              <a href="#" className="text-background/40 hover:text-background">Privacy Policy</a>
+              <a href="#" className="text-background/40 hover:text-background">Terms of Service</a>
             </div>
           </div>
         </div>
