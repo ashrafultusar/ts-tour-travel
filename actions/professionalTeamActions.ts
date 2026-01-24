@@ -4,14 +4,15 @@ import { connectDB } from "@/db/dbConfig";
 import { uploadImage } from "@/lib/cloudinary";
 import { ProfessionalTeam } from "@/models/ProfessionalTeam";
 import { revalidateTag } from "next/cache";
+import sanitize from "mongo-sanitize";
 
 export async function createTeamMember(data: FormData) {
     try {
         await connectDB();
 
-        const name = data.get("name") as string;
-        const country = data.get("country") as string;
-        const designation = data.get("designation") as string;
+        const name = sanitize(data.get("name") as string);
+        const country = sanitize(data.get("country") as string);
+        const designation = sanitize(data.get("designation") as string);
         const imageFile = data.get("image") as File | null;
 
         if (!name || !country || !designation) {
@@ -42,9 +43,9 @@ export async function updateTeamMember(id: string, data: FormData) {
     try {
         await connectDB();
 
-        const name = data.get("name") as string;
-        const country = data.get("country") as string;
-        const designation = data.get("designation") as string;
+        const name = sanitize(data.get("name") as string);
+        const country = sanitize(data.get("country") as string);
+        const designation = sanitize(data.get("designation") as string);
         const imageFile = data.get("image") as File | null;
 
         if (!name || !country || !designation) {

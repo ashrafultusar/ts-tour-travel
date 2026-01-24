@@ -1,10 +1,12 @@
 "use server";
 
 import { connectDB } from "@/db/dbConfig";
+import { z } from "zod";
+import sanitize from "mongo-sanitize";
+
 import SuccessStory from "@/models/SuccessStory";
 import { uploadImage } from "@/lib/cloudinary";
 import { revalidateTag } from "next/cache";
-import { z } from "zod";
 
 const SuccessStorySchema = z.object({
     studentName: z.string().min(2, "Name must be at least 2 characters"),
@@ -17,12 +19,12 @@ export async function createSuccessStory(formData: FormData) {
     try {
         await connectDB();
 
-        const rawData = {
+        const rawData = sanitize({
             studentName: formData.get("studentName"),
             subject: formData.get("subject"),
             university: formData.get("university"),
             story: formData.get("story"),
-        };
+        });
 
         const validatedFields = SuccessStorySchema.safeParse(rawData);
 
@@ -67,12 +69,12 @@ export async function updateSuccessStory(id: string, formData: FormData) {
     try {
         await connectDB();
 
-        const rawData = {
+        const rawData = sanitize({
             studentName: formData.get("studentName"),
             subject: formData.get("subject"),
             university: formData.get("university"),
             story: formData.get("story"),
-        };
+        });
 
         const validatedFields = SuccessStorySchema.safeParse(rawData);
 

@@ -5,6 +5,7 @@ import { uploadImage } from "@/lib/cloudinary";
 import University from "@/models/University";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
+import sanitize from "mongo-sanitize";
 
 const UniversitySchema = z.object({
     universityName: z.string().min(3, "University name minimum 3 characters"),
@@ -18,13 +19,13 @@ export async function createUniversity(formData: FormData) {
     try {
         await connectDB();
 
-        const rawData = {
+        const rawData = sanitize({
             universityName: formData.get("universityName"),
             location: formData.get("location"),
             level: formData.getAll("level"),
             offerLetterType: formData.get("offerLetterType"),
             description: formData.get("description"),
-        };
+        });
 
         const validatedFields = UniversitySchema.safeParse(rawData);
 
@@ -63,13 +64,13 @@ export async function updateUniversity(id: string, formData: FormData) {
     try {
         await connectDB();
 
-        const rawData = {
+        const rawData = sanitize({
             universityName: formData.get("universityName"),
             location: formData.get("location"),
             level: formData.getAll("level"),
             offerLetterType: formData.get("offerLetterType"),
             description: formData.get("description"),
-        };
+        });
 
         const validatedFields = UniversitySchema.safeParse(rawData);
 

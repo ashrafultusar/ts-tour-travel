@@ -14,11 +14,23 @@ export const authConfig = {
       } else if (isLoggedIn) {
         // Redirect logged-in users away from auth pages
         if (nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/register")) {
-            return Response.redirect(new URL("/profile", nextUrl));
+          return Response.redirect(new URL("/profile", nextUrl));
         }
       }
       return true;
     },
   },
   providers: [], // Add providers with an empty array for now
+  useSecureCookies: process.env.NODE_ENV === "production",
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
 } satisfies NextAuthConfig;

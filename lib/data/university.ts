@@ -34,6 +34,7 @@ const getUniversitiesConfig = async (page: number, limit: number, search?: strin
             }
 
             const universities = await University.find(query)
+                .select("-description")
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);

@@ -6,9 +6,10 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import { connectDB } from "@/db/dbConfig";
-import LoginAttempt from "@/models/LoginAttempt";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import sanitize from "mongo-sanitize";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 const RegisterSchema = z.object({
     name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -22,8 +23,11 @@ const RegisterSchema = z.object({
 
 export async function register(prevState: any, formData: FormData) {
     try {
-        const data = Object.fromEntries(formData.entries());
-        const validatedFields = RegisterSchema.safeParse(data);
+        const rawData = Object.fromEntries(formData.entries());
+        // Sanitize input to prevent NoSQL injection
+        const sanitizedData = sanitize(rawData);
+
+        const validatedFields = RegisterSchema.safeParse(sanitizedData);
 
         if (!validatedFields.success) {
             return {
@@ -64,26 +68,25 @@ export async function authenticate(
     formData: FormData,
 ) {
     const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
-    const email = formData.get("email") as string;
+    // Sanitize email input
+    const email = sanitize(formData.get("email") as string);
+    const password = sanitize(formData.get("password") as string);
 
-    await connectDB();
+    // Check Rate Limit (In-Memory)
+    const limitKey = `${ip}_${email}`;
+    const limitResult = await checkRateLimit(limitKey);
 
-    // 1. Check Rate Limit
-    const limitResult = await checkRateLimit(email, ip);
     if (!limitResult.allowed) {
         return `Too many attempts. Please try again later.`;
     }
 
     try {
-        await signIn("credentials",{ formData,redirect:'/'});
-        // If successful, reset attempts
-        await resetRateLimit(email, ip);
-        
+        await connectDB();
+        await signIn("credentials", { email, password, redirect: false });
+        // Redirect to profile after successful login
+        redirect("/profile");
     } catch (error) {
         if (error instanceof AuthError) {
-            // Track failed attempt
-            await incrementRateLimit(email, ip);
-
             switch (error.type) {
                 case "CredentialsSignin":
                     return "Invalid credentials.";
@@ -91,49 +94,19 @@ export async function authenticate(
                     return "Something went wrong.";
             }
         }
-        // Rethrow redirect error
         throw error;
     }
-}
+    // If signIn doesn't throw, it was successful (or redirected depending on config).
+    // If we want to force redirect after success:
+    // redirect('/'); 
+    // But since this is a server action returning a state string in UI, 
+    // the client component usually handles the redirect or the signIn does it.
+    // The original code was `await signIn("credentials",{ formData,redirect:'/'});`
+    // Let's correct this to boolean or string URL if supported, usually it's `redirectTo`.
+    // NextAuth v5 `signIn` second arg is options.
 
-async function checkRateLimit(email: string, ip: string) {
-    const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
-    const MAX_ATTEMPTS = 5;
-
-    const attempt = await LoginAttempt.findOne({
-        $or: [{ email }, { ip }]
-    }).sort({ lastAttempt: -1 });
-
-    if (!attempt) return { allowed: true };
-
-    const timePassed = Date.now() - new Date(attempt.lastAttempt).getTime();
-
-    if (timePassed < WINDOW_MS && attempt.attempts >= MAX_ATTEMPTS) {
-        return { allowed: false };
-    }
-
-    // Reset if window passed
-    if (timePassed > WINDOW_MS) {
-        await LoginAttempt.deleteMany({ $or: [{ email }, { ip }] });
-        return { allowed: true };
-    }
-
-    return { allowed: true };
-}
-
-async function incrementRateLimit(email: string, ip: string) {
-    const attempt = await LoginAttempt.findOne({ $or: [{ email }, { ip }] });
-    if (attempt) {
-        attempt.attempts += 1;
-        attempt.lastAttempt = new Date();
-        await attempt.save();
-    } else {
-        await LoginAttempt.create({ email, ip, attempts: 1 });
-    }
-}
-
-async function resetRateLimit(email: string, ip: string) {
-    await LoginAttempt.deleteMany({ $or: [{ email }, { ip }] });
+    // Correct usage:
+    // await signIn("credentials", formData); 
 }
 
 export async function logout() {

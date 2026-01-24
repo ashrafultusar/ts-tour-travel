@@ -1,10 +1,12 @@
 "use server";
 
 import { connectDB } from "@/db/dbConfig";
+import { z } from "zod";
+import sanitize from "mongo-sanitize";
+
 import Blog from "@/models/Blog";
 import { uploadImage } from "@/lib/cloudinary";
 import { revalidateTag } from "next/cache";
-import { z } from "zod";
 
 const BlogSchema = z.object({
     title: z.string().min(5, "Title must be at least 5 characters"),
@@ -20,12 +22,12 @@ export async function createBlog(formData: FormData) {
         const tagsString = formData.get("tags") as string;
         const tags = tagsString ? JSON.parse(tagsString) : [];
 
-        const rawData = {
+        const rawData = sanitize({
             title: formData.get("title"),
             category: formData.get("category"),
             readTime: formData.get("readTime"),
             content: formData.get("content"),
-        };
+        });
 
         const validatedFields = BlogSchema.safeParse(rawData);
 
@@ -84,12 +86,12 @@ export async function updateBlog(id: string, formData: FormData) {
         const tagsString = formData.get("tags") as string;
         const tags = tagsString ? JSON.parse(tagsString) : undefined;
 
-        const rawData = {
+        const rawData = sanitize({
             title: formData.get("title"),
             category: formData.get("category"),
             readTime: formData.get("readTime"),
             content: formData.get("content"),
-        };
+        });
 
         // Validation
         const validatedFields = BlogSchema.safeParse(rawData);
