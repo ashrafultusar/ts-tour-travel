@@ -1,124 +1,103 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Plus, ArrowLeft, Edit, Trash2, Calendar, FileText } from 'lucide-react';
+import { Plus, ArrowLeft, Edit, Trash2, Calendar, FileText, ChevronRight } from 'lucide-react';
 import CreateBlog from '@/components/admin/blog/CreateBlog';
 
 const BlogAdminPage = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   const posts = [
-    { id: 1, title: "প্রথম ব্লগ পোস্ট", date: "2024-05-20" },
-    { id: 2, title: "ভিসা প্রসেসিং টিপস", date: "2024-05-18" },
+    { id: 1, title: "প্রথম ব্লগ পোস্ট", date: "2024-05-20", category: "Education" },
+    { id: 2, title: "ভিসা প্রসেসিং টিপস", date: "2024-05-18", category: "Visa Guide" },
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-      {/* হেডার সেকশন - Responsive Flex */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <FileText className="text-blue-600" size={24} />
             {showCreateForm ? "নতুন ব্লগ তৈরি করুন" : "সকল ব্লগ পোস্ট"}
           </h1>
-          <p className="text-gray-500 text-sm">ব্লগ ম্যানেজমেন্ট প্যানেল</p>
+          <p className="text-gray-500 text-sm mt-1">ব্লগ ম্যানেজমেন্ট প্যানেল</p>
         </div>
 
         <button
           onClick={() => setShowCreateForm(!showCreateForm)}
-          className={`w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all cursor-pointer shadow-sm ${
+          className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-semibold transition-all shadow-sm active:scale-95 ${
             showCreateForm 
-              ? "bg-gray-100 text-gray-700 hover:bg-gray-200" 
-              : "bg-blue-600 text-white hover:bg-blue-700 active:scale-95"
+              ? "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" 
+              : "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-100"
           }`}
         >
           {showCreateForm ? (
-            <><ArrowLeft size={18} /> Go Back</>
+            <><ArrowLeft size={18} /> ফিরে যান</>
           ) : (
-            <><Plus size={18} /> New Post</>
+            <><Plus size={18} /> নতুন পোস্ট</>
           )}
         </button>
       </div>
 
       <hr className="mb-8 border-gray-100" />
 
-      {/* কন্ডিশনাল রেন্ডারিং */}
+      {/* Main Content Area */}
       {showCreateForm ? (
-        <div className="bg-white p-4 sm:p-8 rounded-2xl shadow-sm border border-gray-100 transition-all">
+        <div className="bg-white p-4 sm:p-8 rounded-2xl shadow-sm border border-gray-100 animate-in fade-in duration-300">
           <CreateBlog />
         </div>
       ) : (
         <div className="space-y-4">
-          
-          {/* --- Mobile View (Cards) --- */}
-          <div className="grid grid-cols-1 gap-4 md:hidden">
-            {posts.map((post) => (
-              <div key={post.id} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <div className="flex items-start justify-between">
-                  <div className="flex gap-3">
-                    <div className="bg-blue-50 p-2 rounded-lg">
-                      <FileText size={20} className="text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-gray-800 font-bold leading-tight">{post.title}</h3>
-                      <div className="flex items-center text-gray-400 text-xs mt-1">
-                        <Calendar size={14} className="mr-1" /> {post.date}
+          {posts.map((post) => (
+            <div 
+              key={post.id} 
+              className="bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all group"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                {/* Left Side: Info */}
+                <div className="flex items-center gap-4">
+                  <div className="hidden sm:flex bg-blue-50 w-12 h-12 rounded-xl items-center justify-center text-blue-600 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <FileText size={22} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-gray-800 font-bold text-base sm:text-lg leading-tight truncate">
+                      {post.title}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1.5">
+                      <div className="flex items-center text-gray-400 text-xs sm:text-sm">
+                        <Calendar size={14} className="mr-1.5 shrink-0" />
+                        {post.date}
                       </div>
+                      <span className="bg-gray-50 text-gray-500 text-[10px] sm:text-xs px-2 py-0.5 rounded-md font-medium uppercase tracking-wider">
+                        {post.category}
+                      </span>
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2 mt-5 pt-4 border-t border-gray-50">
-                  <button className="flex-1 flex items-center justify-center gap-2 bg-blue-50 text-blue-600 py-2.5 rounded-xl text-sm font-semibold">
-                    <Edit size={16} /> Edit
+
+                {/* Right Side: Actions */}
+                <div className="flex items-center justify-end gap-2 pt-3 sm:pt-0 border-t sm:border-none border-gray-50">
+                  <button className="flex items-center justify-center gap-2 px-4 py-2 sm:p-2.5 text-blue-600 bg-blue-50 sm:bg-transparent hover:bg-blue-50 rounded-xl transition-all flex-1 sm:flex-none">
+                    <Edit size={18} className="shrink-0" />
+                    <span className="sm:hidden text-sm font-semibold">Edit</span>
                   </button>
-                  <button className="flex-1 flex items-center justify-center gap-2 bg-red-50 text-red-500 py-2.5 rounded-xl text-sm font-semibold">
-                    <Trash2 size={16} /> Delete
+                  <button className="flex items-center justify-center gap-2 px-4 py-2 sm:p-2.5 text-red-500 bg-red-50 sm:bg-transparent hover:bg-red-50 rounded-xl transition-all flex-1 sm:flex-none">
+                    <Trash2 size={18} className="shrink-0" />
+                    <span className="sm:hidden text-sm font-semibold">Delete</span>
                   </button>
+                  <div className="hidden sm:block text-gray-300 ml-2">
+                    <ChevronRight size={20} />
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* --- Tablet & Desktop View (Table) --- */}
-          <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-gray-50/50 border-b border-gray-100">
-                <tr>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600 tracking-wider">শিরোনাম</th>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600 tracking-wider">তারিখ</th>
-                  <th className="px-6 py-4 text-sm font-semibold text-gray-600 tracking-wider text-right">অ্যাকশন</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {posts.map((post) => (
-                  <tr key={post.id} className="hover:bg-gray-50/50 transition-colors group">
-                    <td className="px-6 py-4">
-                      <span className="text-gray-800 font-medium group-hover:text-blue-600 transition-colors">
-                        {post.title}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-gray-500 text-sm">{post.date}</td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex justify-end gap-2">
-                        <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all">
-                          <Edit size={18} />
-                        </button>
-                        <button className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            </div>
+          ))}
 
           {/* Empty State */}
           {posts.length === 0 && (
-            <div className="p-16 text-center bg-white rounded-2xl border-2 border-dashed border-gray-100">
-              <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="text-gray-300" size={32} />
-              </div>
+            <div className="py-20 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+              <FileText className="mx-auto text-gray-300 mb-4" size={48} />
               <p className="text-gray-400 font-medium">কোনো পোস্ট পাওয়া যায়নি।</p>
             </div>
           )}
