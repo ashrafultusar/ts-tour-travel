@@ -71,7 +71,9 @@ export default function RegisterPage() {
                     placeholder="Full name"
                   />
                 </div>
-                {state?.error?.name && <p className="text-sm text-red-500">{state.error.name}</p>}
+                {state?.error?.name && (
+                  <p className="text-sm text-red-500">{state.error.name}</p>
+                )}
               </div>
 
               {/* Email */}
@@ -96,7 +98,9 @@ export default function RegisterPage() {
                     placeholder="you@example.com"
                   />
                 </div>
-                {state?.error?.email && <p className="text-sm text-red-500">{state.error.email}</p>}
+                {state?.error?.email && (
+                  <p className="text-sm text-red-500">{state.error.email}</p>
+                )}
               </div>
 
               {/* Password */}
@@ -132,7 +136,9 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
-                {state?.error?.password && <p className="text-sm text-red-500">{state.error.password}</p>}
+                {state?.error?.password && (
+                  <p className="text-sm text-red-500">{state.error.password}</p>
+                )}
               </div>
 
               {/* Confirm Password */}
@@ -168,7 +174,11 @@ export default function RegisterPage() {
                     )}
                   </button>
                 </div>
-                {state?.error?.confirmPassword && <p className="text-sm text-red-500">{state.error.confirmPassword}</p>}
+                {state?.error?.confirmPassword && (
+                  <p className="text-sm text-red-500">
+                    {state.error.confirmPassword}
+                  </p>
+                )}
               </div>
 
               {/* Terms checkbox */}
@@ -214,7 +224,7 @@ export default function RegisterPage() {
             >
               {state?.message && (
                 <>
-                  <p className="text-sm text-red-500">{state.message}</p>
+                  <p className="text-sm text-blue-500">{state.message}</p>
                 </>
               )}
             </div>
