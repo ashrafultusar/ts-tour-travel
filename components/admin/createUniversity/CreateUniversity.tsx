@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Camera, Save, X, Info } from "lucide-react";
+import { Camera, Save, X, } from "lucide-react";
 
 interface Props {
   onCancel: () => void;

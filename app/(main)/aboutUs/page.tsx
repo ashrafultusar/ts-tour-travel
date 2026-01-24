@@ -1,29 +1,8 @@
 import React from "react";
-import Image from "next/image"; // Using Next.js Image component
 import { Target, Award, Heart, CheckCircle2 } from "lucide-react";
+import { getTeamMembers } from "@/lib/data/team";
 
-const teamMembers = [
-  {
-    name: "Ahmed Hassan",
-    role: "Founder & CEO",
-    image: "https://i.pravatar.cc/300?img=60",
-  },
-  {
-    name: "Farhana Rahman",
-    role: "Head of Operations",
-    image: "https://i.pravatar.cc/300?img=47",
-  },
-  {
-    name: "Karim Uddin",
-    role: "Visa Consultant",
-    image: "https://i.pravatar.cc/300?img=53",
-  },
-  {
-    name: "Najma Akter",
-    role: "Student Counselor",
-    image: "https://i.pravatar.cc/300?img=44",
-  },
-];
+export const dynamic = "force-dynamic";
 
 const values = [
   {
@@ -51,10 +30,12 @@ const milestones = [
   { year: "2023", title: "500+ Students", description: "Record number of successful admissions." },
 ];
 
-const AboutUs = () => {
+const AboutUs = async () => {
+  const { members } = await getTeamMembers(1, 100); // Fetch all members
+
   return (
     <div className="overflow-hidden bg-[#f8fafc]">
-      
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]">
         <div className="container mx-auto px-4 text-center">
@@ -159,29 +140,41 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Team Section - Removed Grayscale/Hover Effect */}
+      {/* Team Section */}
       <section className="py-24 bg-[#f1f5f9]">
         <div className="container mx-auto px-4 text-center">
           <span className="text-[#1a8a81] font-medium uppercase text-sm tracking-widest">Our People</span>
           <h2 className="text-4xl font-bold text-[#0d4a7e] mt-2 mb-16">Meet Our Professional Team</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="bg-white p-4 rounded-2xl shadow-sm">
-                <div className="aspect-[4/5] overflow-hidden rounded-xl mb-6">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
+
+          {members.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {members.map((member: any) => (
+                <div key={member._id} className="bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-gray-100">
+                    {member.image ? (
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
+                        No Image
+                      </div>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-bold text-[#0d4a7e]">{member.name}</h3>
+                  <p className="text-[#1a8a81] font-semibold text-sm mt-1">{member.designation}</p>
+                  <p className="text-xs text-gray-400 mt-2">{member.country}</p>
                 </div>
-                <h3 className="text-xl font-bold text-[#0d4a7e]">{member.name}</h3>
-                <p className="text-[#1a8a81] font-semibold text-sm mt-1">{member.role}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-gray-500">No team members found.</div>
+          )}
         </div>
       </section>
-      
+
     </div>
   );
 };

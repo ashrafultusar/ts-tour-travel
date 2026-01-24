@@ -8,4 +8,4 @@ const TeamSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export const ProfessionalTeam = models.Team || model("ProfessionalTeam", TeamSchema);
+export const ProfessionalTeam = models.ProfessionalTeam || model("ProfessionalTeam", TeamSchema);

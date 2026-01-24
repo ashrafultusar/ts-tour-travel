@@ -1,0 +1,85 @@
+"use server";
+
+import { connectDB } from "@/db/dbConfig";
+import { uploadImage } from "@/lib/cloudinary";
+import { ProfessionalTeam } from "@/models/ProfessionalTeam";
+import { revalidatePath } from "next/cache";
+
+export async function createTeamMember(data: FormData) {
+    try {
+        await connectDB();
+
+        const name = data.get("name") as string;
+        const country = data.get("country") as string;
+        const designation = data.get("designation") as string;
+        const imageFile = data.get("image") as File | null;
+
+        if (!name || !country || !designation) {
+            return { success: false, message: "All fields are required!" };
+        }
+
+        let imageUrl = "";
+        if (imageFile && imageFile.size > 0) {
+            imageUrl = await uploadImage(imageFile, "team_members");
+        }
+
+        await ProfessionalTeam.create({
+            name,
+            country,
+            designation,
+            image: imageUrl,
+        });
+
+        revalidatePath("/ts-staff-portal/professionalTeam");
+        return { success: true, message: "Member created successfully!" };
+    } catch (error: any) {
+        console.error("Error creating team member:", error);
+        return { success: false, message: error.message || "Failed to save data" };
+    }
+}
+
+export async function updateTeamMember(id: string, data: FormData) {
+    try {
+        await connectDB();
+
+        const name = data.get("name") as string;
+        const country = data.get("country") as string;
+        const designation = data.get("designation") as string;
+        const imageFile = data.get("image") as File | null;
+
+        if (!name || !country || !designation) {
+            return { success: false, message: "All fields are required!" };
+        }
+
+        const updateData: any = {
+            name,
+            country,
+            designation,
+        };
+
+        if (imageFile && imageFile.size > 0) {
+            const imageUrl = await uploadImage(imageFile, "team_members");
+            updateData.image = imageUrl;
+        }
+
+        await ProfessionalTeam.findByIdAndUpdate(id, updateData);
+
+        revalidatePath("/ts-staff-portal/professionalTeam");
+        return { success: true, message: "Member updated successfully!" };
+    } catch (error: any) {
+        console.error("Error updating team member:", error);
+        return { success: false, message: error.message || "Failed to update data" };
+    }
+}
+
+export async function deleteTeamMember(id: string) {
+    try {
+        await connectDB();
+        await ProfessionalTeam.findByIdAndDelete(id);
+        revalidatePath("/ts-staff-portal/professionalTeam");
+        return { success: true, message: "Team member deleted successfully" };
+    } catch (error: any) {
+        console.error("Error deleting team member:", error);
+        return { success: false, message: "Failed to delete team member" };
+    }
+}
