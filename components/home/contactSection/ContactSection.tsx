@@ -6,22 +6,23 @@ const ContactSection = () => {
     {
       title: "Bangladesh Office",
       address:
-        "Darus-Salam Arcade, 6th Floor (5th lift), 14 Purana Paltan, Dhaka 1000",
-      phones: ["+880 1961-656769", "+880 1618-660577"],
-      email: "enquiry@nhglobaleducation",
+        "House No:67,Shahid Moslem Uddin Chattrabas Goli,Central Road,Paira Chattar, Rangpur, Bangladesh, 5400",
+      phones: ["01341-462233"],
+      email: "info@tstourtravels.com",
       hours: "Sat - Thu: 10:00 AM - 6:00 PM",
       mapSrc:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.5350383378544!2d90.41005887589574!3d23.72828038961726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8582f7df549%3A0x48ff1750793234c1!2sDarus%20Salam%20Arcade!5e0!3m2!1sen!2sbd!4v1700000000000",
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.6104181539167!2d89.2499675869332!3d25.7503939507081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e32dfc99c1f351%3A0xad69d303fb9f0b89!2sCentral%20Road%20%26%20Paira%20Chattar%2C%20Rangpur!5e0!3m2!1sen!2sbd!4v1769272167743!5m2!1sen!2sbd",
     },
     {
       title: "Malaysia Office",
       address:
-        "Suite 32-01, 32nd Floor, Menara Keck Seng, 203 Jalan Bukit Bintang, 55100 KL",
-      phones: ["+60 11-6117 5133", "+60 11-6178 5257"],
-      email: "enquiry@nhglobaleducation",
+        "Mercu Summer Suites, 8 Jalan Cendana 50250, Kuala Lumpur, Malaysia",
+      phones: ["01341-462233"],
+      email: "info@tstourtravels.com",
       hours: "Mon - Sat: 10:00 AM - 6:00 PM",
+      
       mapSrc:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.797651461034!2d101.7124598758441!3d3.148024253157757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362c4bf8c6bb%3A0xd7413752f356fe12!2sMenara%20Keck%20Seng!5e0!3m2!1sen!2sbd!4v1769187813621!5m2!1sen!2sbd",
+        "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d63740.1319365875!2d101.706871!3d3.158312!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37d654405935%3A0x2eb296a9174f7be6!2sMercu%20Summer%20Suites%20Kuala%20Lumpur%20Bukit%20Bintang%20by%20Classy!5e0!3m2!1sen!2sus!4v1769272439296!5m2!1sen!2sus",
     },
   ];
 

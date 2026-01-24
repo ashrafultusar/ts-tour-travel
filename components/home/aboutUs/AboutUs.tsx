@@ -51,7 +51,7 @@ const AboutUs = () => {
             Our Services
           </span>
           <h2 className="text-3xl md:text-5xl font-black mb-6 text-[#2D3142]">
-            One-Stop Solution <span className="text-[#14919B]">For All Your Needs</span>
+            One-Roof Solution <span className="text-[#14919B]">For All Your Needs</span>
           </h2>
           <p className="text-gray-500 text-lg font-medium">
             We are dedicated to supporting your dreams of studying or traveling abroad with expert guidance.

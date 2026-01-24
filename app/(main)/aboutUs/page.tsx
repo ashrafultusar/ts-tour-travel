@@ -165,7 +165,7 @@ const AboutUs = () => {
           <span className="text-[#1a8a81] font-medium uppercase text-sm tracking-widest">Our People</span>
           <h2 className="text-4xl font-bold text-[#0d4a7e] mt-2 mb-16">Meet Our Professional Team</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
+            {teamMembers?.map((member, index) => (
               <div key={index} className="bg-white p-4 rounded-2xl shadow-sm">
                 <div className="aspect-[4/5] overflow-hidden rounded-xl mb-6">
                   <img
