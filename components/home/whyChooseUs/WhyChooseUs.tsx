@@ -77,7 +77,7 @@ const WhyChooseUs = () => {
                 <div className="text-[10px] lg:text-xs font-bold text-gray-400 uppercase tracking-tighter">Successful Visas</div>
               </div>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">
-                <div className="text-3xl lg:text-4xl font-black text-[#14919B] mb-1">20+</div>
+                <div className="text-3xl lg:text-4xl font-black text-[#14919B] mb-1">41+</div>
                 <div className="text-[10px] lg:text-xs font-bold text-gray-400 uppercase tracking-tighter">Universities</div>
               </div>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center">

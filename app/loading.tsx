@@ -20,10 +20,10 @@ export default function Loading() {
         <div className="relative h-20 w-20">
           {/* Outer ring */}
           <div className="absolute inset-0 rounded-full border-4 border-indigo-400/30 animate-spin animation-duration-[1.2s]" />
-          
+
           {/* Middle ring - reverse direction */}
           <div className="absolute inset-2 rounded-full border-4 border-purple-400/40 animate-spin direction-[reverse] animation-duration-[1.8s]" />
-          
+
           {/* Inner spinner */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="h-8 w-8 rounded-full border-4 border-t-indigo-500 border-r-transparent border-b-purple-500 border-l-transparent animate-spin animation-duration-[0.9s]" />

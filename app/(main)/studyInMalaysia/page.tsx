@@ -286,8 +286,14 @@ const StudyInMalaysia = () => {
             your academic success.
           </p>
           <div className="flex justify-center">
-            <Button className="bg-[#036ca3]  transition-opacity text-white font-bold    px-12 py-8 text-xl rounded-xl shadow-2xl">
-              <Link href={"/"} className="flex items-center gap-3">
+            <Button className="
+      bg-[#14919B] hover:bg-[#0E747C] text-white rounded-lg
+      px-4 sm:px-6 lg:px-8
+      h-10 sm:h-12 lg:h-14
+      text-sm sm:text-base lg:text-lg
+      font-bold flex items-center gap-2 shadow-md
+    ">
+              <Link href={"/contactUs"} className="flex items-center gap-3">
                 Contact Us Now
                 <ArrowRight className="w-6 h-6" />
               </Link>

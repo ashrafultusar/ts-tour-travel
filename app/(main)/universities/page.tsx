@@ -1,101 +1,101 @@
+import { getUniversities } from "@/lib/data/university";
+import UniversityFilterSidebar from "@/components/visitor/universities/UniversityFilterSidebar";
+import Link from "next/link";
+import Pagination from "@/components/shared/Pagination";
 
-const UniversityCard = ({ name, location, logo }: { name: string, location: string, logo: string }) => (
-  <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-white border border-gray-100 rounded-lg shadow-sm mb-4 hover:shadow-md transition-shadow">
+export const dynamic = "force-dynamic"; // Changed to dynamic to ensure searchParams are read correctly in this architecture? 
+// WAIT. If we want Static + On-Demand, we should NOT use force-dynamic.
+// Ideally, searchParams usage forces dynamic rendering in Next.js UNLESS we are okay with it. 
+// Actually, List pages with searchParams usually ARE dynamic. 
+// But the user requested "Use Next.js data cache properly". 
+// If we cache the DATA (unstable_cache), the page can be dynamic shell but data is cached.
+// So let's removing revalidate is correct. Keep it minimal.
+
+const UniversityCard = ({ uni }: { uni: any }) => (
+  <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-white border border-gray-100 rounded-lg shadow-sm mb-4 hover:shadow-md transition-shadow group">
     <div className="flex items-center gap-6 w-full">
-      <div className="w-20 h-20 flex items-center justify-center">
-        <img src={logo} alt={name} className="max-w-full max-h-full object-contain" />
+      <div className="w-20 h-20 relative shrink-0 bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
+        {uni?.image ? (
+          
+          <img src={uni?.image} alt={uni.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-300">U</div>
+        )}
       </div>
-      <div className="flex-1">
-        <h3 className="text-xl font-bold text-gray-800">{name}</h3>
-        <p className="text-gray-500 flex items-center gap-1 mt-1">
-          <span className="text-sm">📍 {location}</span>
+      <div className="flex-1 min-w-0">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-800 line-clamp-1">{uni.name}</h3>
+        <p className="text-gray-500 flex items-center gap-1 mt-1 text-sm">
+          <span>📍 {uni?.location}</span>
         </p>
-        <p className="text-xs text-gray-600 mt-2 flex items-center gap-1">
-          💼 Offer Letter Applicable: <span className="font-semibold text-green-600">Yes</span>
-        </p>
+        <div className="flex flex-wrap gap-2 mt-2">
+           <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border ${uni.offerType === 'Free' ? 'text-green-600 border-green-200 bg-green-50' : 'text-orange-600 border-orange-200 bg-orange-50'}`}>
+             {uni?.offerType || 'Paid'}
+           </span>
+        
+           <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border text-blue-600 border-blue-200 bg-blue-50">
+             {uni?.level?.[0] || 'Degree'}
+           </span>
+        </div>
       </div>
     </div>
-    <div className="flex flex-col gap-2 mt-4 md:mt-0 w-full md:w-32">
+    <div className="flex flex-col gap-2 mt-4 md:mt-0 w-full md:w-auto">
      
-      <button className="bg-[#1a8a81] text-white hover:bg-[#157a72] border border-white/20 font-bold px-1 py-1 text-md rounded-sm shadow-md transition-all transform hover:scale-105 active:scale-95">
+      <Link href={`/universities/${uni._id}`} className="bg-[#1a8a81] text-white hover:bg-[#157a72] border border-white/20 font-bold px-6 py-2 text-md rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 text-center whitespace-nowrap">
         Details
-      </button>
+      </Link>
     </div>
   </div>
 );
 
-export default function UniversitySearch() {
-  const levels = ["Diploma", "Bachelor Degree", "Masters Degree", "Doctoral Degree (PhD)", "Advance Diploma", "Certificate", "Foundation / A-level"];
-  
-  const universities = [
-    { name: "Multimedia University Malaysia (MMU)", location: "Selangor, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-    { name: "UCSI University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-    { name: "Taylor's University Malaysia", location: "Selangor, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-    { name: "APU University Malaysia", location: "Kuala Lumpur, Malaysia", logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" },
-  ];
+interface PageProps {
+  searchParams: { [key: string]: string | undefined | string[] };
+}
+
+export default async function UniversitySearch({ searchParams }: PageProps) {
+  // Await searchParams before accessing properties
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+
+  const search = (resolvedSearchParams?.search as string) || "";
+  const location = (resolvedSearchParams?.location as string) || "";
+  const level = resolvedSearchParams?.level; // can be string or array
+  const offerType = resolvedSearchParams?.offerType; // can be string or array
+  const page = Number(resolvedSearchParams?.page) || 1;
+  const limit = 10;
+
+  const { universities, total, totalPages } = await getUniversities(page, limit, search, location, level, offerType);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-10 font-sans">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-        
-        {/* Sidebar Filter */}
-        <aside className="w-full md:w-1/4 bg-white p-6 rounded-lg border border-gray-200 h-fit">
-          <h2 className="text-xl font-bold mb-6 text-gray-800">Filter Your Best Search</h2>
-          
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-2">Search by name</label>
-            <input 
-              type="text" 
-              placeholder="Type University Name" 
-              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-            />
-          </div>
 
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-3">Level of Interest</label>
-            <div className="space-y-2">
-              {levels.map((level) => (
-                <label key={level} className="flex items-center gap-2 cursor-pointer text-sm text-gray-600 hover:text-black">
-                  <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600" />
-                  {level}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-2">Search by location</label>
-            <select className="w-full p-2 border border-gray-300 rounded bg-white outline-none">
-              <option>All Locations</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-3">Offer Letter Type</label>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm text-gray-600">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                Free Offer Letter
-              </label>
-              <label className="flex items-center gap-2 text-sm text-gray-600">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                Offer Letter Fees Apply
-              </label>
-            </div>
-          </div>
-        </aside>
+        {/* Sidebar Filter - Client Component */}
+        <UniversityFilterSidebar />
 
         {/* Main Content */}
         <main className="w-full md:w-3/4">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-gray-100 pb-2">University List</h2>
-          <div className="space-y-4">
-            {universities.map((uni, index) => (
-              <UniversityCard key={index} {...uni} />
-            ))}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">University List</h2>
+            <span className="text-sm text-gray-500">{total} Results Found</span>
           </div>
+
+          <div className="space-y-4">
+            {universities.length > 0 ? (
+              universities.map((uni: any) => (
+                <UniversityCard key={uni._id} uni={uni} />
+              ))
+            ) : (
+              <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
+                <p className="text-gray-500">No universities found matching your search.</p>
+              </div>
+            )}
+          </div>
+
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            baseUrl="/universities"
+            searchParams={resolvedSearchParams as any}
+          />
         </main>
 
       </div>
