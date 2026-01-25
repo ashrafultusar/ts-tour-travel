@@ -4,7 +4,7 @@ import { ArrowRight, GraduationCap, Building2, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import styles from "./HeroSection.module.css";
 import Link from "next/link";
-
+ 
 const HeroSection = () => {
   return (
     <section
