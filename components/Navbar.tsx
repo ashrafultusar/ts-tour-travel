@@ -20,7 +20,6 @@ import {
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-// লিঙ্কগুলো কম্পোনেন্টের বাইরে রাখলে রেন্ডারিং পারফরম্যান্স বাড়ে
 const NAVIGATION_LINKS = [
   { name: "Home", href: "/", icon: Home },
   { name: "About Us", href: "/aboutUs", icon: Info },
@@ -39,14 +38,14 @@ export default function Navbar() {
 
   const isLoading = status === "loading";
 
-  // মেমোরাইজড রোল চেক (সিকিউরিটি ও পারফরম্যান্সের জন্য)
+ 
   const isStaff = useMemo(() => {
     return (
       session?.user?.role === "admin" || session?.user?.role === "moderator"
     );
   }, [session?.user?.role]);
 
-  // ডায়নামিক লিঙ্ক জেনারেশন
+
   const navLinks = useMemo(() => {
     if (isStaff) {
       return [
@@ -57,7 +56,7 @@ export default function Navbar() {
     return NAVIGATION_LINKS;
   }, [isStaff]);
 
-  // মোবাইল মেনু বা প্রোফাইল খোলা থাকলে বডি স্ক্রল বন্ধ রাখা (UX)
+  
   useEffect(() => {
     if (mobileOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
@@ -175,7 +174,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="px-6 py-2.5 rounded-full bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-blue-200"
+                  className="w-full bg-[#0891B2] hover:bg-[#0369A1] text-white font-bold py-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/10"
                 >
                   Login
                 </Link>
