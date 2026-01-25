@@ -12,7 +12,9 @@ const universities = [
   { id: 8, img: "/assets/universities/8_logo.jpg", name: "Sunway" },
   { id: 9, img: "/assets/universities/9_logo.jpg", name: "MSU" },
   { id: 10, img: "/assets/universities/10_logo.jpg", name: "UTMSPACE" },
-];
+  { id: 11, img: "/assets/universities/11_logo.jpg", name: "UTMSPACE" },
+  { id: 12, img: "/assets/universities/12_logo.png", name: "UTMSPACE" },
+]; 
 
 const OurUniversities = () => {
   return (

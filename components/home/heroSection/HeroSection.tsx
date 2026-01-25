@@ -2,10 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { ArrowRight, GraduationCap, Building2, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// CSS Module Import
 import styles from "./HeroSection.module.css";
-
+import Link from "next/link";
+ 
 const HeroSection = () => {
   return (
     <section
@@ -42,9 +41,12 @@ py-12 lg:py-16 flex items-center overflow-hidden"
             </div>
 
             <p className="text-[#5E6272] text-base lg:text-xl leading-relaxed max-w-lg font-medium">
-              We make everything simple — from selecting the right university to
-              securing your student visa. We are by your side to build your
-              dream career.
+              TS Tour & Travel is a professional education consultancy and
+              travel agency providing student consultancy services, tourist visa
+              processing, and affordable Umrah packages. We specialize in
+              reliable travel solutions, visa assistance, and study abroad
+              guidance to help clients achieve smooth, secure, and successful
+              journeys.
             </p>
 
             {/* Action Buttons */}
@@ -110,11 +112,12 @@ py-12 lg:py-16 flex items-center overflow-hidden"
                 </div>
                 <div>
                   <p className="text-xl lg:text-3xl font-bold leading-none">
-                    39+
+                    <span
+                      className={`${styles.counterAnim} ${styles.partnerCount}`}
+                    ></span>
+                    +
                   </p>
-                  <p className="text-[9px] lg:text-[11px] font-medium opacity-90">
-                    Partner Universities
-                  </p>
+                  <p className="...">Partner Universities</p>
                 </div>
               </div>
 
@@ -128,11 +131,12 @@ py-12 lg:py-16 flex items-center overflow-hidden"
                 </div>
                 <div>
                   <p className="text-xl lg:text-3xl font-bold leading-none">
-                    820+
+                    <span
+                      className={`${styles.counterAnim} ${styles.visaCount}`}
+                    ></span>
+                    +
                   </p>
-                  <p className="text-[9px] lg:text-[11px] font-medium opacity-90">
-                    Successful Visas
-                  </p>
+                  <p className="...">Successful Visas</p>
                 </div>
               </div>
 
@@ -152,12 +156,15 @@ py-12 lg:py-16 flex items-center overflow-hidden"
                 <p className="text-[#5E6272] text-[11px] lg:text-[13px] mb-4 leading-snug">
                   Unlock world-class education opportunities in Malaysia!
                 </p>
-                <Button
-                  size="sm"
-                  className="w-full bg-[#E1EBF7] text-[#1E56A0] hover:bg-[#D1DFEF] font-bold rounded-lg py-2"
-                >
-                  Apply Now
-                </Button>
+
+                <Link href={"/universities"}>
+                  <Button
+                    size="sm"
+                    className="w-full bg-[#E1EBF7] cursor-pointer text-[#1E56A0] hover:bg-[#D1DFEF] font-bold rounded-lg py-2"
+                  >
+                    Apply Now
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
