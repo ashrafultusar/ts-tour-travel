@@ -12,7 +12,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const isAuthorized = userRole === "admin" || userRole === "moderator";
 
   if (!isAuthorized) {
-    redirect("/404-not-found"); 
+    redirect("/404-not-found");
   }
 
   return (
