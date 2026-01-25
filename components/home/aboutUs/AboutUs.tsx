@@ -1,5 +1,4 @@
-import { GraduationCap, Plane, FileCheck, Ticket, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { GraduationCap, Plane, FileCheck, Ticket} from "lucide-react";
 
 const AboutUs = () => {
     const services = [

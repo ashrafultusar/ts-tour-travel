@@ -28,6 +28,8 @@ export default function Navbar() {
   // ১. স্টাফ চেক (Admin বা Moderator কি না)
   const isStaff = session?.role === "admin" || session?.role === "moderator";
 
+  console.log(isStaff);
+
   // ২. নেভিগেশন লিঙ্কগুলো আলাদা করা
   const publicLinks = [
     { name: "Home", href: "/", icon: Home },
