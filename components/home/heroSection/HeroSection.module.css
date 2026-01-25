@@ -42,7 +42,6 @@
 
 .visualWrapper {
   position: relative;
-  /* স্ক্রিন সাইজ অনুযায়ী পুরো কন্টেইনার স্কেল হবে */
   width: clamp(280px, 42vw, 480px);
   aspect-ratio: 1 / 1;
   display: flex;
@@ -101,7 +100,6 @@
   50% { transform: translateY(-12px); }
 }
 
-/* মোবাইল ডিভাইসের জন্য স্পেশাল হ্যান্ডলিং */
 @media (max-width: 1024px) {
   .statCard1 { left: -5%; }
   .statCard2 { right: -5%; }
@@ -141,4 +139,4 @@
 
 /* Prottek card er jonno alada final value */
 .partnerCount { --final-num: 41; }
-.visaCount { --final-num: 820; }
+.visaCount { --final-num: 500; }

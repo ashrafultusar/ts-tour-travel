@@ -9,14 +9,6 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
-  const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About Us", href: "#about" },
-    { name: "Our Services", href: "#services" },
-    { name: "Success Stories", href: "#success" },
-    { name: "Contact Us", href: "#contact" },
-  ];
-
   const services = [
     "Malaysia Admission",
     "Student Visa",
@@ -26,123 +18,122 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook,  href: "https://www.facebook.com/tsstudysolutionmalaysia", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Youtube, href: "#", label: "YouTube" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
+    {
+      icon: Facebook,
+      href: "https://www.facebook.com/tsstudysolutionmalaysia",
+      label: "Facebook",
+      brandClass: "bg-[#1877F2] text-white",
+    },
+    {
+      icon: Instagram,
+      href: "#",
+      label: "Instagram",
+      brandClass: "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white",
+    },
+    {
+      icon: Youtube,
+      href: "#",
+      label: "YouTube",
+      brandClass: "bg-[#FF0000] text-white",
+    },
+    {
+      // TikTok Custom SVG for perfect rendering
+      icon: () => (
+        <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
+          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.09-1.47-.88-.64-1.62-1.49-2.11-2.47-.04 3.44-.02 6.88-.04 10.32-.08 2.51-1.42 4.97-3.71 6.01-2.26 1.08-5.11.87-7.14-.52-2.13-1.42-3.21-4.18-2.58-6.62.53-2.2 2.45-3.95 4.67-4.27.9-.14 1.83-.03 2.69.29-.02 1.35-.02 2.7-.02 4.05-.85-.35-1.84-.42-2.69-.07-1.12.44-1.92 1.6-1.9 2.81.01 1.29.98 2.45 2.25 2.64 1.37.23 2.91-.53 3.44-1.85.17-.41.24-.85.23-1.29V.02z" />
+        </svg>
+      ),
+      href: "#",
+      label: "Tiktok",
+      brandClass: "bg-black text-white", 
+    },
   ];
 
   return (
-    <footer className="bg-[#172636] text-background/80">
+    <footer className="bg-[#172636] text-white/80">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Brand */}
-          <div className="space-y-5">
-          <div className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center overflow-hidden">
-                <span className="text-white bg-[#1665a1]/50 px-2 py-0.5 font-extrabold text-xl tracking-tighter">
-                  TS
-                </span>
+        {/* Grid Alignment: 3 Columns for a cleaner look since Office Hours is removed */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-24 items-start">
+          
+          {/* 1. Brand & Socials */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center shrink-0 shadow-lg">
+                <span className="text-white font-bold text-xl">TS</span>
               </div>
-              <span className="font-bold text-xl text-white">
+              <span className="font-bold text-xl text-white tracking-tight">
                 Tour & Travel
               </span>
             </div>
-            <p className="text-background/60 leading-relaxed">
+            <p className="text-white/60 leading-relaxed text-sm max-w-sm">
               The most trusted education consultancy in Bangladesh. We are by
               your side for all assistance regarding higher education and visas
               for Malaysia.
             </p>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3 pt-2">
               {socialLinks.map((social) => (
                 <a
-                target="_blank"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   key={social.label}
                   href={social.href}
-                  className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-95 ${social.brandClass}`}
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-bold text-background mb-5">
-              Quick Links
-            </h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-background/60 hover:text-background transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-bold text-background mb-5">
-              Our Services
-            </h3>
-            <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service}>
-                  <span className="text-background/60">{service}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-lg font-bold text-background mb-5">Contact</h3>
+          {/* 2. Services List */}
+          <div className="lg:justify-self-center">
+            <h3 className="text-lg font-bold text-white mb-6">Our Services</h3>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-background/60">
-                  House #12, Road #5, Dhanmondi, Dhaka-1205
+              {services.map((service) => (
+                <li key={service} className="flex items-center gap-2 group cursor-pointer">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/40 group-hover:bg-cyan-400 transition-colors" />
+                  <span className="text-white/60 text-sm group-hover:text-white transition-colors">
+                    {service}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 3. Contact Details */}
+          <div className="lg:justify-self-end w-full max-w-xs">
+            <h3 className="text-lg font-bold text-white mb-6">Contact Us</h3>
+            <ul className="space-y-5">
+              <li className="flex items-start gap-3 group">
+                <MapPin className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                <span className="text-white/60 text-sm leading-relaxed">
+                  House No: 67, Shahid Moslem Uddin Chattrabas Goli, Central
+                  Road, Paira Chattar, Rangpur, 5400
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-background/60">+880 1XXX-XXXXXX</span>
+              <li className="flex items-center gap-3 group">
+                <Phone className="w-5 h-5 text-cyan-400 shrink-0 group-hover:scale-110 transition-transform" />
+                <a href="tel:+8801341462233" className="text-white/60 text-sm hover:text-white transition-colors">
+                  +880 1341-462233
+                </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-background/60">info@eduvisabd.com</span>
+              <li className="flex items-center gap-3 group">
+                <Mail className="w-5 h-5 text-cyan-400 shrink-0 group-hover:scale-110 transition-transform" />
+                <a href="mailto:info@tstourtravels.com" className="text-white/60 text-sm hover:text-white transition-colors break-all">
+                  info@tstourtravels.com
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-background/10 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-background/40 text-sm">
-              © 2025 EduVisa BD. All rights reserved.
-            </p>
-            <div className="flex gap-6 text-sm">
-              <a
-                href="#"
-                className="text-background/40 hover:text-background transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-background/40 hover:text-background transition-colors"
-              >
-                Terms of Service
-              </a>
-            </div>
+        {/* Bottom Copyright Bar */}
+        <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 text-xs">
+          <p>© 2026 TS Tour & Travel. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>
