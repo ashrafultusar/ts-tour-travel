@@ -20,7 +20,6 @@ export async function createUniversity(formData: FormData) {
   try {
     await connectDB();
 
-    // 1. Sanitize Basic Fields
     const rawData = sanitize({
       universityName: formData.get("universityName"),
       location: formData.get("location"),
@@ -29,7 +28,6 @@ export async function createUniversity(formData: FormData) {
       description: formData.get("description"),
     });
 
-    // 2. Parse Departments (Frontend theke JSON.stringify hoye ashe)
     const departmentsRaw = formData.get("departments") as string;
     let departments = [];
     try {
