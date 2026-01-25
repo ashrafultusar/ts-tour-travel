@@ -72,7 +72,7 @@ export default function Navbar() {
               <button
                 onClick={() => setMobileOpen(true)}
                 aria-label="Open Menu"
-                className="lg:hidden p-2 hover:bg-slate-100 rounded-xl transition-colors"
+                className="lg:hidden p-2 cursor-pointer hover:bg-slate-100 rounded-xl transition-colors"
               >
                 <Menu size={26} className="text-slate-700" />
               </button>
@@ -174,7 +174,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="w-full bg-[#0891B2] hover:bg-[#0369A1] text-white font-bold py-6 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/10"
+                  className="w-full bg-[#0891B2] hover:bg-[#0369A1] text-white font-bold px-4 py-2 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/10"
                 >
                   Login
                 </Link>
@@ -211,7 +211,7 @@ export default function Navbar() {
           </div>
           <button
             onClick={() => setMobileOpen(false)}
-            className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+            className="p-2 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
           >
             <X size={22} className="text-slate-500" />
           </button>
