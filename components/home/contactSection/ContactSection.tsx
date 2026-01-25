@@ -20,7 +20,7 @@ const ContactSection = () => {
       phones: ["01341-462233"],
       email: "info@tstourtravels.com",
       hours: "Mon - Sat: 10:00 AM - 6:00 PM",
-      
+
       mapSrc:
         "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d63740.1319365875!2d101.706871!3d3.158312!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37d654405935%3A0x2eb296a9174f7be6!2sMercu%20Summer%20Suites%20Kuala%20Lumpur%20Bukit%20Bintang%20by%20Classy!5e0!3m2!1sen!2sus!4v1769272439296!5m2!1sen!2sus",
     },
@@ -62,14 +62,14 @@ const ContactSection = () => {
 
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
-                      <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-cyan-300" />
+                      <MapPin className="w-4 h-4 mt-1 shrink-0 text-cyan-300" />
                       <p className="text-xs md:text-sm opacity-95 leading-relaxed">
                         {office.address}
                       </p>
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <Phone className="w-4 h-4 mt-1 flex-shrink-0 text-cyan-300" />
+                      <Phone className="w-4 h-4 mt-1 shrink-0 text-cyan-300" />
                       <div className="space-y-0.5">
                         {office.phones.map((p, i) => (
                           <p key={i} className="text-xs md:text-sm font-medium">
@@ -80,7 +80,7 @@ const ContactSection = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Mail className="w-4 h-4 flex-shrink-0 text-cyan-300" />
+                      <Mail className="w-4 h-4 shrink-0 text-cyan-300" />
                       <p className="text-xs md:text-sm break-all font-medium">
                         {office.email}
                       </p>
@@ -96,7 +96,7 @@ const ContactSection = () => {
                 </div>
 
                 {/* Map Section - Flex Grow fills the remaining height of the form */}
-                <div className="flex-grow rounded-b-2xl overflow-hidden border-x border-b border-slate-200 shadow-md min-h-[200px] mt-1">
+                <div className="grow rounded-b-2xl overflow-hidden border-x border-b border-slate-200 shadow-md min-h-50 mt-1">
                   <iframe
                     src={office.mapSrc}
                     width="100%"

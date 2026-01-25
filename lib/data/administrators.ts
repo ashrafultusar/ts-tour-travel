@@ -31,7 +31,7 @@ export const updateUserRole = async (userId: string, newRole: string) => {
     try {
         await connectDB();
         await User.findByIdAndUpdate(userId, { role: newRole });
-        revalidateTag("users"); 
+        revalidateTag("users", "max"); 
         return { success: true };
     } catch (error) {
         return { success: false, error: "Failed to update role" };
@@ -44,7 +44,7 @@ export const deleteUser = async (userId: string) => {
     try {
         await connectDB();
         await User.findByIdAndDelete(userId);
-        revalidateTag("users"); 
+        revalidateTag("users", "max"); 
         return { success: true };
     } catch (error) {
         return { success: false, error: "Failed to delete user" };

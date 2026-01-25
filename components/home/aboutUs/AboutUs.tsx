@@ -1,5 +1,4 @@
-import { GraduationCap, Plane, FileCheck, Ticket } from "lucide-react";
-
+import { GraduationCap, Plane, FileCheck, Ticket} from "lucide-react";
 
 const AboutUs = () => {
     const services = [
