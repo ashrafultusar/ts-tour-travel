@@ -38,7 +38,7 @@ const FormLayout: React.FC<FormLayoutProps> = ({
                     className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
                 >
                     <ArrowLeft size={20} />
-                    <span className="font-medium">Back</span>
+                    <span className="font-medium cursor-pointer">Back</span>
                 </button>
 
                 <div className="flex items-center gap-3">
