@@ -24,11 +24,6 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const pathName = usePathname();
 
-  
-
-
-
-
 
   const navLinks = [
     { name: "Dashboard", href: "/ts-staff-portal", icon: Home },

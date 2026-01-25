@@ -1,4 +1,3 @@
-// @/app/admin/management/page.tsx
 import AdminManagement from "@/components/admin/administrators/AdminManagement";
 import { getAllUsers } from "@/lib/data/administrators";
 
