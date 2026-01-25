@@ -6,6 +6,7 @@ import University from "@/models/University";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import sanitize from "mongo-sanitize";
+import { requireStaff } from "@/lib/access-helper";
 
 const UniversitySchema = z.object({
     universityName: z.string().min(3, "University name minimum 3 characters"),
@@ -18,6 +19,7 @@ const UniversitySchema = z.object({
 
 export async function createUniversity(formData: FormData) {
   try {
+        await requireStaff()
     await connectDB();
 
     const rawData = sanitize({
@@ -91,6 +93,7 @@ export async function createUniversity(formData: FormData) {
 
 export async function updateUniversity(id: string, formData: FormData) {
     try {
+        await requireStaff()
         await connectDB();
 
         const rawData = sanitize({
@@ -136,6 +139,7 @@ export async function updateUniversity(id: string, formData: FormData) {
 
 export async function deleteUniversity(id: string) {
     try {
+        await requireStaff()
         await connectDB();
         await University.findByIdAndDelete(id);
         revalidateTag("universities", "max");

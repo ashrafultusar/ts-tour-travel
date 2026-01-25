@@ -5,9 +5,11 @@ import { uploadImage } from "@/lib/cloudinary";
 import { ProfessionalTeam } from "@/models/ProfessionalTeam";
 import { revalidateTag } from "next/cache";
 import sanitize from "mongo-sanitize";
+import { requireStaff } from "@/lib/access-helper";
 
 export async function createTeamMember(data: FormData) {
     try {
+        await requireStaff()
         await connectDB();
 
         const name = sanitize(data.get("name") as string);
@@ -41,6 +43,7 @@ export async function createTeamMember(data: FormData) {
 
 export async function updateTeamMember(id: string, data: FormData) {
     try {
+        await requireStaff()
         await connectDB();
 
         const name = sanitize(data.get("name") as string);
@@ -76,6 +79,7 @@ export async function updateTeamMember(id: string, data: FormData) {
 
 export async function deleteTeamMember(id: string) {
     try {
+        await requireStaff()
         await connectDB();
         await ProfessionalTeam.findByIdAndDelete(id);
         revalidateTag("professional-team", "max");
