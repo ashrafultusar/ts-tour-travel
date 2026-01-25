@@ -93,7 +93,7 @@ const Blog = async ({ searchParams }: BlogPageProps) => {
                     User asked for filtering/pagination on list page.
                 */}
                 <Link href={`/blog/${featuredPost._id}`}>
-                  <Button className="w-fit bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] text-white px-8 py-6 rounded-xl text-lg flex gap-2">
+                  <Button className="w-fit bg-gradient-to-r from-[#0d4a7e] to-[#1a8a81] text-white px-8 py-6 rounded-xl text-lg flex gap-2 cursor-pointer">
                     Read More <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>

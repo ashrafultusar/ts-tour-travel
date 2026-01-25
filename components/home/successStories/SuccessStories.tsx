@@ -37,7 +37,7 @@ const SuccessStories: React.FC = async () => {
 
           <div className="flex w-max gap-6 md:gap-10 animate-testimonial-scroll hover:[animation-play-state:paused] cursor-pointer">
             {/* Map over the stories with the correct keys from your console log */}
-            {stories.map((testimonial: Testimonial, index) => (
+            {stories?.map((testimonial: Testimonial, index) => (
               <div
                 key={`${testimonial._id}-${index}`}
                 className="w-[80vw] md:w-[420px] shrink-0 relative flex flex-col p-8 rounded-[32px] bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#14919B20] transition-all duration-300 group"
@@ -47,21 +47,21 @@ const SuccessStories: React.FC = async () => {
                 </div>
 
                 <div className="flex gap-1 mb-6">
-                  {/* Fallback to 5 stars if rating isn't in API */}
-                  {[...Array(testimonial.rating || 5)].map((_, i) => (
+
+                  {[...Array(testimonial?.rating || 5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#FBBF24] text-[#FBBF24]" />
                   ))}
                 </div>
 
                 <p className="text-gray-500 mb-8 text-sm md:text-base leading-relaxed italic min-h-[90px]">
-                  {testimonial.story}
+                  {testimonial?.story}
                 </p>
 
                 <div className="flex items-center gap-4 border-t border-gray-50 pt-6 mt-auto">
                   <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden ring-4 ring-[#E7F6F2] shrink-0">
                     <Image
-                      src={testimonial.image}
-                      alt={testimonial.studentName}
+                      src={testimonial?.image}
+                      alt={testimonial?.studentName}
                       fill
                       sizes="(max-width: 768px) 48px, 56px" 
                       className="object-cover"
@@ -69,13 +69,13 @@ const SuccessStories: React.FC = async () => {
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-bold text-[#2D3142] text-sm md:text-base truncate">
-                      {testimonial.studentName}
+                      {testimonial?.studentName}
                     </h4>
                     <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest truncate">
-                      {testimonial.subject}
+                      {testimonial?.subject}
                     </p>
                     <p className="text-xs md:text-sm text-[#14919B] font-bold truncate">
-                      {testimonial.university}
+                      {testimonial?.university}
                     </p>
                   </div>
                 </div>
