@@ -8,10 +8,10 @@ import {
   MapPin, 
   Camera, 
   Hotel, 
-  Car, 
-  ArrowRight 
+  Car,  
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const services = [
   {
@@ -202,12 +202,10 @@ const TouristVisa = () => {
             Get expert visa advice and seamless travel planning today.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button className="bg-white text-[#0d4a7e] hover:bg-slate-100 font-bold px-10 py-7 text-lg rounded-xl shadow-xl transition-all transform hover:scale-105 active:scale-95">
+            <Link href={'/contactUs'} className="bg-white text-[#0d4a7e] hover:bg-slate-100 font-bold px-10 py-7 text-lg rounded-xl shadow-xl transition-all transform hover:scale-105 active:scale-95">
               Free Consultation
-            </Button>
-            <Button className="bg-[#1a8a81] text-white hover:bg-[#157a72] border border-white/20 font-bold px-10 py-7 text-lg rounded-xl shadow-xl transition-all transform hover:scale-105 active:scale-95">
-              WhatsApp Support
-            </Button>
+            </Link>
+           
           </div>
         </div>
       </section>

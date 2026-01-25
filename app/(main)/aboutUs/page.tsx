@@ -43,7 +43,7 @@ const AboutUs = async () => {
             About Us
           </h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto font-light">
-            Since 2014, we have been helping students fulfill their dreams of higher education in Malaysia and beyond.
+            Since 2019, we have been helping students fulfill their dreams of higher education in Malaysia and beyond.
           </p>
         </div>
       </section>
@@ -58,7 +58,7 @@ const AboutUs = async () => {
                 A Decade of Trusted Service
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                EduVisa Bangladesh was founded in 2014. Our founder, a Malaysia graduate himself, recognized the lack of proper guidance for international students.
+              TS Tour & Travel was founded in 2019. Our founder, a Malaysia graduate himself, recognized the lack of proper guidance for international students.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
                 We don't just process visas; we help every student choose the right university and course based on their career goals.
@@ -66,8 +66,8 @@ const AboutUs = async () => {
               <ul className="grid grid-cols-1 gap-4">
                 {[
                   "Government Authorized Agency",
-                  "20+ Partner Universities",
-                  "Offices in Dhaka & Kuala Lumpur"
+                  "41+ Partner Universities",
+                  "Offices in Rangpur & Kuala Lumpur"
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-gray-700 font-medium">
                     <CheckCircle2 className="w-6 h-6 text-[#25a18e]" />

@@ -172,7 +172,7 @@ export default function Navbar() {
              <div className="w-8 h-8 relative">
                 <Image src="/assets/logo/logo.jpg" alt="Logo" fill className="rounded-full object-contain" />
              </div>
-             <span className="font-bold text-slate-800">TS Navigation</span>
+           
           </div>
           <button onClick={() => setMobileOpen(false)} className="p-2 hover:bg-slate-100 rounded-full">
             <X size={22} className="text-slate-600" />
