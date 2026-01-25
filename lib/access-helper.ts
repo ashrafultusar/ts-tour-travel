@@ -1,4 +1,4 @@
-// lib/access-helpers.ts
+//lib/access-helpers.ts
 
 import { auth } from "@/auth";
 
