@@ -34,7 +34,7 @@ const SuccessStoriesPage = async () => {
 
       {/* Main Content Area */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {stories.map((story: any) => (
+        {stories?.map((story: any) => (
           <div
             key={story._id}
             className="bg-white p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group relative"

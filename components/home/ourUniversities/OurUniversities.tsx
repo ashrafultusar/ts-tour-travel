@@ -14,7 +14,7 @@ const universities = [
   { id: 10, img: "/assets/universities/10_logo.jpg", name: "UTMSPACE" },
   { id: 11, img: "/assets/universities/11_logo.jpg", name: "UTMSPACE" },
   { id: 12, img: "/assets/universities/12_logo.png", name: "UTMSPACE" },
-];
+]; 
 
 const OurUniversities = () => {
   return (
