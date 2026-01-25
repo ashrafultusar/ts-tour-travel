@@ -28,9 +28,9 @@ export default function Navbar() {
   const navLinks = [
     { name: "Dashboard", href: "/ts-staff-portal", icon: Home },
     { name: "Home", href: "/", icon: Home },
-    { name: "Universities", href: "/universities", icon: Info },
     { name: "About Us", href: "/aboutUs", icon: Info },
-    { name: "Study in Malaysia", href: "/studyInMalaysia", icon: Briefcase },
+    { name: "Universities", href: "/universities", icon: Info },
+    { name: "Why Malaysia", href: "/studyInMalaysia", icon: Briefcase },
     { name: "Tourist Visa", href: "/touristVisa", icon: Map },
     { name: "Blog", href: "/blog", icon: Mail },
     { name: "Contact Us", href: "/contactUs", icon: Mail },
