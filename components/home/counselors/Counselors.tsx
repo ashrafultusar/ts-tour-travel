@@ -9,12 +9,11 @@ const MeetCounselors = () => {
     name: "Engr. Md. John deo",
     title: "General Manager",
     description:
-      " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eos sequi asperiores distinctio saepe recusandae soluta? Provident, perspiciatis repellendus natus illum maiores, quam quidem nesciunt exercitationem earum, eos id quos."
+      " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eos sequi asperiores distinctio saepe recusandae soluta? Provident, perspiciatis repellendus natus illum maiores, quam quidem nesciunt exercitationem earum, eos id quos.",
   };
 
   return (
     <section className="relative min-h-[50vh] overflow-hidden bg-[#f0f4f7] flex flex-col items-center justify-center py-10">
-      
       {/* 1. Background Striped Pattern (Same as image) */}
       <div
         className="absolute inset-0 pointer-events-none opacity-40"
@@ -35,19 +34,12 @@ const MeetCounselors = () => {
       </h2>
 
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4">
-        
         {/* 3. Quote Card (Behind the person) */}
         <div className="relative z-10 bg-white rounded-lg shadow-xl p-8 lg:p-14 max-w-xl lg:max-w-3xl lg:-mr-32 border border-white/50">
           <div className="relative">
-            {/* Quote Start Icon */}
-            <span className="text-black text-2xl font-bold absolute -left-6 -top-2">&quot;</span>
-            
             <p className="text-gray-600 italic leading-relaxed text-[14px] lg:text-[15px] pr-0 lg:pr-32 text-justify">
               {counselor.description}
             </p>
-            
-            {/* Quote End Icon */}
-            <span className="text-black text-2xl font-bold block mt-2">&quot;</span>
           </div>
 
           <div className="mt-8">
@@ -70,12 +62,6 @@ const MeetCounselors = () => {
             />
           </div>
         </div>
-      </div>
-
-      {/* 5. Pagination Dots (Bottom) */}
-      <div className="relative z-30 flex gap-2 mt-10">
-        <span className="w-8 h-2 bg-white rounded-full"></span>
-        <span className="w-3 h-2 bg-gray-800 rounded-full"></span>
       </div>
     </section>
   );
