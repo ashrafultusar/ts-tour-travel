@@ -1,63 +1,84 @@
-import React from 'react';
-import Image from 'next/image';
+import Image from "next/image";
+import React from "react";
 
-const Counselors: React.FC = () => {
+// Image path: public/assets/counselor/image1.png
+const counselorImage = "/assets/counselor/image1.png";
+
+const MeetCounselors = () => {
+  const counselor = {
+    name: "Engr. Md. John deo",
+    title: "General Manager",
+    description:
+      " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum eos sequi asperiores distinctio saepe recusandae soluta? Provident, perspiciatis repellendus natus illum maiores, quam quidem nesciunt exercitationem earum, eos id quos."
+  };
+
   return (
-    <section className="relative min-h-screen w-full bg-[#f1f5f9] flex flex-col items-center py-16 overflow-hidden">
+    <section className="relative min-h-[50vh] overflow-hidden bg-[#f0f4f7] flex flex-col items-center justify-center py-10">
       
-      {/* Background Stripes */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none bg-stripes" />
+      {/* 1. Background Striped Pattern (Same as image) */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{
+          backgroundImage: `repeating-linear-gradient(
+            90deg,
+            #dbeafe 0px,
+            #dbeafe 60px,
+            transparent 60px,
+            transparent 120px
+          )`,
+        }}
+      />
 
-      {/* Title */}
-      <h2 className="relative z-10 text-4xl font-bold text-gray-800 mb-20 text-center">
+      {/* 2. Header Title */}
+      <h2 className="relative z-30 text-3xl lg:text-4xl font-bold text-[#1e293b] mb-12 text-center">
         Meet Our Counselors
       </h2>
 
-      <div className="relative z-10 flex flex-col md:flex-row items-center md:items-end justify-center w-full max-w-6xl px-4">
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4">
         
-        {/* White Info Card */}
-        <div className="bg-white p-8 md:p-12 rounded-lg shadow-xl max-w-2xl md:-mr-24 mb-10 md:mb-20 relative z-20">
+        {/* 3. Quote Card (Behind the person) */}
+        <div className="relative z-10 bg-white rounded-lg shadow-xl p-8 lg:p-14 max-w-xl lg:max-w-3xl lg:-mr-32 border border-white/50">
           <div className="relative">
-            {/* Quote Icon Start */}
-            <span className="text-3xl font-serif font-bold text-gray-900 absolute -left-6 -top-2">&quot;</span>
+            {/* Quote Start Icon */}
+            <span className="text-black text-2xl font-bold absolute -left-6 -top-2">&quot;</span>
             
-            <p className="text-gray-700 leading-relaxed italic text-base md:text-[17px]">
-              {/* Ekhane Jahirul's er bodole &apos; bebohar kora hoyeche */}
-              Engr. Jahirul Islam Piash serves as the General Manager of Tawakkul Malaysia Education Consultancy, 
-              overseeing all operations in Bangladesh. With a solid background in engineering and management, 
-              he plays a crucial role in ensuring that the company&apos;s services are executed smoothly and 
-              meet high standards. Jahirul&apos;s meticulous attention to detail and strategic oversight enhance 
-              operational efficiency, contributing significantly to the firm&apos;s success in the region. 
-              He fosters a collaborative work environment that encourages continuous improvement, 
-              ensuring Tawakkul Malaysia remains a leading force in educational consultancy.
+            <p className="text-gray-600 italic leading-relaxed text-[14px] lg:text-[15px] pr-0 lg:pr-32 text-justify">
+              {counselor.description}
             </p>
             
-            {/* Quote Icon End */}
-            <span className="text-3xl font-serif font-bold text-gray-900 ml-1">&quot;</span>
+            {/* Quote End Icon */}
+            <span className="text-black text-2xl font-bold block mt-2">&quot;</span>
           </div>
 
           <div className="mt-8">
-            <h3 className="text-[#00a3ff] font-bold text-xl mb-1">
-              Engr. Md. Jahirul Islam Piash
+            <h3 className="text-[#00aeef] font-bold text-lg lg:text-xl">
+              {counselor.name}
             </h3>
-            <p className="text-gray-500 font-medium">General Manager</p>
+            <p className="text-gray-500 text-sm mt-1">{counselor.title}</p>
           </div>
         </div>
 
-        {/* Person Image */}
-        <div className="relative z-10 w-full max-w-md md:max-w-lg">
-          <Image 
-            src="/counselor.png" // Apnar image path
-            alt="Engr. Md. Jahirul Islam Piash"
-            width={600}
-            height={700}
-            className="object-contain"
-            priority
-          />
+        {/* 4. Person Image (Foreground / On Top) */}
+        <div className="relative z-20 mt-8 lg:mt-0">
+          <div className="relative w-[320px] h-[450px] lg:w-[500px] lg:h-[650px]">
+            <Image
+              src={counselorImage}
+              alt={counselor.name}
+              fill
+              priority
+              className="object-contain object-bottom drop-shadow-2xl"
+            />
+          </div>
         </div>
+      </div>
+
+      {/* 5. Pagination Dots (Bottom) */}
+      <div className="relative z-30 flex gap-2 mt-10">
+        <span className="w-8 h-2 bg-white rounded-full"></span>
+        <span className="w-3 h-2 bg-gray-800 rounded-full"></span>
       </div>
     </section>
   );
 };
 
-export default Counselors;
+export default MeetCounselors;
