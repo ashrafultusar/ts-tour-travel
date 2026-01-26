@@ -5,11 +5,10 @@ import {
   Clock,
   FileCheck,
   Plane,
-  Home,
+  Home,Sun,
   CheckCircle2,
   ArrowRight,
   Search,
-  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -26,13 +25,15 @@ const universities = [
     name: "SEGi University",
     ranking: "QS World University Rankings #300",
     location: "Kuala Lumpur, Malaysia",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1000",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1000",
   },
   {
     name: "Asia Pacific University of Technology & Innovation (APU)",
     ranking: "QS World University Rankings #307",
     location: "Seri Iskandar, Perak",
-    image: "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&q=80&w=1000",
+    image:
+      "https://images.unsplash.com/photo-1592280771190-3e2e4d571952?auto=format&fit=crop&q=80&w=1000",
   },
   {
     name: "MAHSA University",
@@ -112,6 +113,11 @@ const benefits = [
     icon: Home,
     title: "Lifestyle",
     description: "Halal food and a safe, Muslim-friendly environment.",
+  },
+  {
+    icon: Sun, 
+    title: "Weather",
+    description: "Tropical climate with warm sunshine and pleasant rainfall year-round.",
   },
 ];
 
@@ -204,7 +210,6 @@ const StudyInMalaysia = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            
             <h2 className="text-3xl md:text-4xl font-bold text-[#0d4a7e]">
               Best Private Universities in Malaysia
             </h2>
@@ -269,8 +274,8 @@ const StudyInMalaysia = () => {
             </div>
 
             {/* Counseling Form - Styled from image */}
-    
-               <BookFreeConsultation />
+
+            <BookFreeConsultation />
           </div>
         </div>
       </section>
@@ -286,13 +291,15 @@ const StudyInMalaysia = () => {
             your academic success.
           </p>
           <div className="flex justify-center">
-            <Button className="
+            <Button
+              className="
       bg-[#14919B] hover:bg-[#0E747C] text-white rounded-lg
       px-4 sm:px-6 lg:px-8
       h-10 sm:h-12 lg:h-14
       text-sm sm:text-base lg:text-lg
       font-bold flex items-center gap-2 shadow-md
-    ">
+    "
+            >
               <Link href={"/contactUs"} className="flex items-center gap-3">
                 Contact Us Now
                 <ArrowRight className="w-6 h-6" />

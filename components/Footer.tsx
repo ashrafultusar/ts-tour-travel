@@ -7,6 +7,7 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   const services = [
@@ -57,14 +58,30 @@ const Footer = () => {
           
           {/* 1. Brand & Socials */}
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1665a1] to-[#0891B2] flex items-center justify-center shrink-0 shadow-lg">
-                <span className="text-white font-bold text-xl">TS</span>
-              </div>
-              <span className="font-bold text-xl text-white tracking-tight">
-                Tour & Travel
-              </span>
-            </div>
+          <div className="flex items-center gap-4">
+  {/* Logo Container */}
+  <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md bg-white p-0.5">
+    <Image
+      src="/assets/logo/logo.jpg"
+      alt="Agency Logo"
+      fill
+      sizes="(max-width: 768px) 48px, 56px"
+      priority
+      className="object-contain rounded-full"
+    />
+  </div>
+
+  {/* Text Content */}
+  <div className="flex flex-col">
+    <span className="text-lg sm:text-xl font-bold text-white leading-tight">
+      TS Tour & Travel
+    </span>
+    <span className="text-xs sm:text-sm text-[#64748B] font-medium italic">
+    text-white
+    </span>
+  </div>
+</div>
+
             <p className="text-white/60 leading-relaxed text-sm max-w-sm">
               The most trusted education consultancy in Bangladesh. We are by
               your side for all assistance regarding higher education and visas
