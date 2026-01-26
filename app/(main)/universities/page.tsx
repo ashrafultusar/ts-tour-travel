@@ -2,6 +2,7 @@ import { getUniversities } from "@/lib/data/university";
 import UniversityFilterSidebar from "@/components/visitor/universities/UniversityFilterSidebar";
 import Link from "next/link";
 import Pagination from "@/components/shared/Pagination";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic"; // Changed to dynamic to ensure searchParams are read correctly in this architecture? 
 // WAIT. If we want Static + On-Demand, we should NOT use force-dynamic.
@@ -17,7 +18,13 @@ const UniversityCard = ({ uni }: { uni: any }) => (
       <div className="w-20 h-20 relative shrink-0 bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
         {uni?.image ? (
           
-          <img src={uni?.image} alt={uni.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+<Image 
+      src={uni.image} 
+      alt={uni.name} 
+      fill 
+      sizes="80px"
+      className="object-cover group-hover:scale-110 transition-transform duration-300" 
+    />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-gray-300">U</div>
         )}
@@ -66,21 +73,23 @@ export default async function UniversitySearch({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-10 font-sans">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+     <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 lg:gap-8">
 
         {/* Sidebar Filter - Client Component */}
-        <UniversityFilterSidebar />
+        <div className="w-full md:w-[240px] lg:w-[280px] shrink-0">
+    <UniversityFilterSidebar />
+  </div>
 
         {/* Main Content */}
-        <main className="w-full md:w-3/4">
+        <main className="flex-1 min-w-0">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">University List</h2>
             <span className="text-sm text-gray-500">{total} Results Found</span>
           </div>
 
           <div className="space-y-4">
-            {universities.length > 0 ? (
-              universities.map((uni: any) => (
+            {universities?.length > 0 ? (
+              universities?.map((uni: any) => (
                 <UniversityCard key={uni._id} uni={uni} />
               ))
             ) : (
