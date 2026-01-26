@@ -3,7 +3,7 @@
 import { MessageCircle } from "lucide-react";
 
 const WhatsAppFloating = () => {
-  const whatsappNumber = "+880123456789"; // Apnar number boshan
+  const whatsappNumber = "+60177085596"; 
   const message = "Hello, I have an inquiry!";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
