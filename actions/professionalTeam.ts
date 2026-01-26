@@ -1,12 +1,14 @@
 "use server";
 
 import { connectDB } from "@/db/dbConfig";
+import { requireStaff } from "@/lib/access-helper";
 import { uploadImage } from "@/lib/cloudinary";
 import { ProfessionalTeam } from "@/models/ProfessionalTeam";
 import { revalidatePath } from "next/cache";
 
 export async function createTeamMember(data: FormData) {
   try {
+    await requireStaff()
     await connectDB();
     console.log("--- Database Connected ---");
 

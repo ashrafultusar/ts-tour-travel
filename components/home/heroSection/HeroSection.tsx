@@ -4,7 +4,7 @@ import { ArrowRight, GraduationCap, Building2, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import styles from "./HeroSection.module.css";
 import Link from "next/link";
- 
+
 const HeroSection = () => {
   return (
     <section
@@ -51,31 +51,34 @@ py-12 lg:py-16 flex items-center overflow-hidden"
 
             {/* Action Buttons */}
             <div className="flex items-center gap-3 sm:gap-4 pt-4">
-              <Button
-                className="
+              <Link href={"/contactUs"}>
+                <Button
+                  className="
       bg-[#14919B] hover:bg-[#0E747C] text-white rounded-lg
-      px-4 sm:px-6 lg:px-8
+      px-4 sm:px-6 lg:px-8 cursor-pointer
       h-10 sm:h-12 lg:h-14
       text-sm sm:text-base lg:text-lg
       font-bold flex items-center gap-2 shadow-md
     "
-              >
-                Get Free Consultation
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </Button>
-
-              <Button
-                variant="outline"
-                className="
+                >
+                  Get Free Consultation
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </Button>
+              </Link>
+              <Link href={"/universities"}>
+                <Button
+                  variant="outline"
+                  className="
       border border-gray-300 text-[#2D3142] rounded-lg
-      px-4 sm:px-6 lg:px-8
+      px-4 sm:px-6 lg:px-8 cursor-pointer
       h-10 sm:h-12 lg:h-14
       text-sm sm:text-base lg:text-lg
       font-bold bg-white/50 hover:bg-white
     "
-              >
-                Find Universities
-              </Button>
+                >
+                  Find Universities
+                </Button>
+              </Link>
             </div>
           </div>
 

@@ -7,6 +7,7 @@ import sanitize from "mongo-sanitize";
 import SuccessStory from "@/models/SuccessStory";
 import { uploadImage } from "@/lib/cloudinary";
 import { revalidateTag } from "next/cache";
+import { requireStaff } from "@/lib/access-helper";
 
 const SuccessStorySchema = z.object({
     studentName: z.string().min(2, "Name must be at least 2 characters"),
@@ -17,6 +18,7 @@ const SuccessStorySchema = z.object({
 
 export async function createSuccessStory(formData: FormData) {
     try {
+        await requireStaff()
         await connectDB();
 
         const rawData = sanitize({
@@ -67,6 +69,7 @@ export async function createSuccessStory(formData: FormData) {
 
 export async function updateSuccessStory(id: string, formData: FormData) {
     try {
+        await requireStaff()
         await connectDB();
 
         const rawData = sanitize({
@@ -121,6 +124,7 @@ export async function updateSuccessStory(id: string, formData: FormData) {
 
 export async function deleteSuccessStory(id: string) {
     try {
+        await requireStaff()
         await connectDB();
         await SuccessStory.findByIdAndDelete(id);
         revalidateTag("success-stories", "max");
