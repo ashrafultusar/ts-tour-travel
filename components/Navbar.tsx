@@ -363,9 +363,8 @@ export default function Navbar() {
 
             {/* --- Right Side: Buttons & User Actions --- */}
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* WhatsApp Button (Hidden on very small screens) */}
               <a
-                href="https://wa.me/your-number" // Ekhane apnar number boshan
+                href="https://wa.me/+60177085596"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden md:flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-3 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 shadow-lg shadow-green-500/20"
@@ -479,8 +478,10 @@ export default function Navbar() {
           {/* Mobile WhatsApp & Inquiry Buttons */}
           <div className="flex flex-col gap-2 mb-6 px-1">
             <a
-              href="https://wa.me/your-number"
-              className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-bold text-sm"
+              href="https://wa.me/+60177085596"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-3 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 shadow-lg shadow-green-500/20"
             >
               <MessageCircle size={20} fill="currentColor" /> WhatsApp Us
             </a>
