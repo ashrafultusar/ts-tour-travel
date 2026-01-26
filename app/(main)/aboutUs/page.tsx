@@ -16,11 +16,11 @@ const officeImages = [
   { src: "/assets/office/image4.jpeg", alt: "Reception", span: "" },
   {
     src: "/assets/office/image5.jpeg",
-    alt: "Kitchen area",
+    alt: "Consultancy Area",
     span: "row-span-2",
   },
-  { src: "/assets/office/image6.jpeg", alt: "Executive office", span: "" },
-  { src: "/assets/office/image7.jpeg", alt: "Terrace", span: "" },
+  { src: "/assets/office/image6.jpeg", alt: "Reception", span: "" },
+  { src: "/assets/office/image7.jpeg", alt: "Workspace", span: "" },
 ];
 
 const values = [
@@ -45,7 +45,7 @@ const values = [
 ];
 
 const AboutUs = async () => {
-  const { members } = await getTeamMembers(1, 100); // Fetch all members
+  const { members } = await getTeamMembers(1, 100); 
 
   return (
     <div className="overflow-hidden bg-[#f8fafc]">
@@ -142,60 +142,61 @@ const AboutUs = async () => {
         </div>
       </section>
 
-      {/* office Section */}
-    {/* Office Section */}
-<section className="py-24 bg-[#f8fafc]">
-  <div className="container mx-auto px-4">
-    <div className="text-center mb-16">
-      <span className="inline-block px-4 py-2 rounded-full bg-[#f0fdfa] text-[#1a8a81] font-medium text-sm mb-4 border border-[#ccfbf1]">
-        Our Workspace
-      </span>
-      <h2 className="text-4xl md:text-5xl font-bold text-[#0d4a7e] mb-4">
-        Where <span className="text-[#25a18e]">Innovation</span> Happens
-      </h2>
-      <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-        Take a peek inside our modern workspace designed to inspire
-        creativity and collaboration.
-      </p>
-    </div>
-
-    {/* Balanced Bento Grid */}
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px] max-w-7xl mx-auto">
-      {officeImages?.map((image, index) => {
-       
-        const spanClass = 
-          index === 0 ? "md:col-span-2 md:row-span-2" : 
-          index === 2 ? "md:row-span-2" :              
-          index === 4 ? "md:col-span-2" :              
-          "";
-
-        return (
-          <div
-            key={index}
-            className={`relative cursor-pointer overflow-hidden rounded-3xl group shadow-sm hover:shadow-xl transition-all duration-500 ${spanClass}`}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            {/* Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d4a7e]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <div className="absolute bottom-6 left-6">
-                <p className="text-white font-semibold text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  {image.alt}
-                </p>
-                <div className="w-8 h-1 bg-[#25a18e] mt-2 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </div>
-            </div>
+      {/* Office Section */}
+      <section className="py-24 bg-[#f8fafc]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-2 rounded-full bg-[#f0fdfa] text-[#1a8a81] font-medium text-sm mb-4 border border-[#ccfbf1]">
+              Our Workspace
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#0d4a7e] mb-4">
+              Where <span className="text-[#25a18e]">Innovation</span> Happens
+            </h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+              Take a peek inside our modern workspace designed to inspire
+              creativity and collaboration.
+            </p>
           </div>
-        );
-      })}
-    </div>
-  </div>
-</section>
+
+          {/* Balanced Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px] max-w-7xl mx-auto">
+            {officeImages?.map((image, index) => {
+              const spanClass =
+                index === 0
+                  ? "md:col-span-2 md:row-span-2"
+                  : index === 2
+                  ? "md:row-span-2"
+                  : index === 4
+                  ? "md:col-span-2"
+                  : "";
+
+              return (
+                <div
+                  key={index}
+                  className={`relative cursor-pointer overflow-hidden rounded-3xl group shadow-sm hover:shadow-xl transition-all duration-500 ${spanClass}`}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d4a7e]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="absolute bottom-6 left-6">
+                      <p className="text-white font-semibold text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        {image.alt}
+                      </p>
+                      <div className="w-8 h-1 bg-[#25a18e] mt-2 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* Team Section */}
       <section className="py-24 bg-[#f1f5f9]">
