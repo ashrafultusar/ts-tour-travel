@@ -30,8 +30,8 @@ const MeetCounselors = () => {
       <div className="relative z-10 flex flex-col lg:block w-full max-w-7xl px-6">
         
         {/* Image Container */}
-        {/* sm/md তে z-10 (কার্ডের নিচে) এবং lg তে z-30 (কার্ডের উপরে) */}
-        <div className="relative z-10 lg:z-30 order-1 lg:order-none lg:absolute lg:-top-24 lg:right-0 group">
+       
+        <div className="relative z-10 lg:z-30 order-1  lg:order-none lg:absolute  lg:-top-17 lg:right-0 group">
           <div className="relative w-[300px] h-[380px] md:w-[450px] md:h-[580px] lg:w-[500px] lg:h-[700px] transition-transform duration-500 group-hover:scale-[1.02]">
             <Image
               src={counselorImage}
@@ -44,7 +44,7 @@ const MeetCounselors = () => {
         </div>
 
         {/* Text Card */}
-        {/* sm/md তে z-20 যাতে ইমেজ নিচে থাকে, নেগেটিভ মার্জিন দিয়ে উপরে ওঠানো হয়েছে */}
+       
         <div
           className="relative z-20 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] 
                       p-8 md:p-12 lg:p-20 
