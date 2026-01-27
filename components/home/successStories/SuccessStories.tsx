@@ -32,15 +32,15 @@ const SuccessStories: React.FC = async () => {
         </div>
 
         <div className="relative w-full overflow-hidden py-10">
-          <div className="absolute left-0 top-0 w-16 md:w-32 h-full bg-gradient-to-r from-[#F8FAFC] to-transparent z-20 pointer-events-none" />
-          <div className="absolute right-0 top-0 w-16 md:w-32 h-full bg-gradient-to-l from-[#F8FAFC] to-transparent z-20 pointer-events-none" />
+          <div className="absolute left-0 top-0 w-16 md:w-32 h-full bg-linear-to-r from-[#F8FAFC] to-transparent z-20 pointer-events-none" />
+          <div className="absolute right-0 top-0 w-16 md:w-32 h-full bg-linear-to-l from-[#F8FAFC] to-transparent z-20 pointer-events-none" />
 
-          <div className="flex w-max gap-6 md:gap-10 animate-testimonial-scroll hover:[animation-play-state:paused] cursor-pointer">
+          <div className="flex w-max gap-6 md:gap-10 animate-testimonial-scroll hover:paused cursor-pointer">
             {/* Map over the stories with the correct keys from your console log */}
             {stories?.map((testimonial: Testimonial, index) => (
               <div
                 key={`${testimonial._id}-${index}`}
-                className="w-[80vw] md:w-[420px] shrink-0 relative flex flex-col p-8 rounded-[32px] bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#14919B20] transition-all duration-300 group"
+                className="w-[80vw] md:w-105 shrink-0 relative flex flex-col p-8 rounded-[32px] bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#14919B20] transition-all duration-300 group"
               >
                 <div className="absolute -top-4 right-8 w-10 h-10 rounded-full bg-[#14919B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <Quote className="w-4 h-4 text-white fill-current" />
@@ -53,7 +53,7 @@ const SuccessStories: React.FC = async () => {
                   ))}
                 </div>
 
-                <p className="text-gray-500 mb-8 text-sm md:text-base leading-relaxed italic min-h-[90px]">
+                <p className="text-gray-500 mb-8 text-sm md:text-base leading-relaxed italic min-h-22.5">
                   {testimonial?.story}
                 </p>
 
@@ -63,7 +63,7 @@ const SuccessStories: React.FC = async () => {
                       src={testimonial?.image}
                       alt={testimonial?.studentName}
                       fill
-                      sizes="(max-width: 768px) 48px, 56px" 
+                      sizes="(max-width: 768px) 48px, 56px"
                       className="object-cover"
                     />
                   </div>

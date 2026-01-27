@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 
 const counselorImage = "/assets/counselor/image1.png";
 
@@ -29,7 +28,6 @@ const MeetCounselors = () => {
       />
 
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4">
-        
         {/* --- Image Section --- */}
         {/* z-index মোবাইলে পেছনে (z-0) এবং বড় স্ক্রিনে সামনে (lg:z-20) */}
         <div className="relative z-0 lg:z-20 order-1 lg:order-2">
@@ -46,11 +44,12 @@ const MeetCounselors = () => {
 
         {/* --- Text Card Section --- */}
         {/* মোবাইলে কার্ডটি ইমেজের উপরে ভেসে থাকার জন্য -mt-24 এবং z-10 রাখা হয়েছে */}
-        <div className="relative z-10 bg-white rounded-xl shadow-2xl p-6 md:p-10 lg:p-14 
+        <div
+          className="relative z-10 bg-white rounded-xl shadow-2xl p-6 md:p-10 lg:p-14 
                         max-w-[340px] md:max-w-2xl lg:max-w-3xl 
                         -mt-24 md:-mt-32 lg:mt-0 lg:-mr-32 order-2 lg:order-1 
-                        border border-white/50">
-          
+                        border border-white/50"
+        >
           <div className="relative">
             <p className="text-gray-600 italic leading-relaxed text-[14px] md:text-base lg:pr-32 text-justify pt-2">
               {counselor.description}
@@ -66,7 +65,6 @@ const MeetCounselors = () => {
             </p>
           </div>
         </div>
-
       </div>
     </section>
   );
