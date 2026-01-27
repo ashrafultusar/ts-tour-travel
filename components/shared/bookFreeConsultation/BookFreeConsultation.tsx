@@ -33,10 +33,8 @@ const BookFreeConsultation: React.FC = () => {
   const handleWhatsAppSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // আপনার হোয়াটসঅ্যাপ নম্বর
-    const myNumber = "8801571419493";
+    const myNumber = "+60177085596";
 
-    // মেসেজটি সুন্দরভাবে সাজানো (Line break এর জন্য %0A ব্যবহার করা হয়েছে)
     const text =
       `*New Inquiry from Website*%0A%0A` +
       `*Name:* ${formData.name}%0A` +
@@ -45,10 +43,8 @@ const BookFreeConsultation: React.FC = () => {
       `*Service:* ${formData.service}%0A` +
       `*Message:* ${formData.message || "No message"}`;
 
-    // WhatsApp API URL - এটি সরাসরি আপনার ইনবক্সে মেসেজটি নিয়ে যাবে
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${myNumber}&text=${text}`;
 
-    // নতুন ট্যাবে ওপেন করা
     window.open(whatsappUrl, "_blank");
   };
 
@@ -116,7 +112,7 @@ const BookFreeConsultation: React.FC = () => {
             >
               <option value="">Select Service</option>
               <option value="Malaysia Admission">Malaysia Admission</option>
-            
+
               <option value="Tourist Visa">Tourist Visa</option>
               <option value="Air Ticket">Air Ticket</option>
             </select>

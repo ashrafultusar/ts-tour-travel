@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: ["/profile", "/api/"],
+            disallow: ["/profile", "/api/", "/ts-staff-portal"],
         },
-        sitemap: "https://example.com/sitemap.xml", // Replace with actual domain
+        sitemap: "https://tstourtravels.com/sitemap.xml", // Replace with actual domain
     };
 }
