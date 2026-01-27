@@ -1,68 +1,82 @@
 import Image from "next/image";
-import React from "react";
 
 const counselorImage = "/assets/counselor/image1.png";
 
 const MeetCounselors = () => {
   const counselor = {
-    name: "Engr. Md. Jahirul Islam Piash",
-    title: "General Manager",
+    name: "Tofayel Ahamed",
+    title: "CEO",
     description:
-      "Engr. Jahirul Islam Piash serves as the General Manager of Tawakkul Malaysia Education Consultancy, overseeing all operations in Bangladesh. With a solid background in engineering and management, he plays a crucial role in ensuring that the company's services are executed smoothly and meet high standards.",
+      "With years of expertise in global education and travel consultancy, Tofayel Ahamed leads our mission to bridge the gap between local talent and international opportunities. His vision is to empower students by providing seamless guidance for their academic journeys abroad. Under his leadership, we don't just plan trips; we craft life-changing educational experiences that shape future leaders.",
   };
 
   return (
-    // min-h-screen সরিয়ে দিয়ে h-auto বা নির্দিষ্ট প্যাডিং দেওয়া হয়েছে যেন হাইট কমে যায়
-    <section className="relative h-auto overflow-hidden bg-[#f0f4f7] flex flex-col items-center justify-center py-12 md:py-24">
-      {/* 1. Background Pattern */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-30"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            90deg,
-            #dbeafe 0px,
-            #dbeafe 60px,
-            transparent 60px,
-            transparent 120px
-          )`,
-        }}
-      />
+    <section className="relative h-auto overflow-hidden bg-gradient-to-b from-[#f8fafc] to-[#f0f4f7] flex flex-col items-center justify-center py-16 md:py-28">
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute top-10 left-10 w-64 h-64 bg-[#14919B] rounded-full blur-[100px]" />
+        <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#00aeef] rounded-full blur-[100px]" />
+      </div>
 
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4">
+      <div className="relative z-10 mb-12 text-center px-4">
+        <h2 className="text-4xl md:text-6xl font-extrabold text-[#2D3142] tracking-tight">
+          Our <span className="text-[#14919B]">Leadership</span>
+        </h2>
+        <div className="h-1.5 w-24 bg-[#14919B] mx-auto mt-4 rounded-full" />
+      </div>
+
+      {/* Main Wrapper */}
+      <div className="relative z-10 flex flex-col lg:block w-full max-w-7xl px-6">
         
-        {/* --- Image Section --- */}
-        {/* z-index মোবাইলে পেছনে (z-0) এবং বড় স্ক্রিনে সামনে (lg:z-20) */}
-        <div className="relative z-0 lg:z-20 order-1 lg:order-2">
-          <div className="relative w-[280px] h-[350px] md:w-[400px] md:h-[550px] lg:w-[480px] lg:h-[600px]">
+        {/* Image Container */}
+        {/* sm/md তে z-10 (কার্ডের নিচে) এবং lg তে z-30 (কার্ডের উপরে) */}
+        <div className="relative z-10 lg:z-30 order-1 lg:order-none lg:absolute lg:-top-24 lg:right-0 group">
+          <div className="relative w-[300px] h-[380px] md:w-[450px] md:h-[580px] lg:w-[500px] lg:h-[700px] transition-transform duration-500 group-hover:scale-[1.02]">
             <Image
               src={counselorImage}
               alt={counselor.name}
               fill
               priority
-              className="object-contain object-bottom drop-shadow-xl"
+              className="object-contain object-bottom drop-shadow-2xl"
             />
           </div>
         </div>
 
-        {/* --- Text Card Section --- */}
-        {/* মোবাইলে কার্ডটি ইমেজের উপরে ভেসে থাকার জন্য -mt-24 এবং z-10 রাখা হয়েছে */}
-        <div className="relative z-10 bg-white rounded-xl shadow-2xl p-6 md:p-10 lg:p-14 
-                        max-w-[340px] md:max-w-2xl lg:max-w-3xl 
-                        -mt-24 md:-mt-32 lg:mt-0 lg:-mr-32 order-2 lg:order-1 
-                        border border-white/50">
-          
+        {/* Text Card */}
+        {/* sm/md তে z-20 যাতে ইমেজ নিচে থাকে, নেগেটিভ মার্জিন দিয়ে উপরে ওঠানো হয়েছে */}
+        <div
+          className="relative z-20 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] 
+                      p-8 md:p-12 lg:p-20 
+                      lg:pr-[400px] 
+                      max-w-full lg:max-w-[1050px] 
+                      -mt-20 md:-mt-32 lg:mt-0 
+                      order-2 lg:order-none 
+                      border border-white/50"
+        >
           <div className="relative">
-            <p className="text-gray-600 italic leading-relaxed text-[14px] md:text-base lg:pr-32 text-justify pt-2">
+            {/* Quote Icon */}
+            <svg 
+              className="absolute -top-6 -left-6 md:-top-10 md:-left-10 w-12 h-12 md:w-20 md:h-20 text-[#14919B] opacity-10" 
+              fill="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9125 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H12.017V21H14.017ZM6.01701 21L6.01701 18C6.01701 16.8954 6.91244 16 8.01701 16H11.017C11.5693 16 12.017 15.5523 12.017 15V9C12.017 8.44772 11.5693 8 11.017 8H7.01701C6.46473 8 6.01701 8.44772 6.01701 9V12C6.01701 12.5523 5.56928 13 5.01701 13H4.01701V21H6.01701Z" />
+            </svg>
+            
+            <p className="text-slate-600 text-lg md:text-xl leading-relaxed font-medium italic relative z-10 text-justify">
+              <span className="text-[#14919B] text-2xl font-serif">“</span>
               {counselor.description}
+              <span className="text-[#14919B] text-2xl font-serif">”</span>
             </p>
           </div>
 
-          <div className="mt-6 border-t pt-4">
-            <h3 className="text-[#00aeef] font-bold text-lg md:text-2xl">
-              {counselor.name}
+          <div className="mt-8">
+            <h3 className="text-[#14919B] font-bold text-xl md:text-2xl">
+              {counselor?.name}
             </h3>
-            <p className="text-gray-500 text-sm md:text-base mt-1 font-semibold uppercase tracking-wider">
-              {counselor.title}
+            <p className="text-slate-500 text-sm md:text-base font-semibold mt-1">
+              {counselor?.title}
             </p>
           </div>
         </div>

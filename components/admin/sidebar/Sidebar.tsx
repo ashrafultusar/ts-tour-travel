@@ -1,4 +1,5 @@
 'use client'
+import { LogoutButton } from '@/components/auth/LogoutButton';
 import { 
   LayoutDashboard, 
   UserCog, 
@@ -119,20 +120,9 @@ export default function Sidebar() {
 
           {/* ===== LOGOUT ===== */}
           <div className="px-3 py-4 border-t border-white/5">
-            <button
-              className="
-                w-full flex items-center gap-3
-                px-3 py-2.5
-                text-sm font-medium
-                rounded-lg
-                text-red-400
-                hover:bg-red-500/10
-                transition-all
-              "
-            >
-              <LogOut size={20} />
-              <span className={`${!isOpen && "lg:hidden"}`}>Logout</span>
-            </button>
+         
+              <LogoutButton className="w-full cursor-pointer text-red-600 text-sm py-2.5 px-3 rounded-xl hover:bg-red-50 transition-colors text-left font-semibold flex items-center gap-3" />
+         
           </div>
         </div>
       </aside>

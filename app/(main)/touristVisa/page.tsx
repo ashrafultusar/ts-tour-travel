@@ -10,7 +10,6 @@ import {
   Hotel, 
   Car,  
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const services = [
@@ -45,33 +44,33 @@ const destinations = [
   {
     name: "Thailand",
     country: "Southeast Asia",
-    image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1000&auto=format&fit=crop",
+    image: "/assets/country/thailand.jpg",
   },
   {
     name: "Singapore",
     country: "Southeast Asia",
-    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1000&auto=format&fit=crop",
+    image: "/assets/country/Singapore.jpg"
   },
   {
     name: "Nepal",
     country: "South Asia",
-    image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1000&auto=format&fit=crop",
+    image: "/assets/country/nepal.jpg"
   },
   {
     name: "Maldives",
     country: "Indian Ocean",
-    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=1000&auto=format&fit=crop",
+    image: "/assets/country/maldives.jpg"
   },
   {
     name: "Sri Lanka",
     country: "South Asia",
-    image: "https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=1000&auto=format&fit=crop",
+    image: "/assets/country/SriLanka.jpg"
   },
   {
     name: "Saudi Arabia",
     country: "Middle East",
-    image: "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?q=80&w=1000&auto=format&fit=crop",
-    isSpecial: true,
+    image: "/assets/country/saudarabia.jpg",
+        isSpecial: true,
   },
 ];
 
