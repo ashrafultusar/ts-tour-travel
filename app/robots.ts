@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: "/",
             disallow: ["/profile", "/api/", "/ts-staff-portal"],
         },
-        sitemap: "https://example.com/sitemap.xml", // Replace with actual domain
+        sitemap: "https://tstourtravels.com/sitemap.xml", // Replace with actual domain
     };
 }

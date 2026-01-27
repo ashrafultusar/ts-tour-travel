@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TS TOUR & TRAVEL",
     description: "Your trusted partner for global exploration.",
-    url: "https://your-domain.com",
+    url: "https://tstourtravels.com",
     siteName: "TS TOUR & TRAVEL",
     images: [
       {
