@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import { ArrowRight, GraduationCap, Building2, Plane } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,8 +15,8 @@ to-[#EAF3FF]
 py-12 lg:py-16 flex items-center overflow-hidden"
     >
       {/* Background Subtle Gradient Glow */}
-      <div className="absolute top-1/2 left-[-10%] -translate-y-1/2 w-[600px] h-[600px] bg-[#F3E8BB]/40 rounded-full blur-[120px] -z-10" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#D1E9E6]/30 rounded-full blur-[100px] -z-10" />
+      <div className="absolute top-1/2 left-[-10%] -translate-y-1/2 w-150 h-150 bg-[#F3E8BB]/40 rounded-full blur-[120px] -z-10" />
+      <div className="absolute bottom-0 right-0 w-100 h-100 bg-[#D1E9E6]/30 rounded-full blur-[100px] -z-10" />
 
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -96,13 +95,14 @@ py-12 lg:py-16 flex items-center overflow-hidden"
               <div className="absolute inset-0 border-2 border-dashed border-teal-200 rounded-full animate-[spin_30s_linear_infinite]" />
 
               {/* Inner Circle Image */}
-              <div className={styles.imageCircle}>
+              <div className={`${styles.imageCircle} relative overflow-hidden`}>
                 <Image
                   src="/assets/home/malaysia-cityscape.jpg"
                   alt="Study in Malaysia"
                   fill
-                  className="object-cover"
                   priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                  className="object-cover transition-transform duration-500 hover:scale-105"
                 />
               </div>
 

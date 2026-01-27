@@ -16,7 +16,6 @@ import {
   LayoutDashboard,
   ChevronDown,
   User,
-
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -62,7 +61,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-[60] border-b border-slate-100 shadow-sm transition-all duration-300">
+      <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-60 border-b border-slate-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-20 flex items-center justify-between">
             {/* --- Left Side: Mobile Toggle & Logo --- */}
@@ -106,8 +105,8 @@ export default function Navbar() {
                       isActive
                         ? "text-blue-700 bg-blue-50"
                         : isDashboard
-                        ? "text-orange-600 hover:bg-orange-50"
-                        : "text-slate-600 hover:text-blue-600 hover:bg-slate-50"
+                          ? "text-orange-600 hover:bg-orange-50"
+                          : "text-slate-600 hover:text-blue-600 hover:bg-slate-50"
                     }`}
                   >
                     {link.name}
@@ -118,8 +117,6 @@ export default function Navbar() {
 
             {/* --- Right Side: Buttons & User Actions --- */}
             <div className="flex items-center gap-2 sm:gap-4">
-            
-
               {/* Profile / Login Logic */}
               <div className="flex items-center gap-3">
                 {isLoading ? (
@@ -197,21 +194,23 @@ export default function Navbar() {
       />
 
       <aside
-        className={`fixed top-0 left-0 h-full w-[280px] bg-white z-[100] shadow-2xl transform transition-transform duration-300 ease-out ${
+        className={`fixed top-0 left-0 h-full w-70 bg-white z-100 shadow-2xl transform transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-6 flex justify-between items-center border-b">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 relative">
+            <div className="w-10 h-10 flex items-center justify-center">
               <Image
                 src="/assets/logo/logo.jpg"
-                alt="Logo"
-                fill
+                alt="TS TOUR AND TRAVEL"
+                width={40}
+                height={40}
                 className="rounded-full object-contain"
+                priority
               />
             </div>
-            <span className="font-bold text-slate-800">Menu</span>
+            <span className="font-bold text-slate-800 text-lg">Menu</span>
           </div>
           <button
             onClick={() => setMobileOpen(false)}
@@ -222,9 +221,6 @@ export default function Navbar() {
         </div>
 
         <nav className="py-4 px-3 h-[calc(100vh-100px)] overflow-y-auto">
-         
-         
-
           <div className="border-t border-slate-100 my-4" />
 
           {navLinks.map((link) => {
