@@ -12,7 +12,6 @@ const MeetCounselors = () => {
 
   return (
     <section className="relative h-auto overflow-hidden bg-gradient-to-b from-[#f8fafc] to-[#f0f4f7] flex flex-col items-center justify-center py-16 md:py-28">
-      
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
         <div className="absolute top-10 left-10 w-64 h-64 bg-[#14919B] rounded-full blur-[100px]" />
@@ -28,23 +27,23 @@ const MeetCounselors = () => {
 
       {/* Main Wrapper */}
       <div className="relative z-10 flex flex-col lg:block w-full max-w-7xl px-6">
-        
         {/* Image Container */}
-       
-        <div className="relative z-10 lg:z-30 order-1  lg:order-none lg:absolute  lg:-top-17 lg:right-0 group">
+
+        <div className="relative z-10 lg:z-30 order-1  lg:order-0 lg:absolute  lg:-top-17 lg:right-0 group">
           <div className="relative w-[300px] h-[380px] md:w-[450px] md:h-[580px] lg:w-[500px] lg:h-[700px] transition-transform duration-500 group-hover:scale-[1.02]">
             <Image
               src={counselorImage}
-              alt={counselor.name}
+              alt={`Counselor ${counselor.name}`}
               fill
               priority
+              sizes="(max-width: 768px) 300px, (max-width: 1024px) 450px, 500px"
               className="object-contain object-bottom drop-shadow-2xl"
             />
           </div>
         </div>
 
         {/* Text Card */}
-       
+
         <div
           className="relative z-20 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] 
                       p-8 md:p-12 lg:p-20 
@@ -56,14 +55,14 @@ const MeetCounselors = () => {
         >
           <div className="relative">
             {/* Quote Icon */}
-            <svg 
-              className="absolute -top-6 -left-6 md:-top-10 md:-left-10 w-12 h-12 md:w-20 md:h-20 text-[#14919B] opacity-10" 
-              fill="currentColor" 
+            <svg
+              className="absolute -top-6 -left-6 md:-top-10 md:-left-10 w-12 h-12 md:w-20 md:h-20 text-[#14919B] opacity-10"
+              fill="currentColor"
               viewBox="0 0 24 24"
             >
               <path d="M14.017 21L14.017 18C14.017 16.8954 14.9125 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H12.017V21H14.017ZM6.01701 21L6.01701 18C6.01701 16.8954 6.91244 16 8.01701 16H11.017C11.5693 16 12.017 15.5523 12.017 15V9C12.017 8.44772 11.5693 8 11.017 8H7.01701C6.46473 8 6.01701 8.44772 6.01701 9V12C6.01701 12.5523 5.56928 13 5.01701 13H4.01701V21H6.01701Z" />
             </svg>
-            
+
             <p className="text-slate-600 text-lg md:text-xl leading-relaxed font-medium italic relative z-10 text-justify">
               <span className="text-[#14919B] text-2xl font-serif">“</span>
               {counselor.description}
@@ -80,7 +79,6 @@ const MeetCounselors = () => {
             </p>
           </div>
         </div>
-
       </div>
     </section>
   );
