@@ -15,9 +15,9 @@ export default function Home() {
       <OurUniversities />
       <AboutUs />
       <WhyChooseUs />
-      <Counselors/>
+      <Counselors />
       <Suspense
-        fallback={<div className="h-40 w-full bg-slate-100 animate-pulse" />}
+        fallback={<div className="h-80 w-full bg-slate-100 animate-pulse" />}
       >
         <SuccessStories />
       </Suspense>

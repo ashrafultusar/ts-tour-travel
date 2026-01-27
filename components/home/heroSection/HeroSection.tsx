@@ -16,7 +16,7 @@ to-[#EAF3FF]
 py-12 lg:py-16 flex items-center overflow-hidden"
     >
       {/* Background Subtle Gradient Glow */}
-      <div className="absolute top-1/2 left-[-10%] -translate-y-1/2 w-[600px] h-[600px] bg-[#F3E8BB]/40 rounded-full blur-[120px] -z-10" />
+      <div className="absolute top-1/2 left-[-10%] -translate-y-1/2 w-150 h-[600px] bg-[#F3E8BB]/40 rounded-full blur-[120px] -z-10" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#D1E9E6]/30 rounded-full blur-[100px] -z-10" />
 
       <div className="container mx-auto px-6 lg:px-12">
