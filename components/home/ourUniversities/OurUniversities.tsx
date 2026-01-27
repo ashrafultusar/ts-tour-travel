@@ -32,7 +32,6 @@ const OurUniversities = () => {
                 width={150}
                 height={60}
                 className={styles.universityLogo}
-                
                 priority={index < 8}
               />
             </div>
