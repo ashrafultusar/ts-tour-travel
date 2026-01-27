@@ -204,7 +204,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 flex items-center justify-center">
               <Image
-                src="/assets/logo/logo1.png"
+                src="/assets/logo/logo.png"
                 alt="TS TOUR AND TRAVEL"
                 width={40}
                 height={40}
