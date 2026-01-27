@@ -13,7 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TS TOUR & TRAVEL",
+  metadataBase: new URL("https://tstourtravels.com"),
+  title: {
+    default: "TS TOUR & TRAVEL",
+    template: "%s | TS TOUR & TRAVEL",
+  },
   description:
     "Experience the best travel agency services. We offer affordable tour packages, hotel bookings, and flight tickets worldwide.",
   keywords: [
