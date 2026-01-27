@@ -29,7 +29,8 @@ const Footer = () => {
       icon: Instagram,
       href: "#",
       label: "Instagram",
-      brandClass: "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white",
+      brandClass:
+        "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white",
     },
     {
       icon: Youtube,
@@ -46,7 +47,7 @@ const Footer = () => {
       ),
       href: "#",
       label: "Tiktok",
-      brandClass: "bg-black text-white", 
+      brandClass: "bg-black text-white",
     },
   ];
 
@@ -55,32 +56,31 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-16">
         {/* Grid Alignment: 3 Columns for a cleaner look since Office Hours is removed */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-24 items-start">
-          
           {/* 1. Brand & Socials */}
           <div className="space-y-6">
-          <div className="flex items-center gap-4">
-  {/* Logo Container */}
-  <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md bg-white p-0.5">
-    <Image
-      src="/assets/logo/logo.jpg"
-      alt="Agency Logo"
-      fill
-      sizes="(max-width: 768px) 48px, 56px"
-      priority
-      className="object-contain rounded-full"
-    />
-  </div>
+            <div className="flex items-center gap-4">
+              {/* Logo Container */}
+              <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md bg-white p-0.5">
+                <Image
+                  src="/assets/logo/logo.jpg"
+                  alt="Agency Logo"
+                  fill
+                  sizes="(max-width: 768px) 48px, 56px"
+                  priority
+                  className="object-contain rounded-full"
+                />
+              </div>
 
-  {/* Text Content */}
-  <div className="flex flex-col">
-    <span className="text-lg sm:text-xl font-bold text-white leading-tight">
-      TS Tour & Travel
-    </span>
-    <span className="text-xs sm:text-sm text-[#64748B] font-medium italic">
-    text-white
-    </span>
-  </div>
-</div>
+              {/* Text Content */}
+              <div className="flex flex-col">
+                <span className="text-lg sm:text-xl font-bold text-white leading-tight">
+                  TS Tour & Travel
+                </span>
+                <span className="text-xs sm:text-sm text-[#64748B] font-medium italic">
+                  ANYTHING ANYTIME
+                </span>
+              </div>
+            </div>
 
             <p className="text-white/60 leading-relaxed text-sm max-w-sm">
               The most trusted education consultancy in Bangladesh. We are by
@@ -108,7 +108,10 @@ const Footer = () => {
             <h3 className="text-lg font-bold text-white mb-6">Our Services</h3>
             <ul className="space-y-4">
               {services.map((service) => (
-                <li key={service} className="flex items-center gap-2 group cursor-pointer">
+                <li
+                  key={service}
+                  className="flex items-center gap-2 group cursor-pointer"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/40 group-hover:bg-cyan-400 transition-colors" />
                   <span className="text-white/60 text-sm group-hover:text-white transition-colors">
                     {service}
@@ -131,13 +134,19 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3 group">
                 <Phone className="w-5 h-5 text-cyan-400 shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="tel:+8801341462233" className="text-white/60 text-sm hover:text-white transition-colors">
+                <a
+                  href="tel:+8801341462233"
+                  className="text-white/60 text-sm hover:text-white transition-colors"
+                >
                   +880 1341-462233
                 </a>
               </li>
               <li className="flex items-center gap-3 group">
                 <Mail className="w-5 h-5 text-cyan-400 shrink-0 group-hover:scale-110 transition-transform" />
-                <a href="mailto:info@tstourtravels.com" className="text-white/60 text-sm hover:text-white transition-colors break-all">
+                <a
+                  href="mailto:info@tstourtravels.com"
+                  className="text-white/60 text-sm hover:text-white transition-colors break-all"
+                >
                   info@tstourtravels.com
                 </a>
               </li>
@@ -149,8 +158,12 @@ const Footer = () => {
         <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 text-xs">
           <p>© 2026 TS Tour & Travel. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-white transition-colors">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>
