@@ -34,13 +34,11 @@ const AirlinePartners = () => {
           fill
           priority
           className="object-cover"
-          quality={60}
         />
         <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-[2px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10 w-full text-center">
-        {/* Title Section */}
         <div className="mb-10">
           <h2 className="text-xl md:text-3xl font-serif tracking-[0.2em] text-white uppercase mb-2">
             Our Trusted Airline Partners
@@ -48,7 +46,6 @@ const AirlinePartners = () => {
           <div className="w-20 md:w-32 h-0.5 bg-blue-500 mx-auto"></div>
         </div>
 
-        {/* Logos Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
           {airlines.map((airline, index) => (
             <div
