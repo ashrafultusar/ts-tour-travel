@@ -16,6 +16,8 @@ import {
   LayoutDashboard,
   ChevronDown,
   User,
+  MessageCircle, // WhatsApp icon er moto kaj korbe
+  Send,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -78,16 +80,16 @@ export default function Navbar() {
                 href="/"
                 className="flex items-center gap-2 group active:scale-95 transition-transform"
               >
-                <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md bg-white p-0.5">
-                  <Image
-                    src="/assets/logo/logo.jpg"
-                    alt="Agency Logo"
-                    fill
-                    sizes="(max-width: 768px) 48px, 56px"
-                    priority
-                    className="object-contain rounded-full"
-                  />
-                </div>
+               <div className="relative h-16 w-16 sm:h-24 sm:w-24 shrink-0">
+  <Image
+    src="/assets/logo/logo.png"
+    alt="Agency Logo"
+    fill
+    sizes="(max-width: 768px) 80px, 96px"
+    priority
+    className="object-contain"
+  />
+</div>
               </Link>
             </div>
 
@@ -202,7 +204,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 flex items-center justify-center">
               <Image
-                src="/assets/logo/logo.jpg"
+                src="/assets/logo/logo1.png"
                 alt="TS TOUR AND TRAVEL"
                 width={40}
                 height={40}

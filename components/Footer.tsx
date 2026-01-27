@@ -54,20 +54,20 @@ const Footer = () => {
   return (
     <footer className="bg-[#172636] text-white/80">
       <div className="container mx-auto px-4 py-16">
-        {/* Grid Alignment: 3 Columns for a cleaner look since Office Hours is removed */}
+      
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-24 items-start">
           {/* 1. Brand & Socials */}
           <div className="space-y-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center ">
               {/* Logo Container */}
-              <div className="relative h-12 w-12 sm:h-14 sm:w-14 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md bg-white p-0.5">
+              <div className="relative h-20 w-20 sm:h-24  sm:w-24 shrink-0">
                 <Image
-                  src="/assets/logo/logo.jpg"
+                  src="/assets/logo/logo.png"
                   alt="Agency Logo"
                   fill
-                  sizes="(max-width: 768px) 48px, 56px"
+                  sizes="(max-width: 768px) 80px, 96px"
                   priority
-                  className="object-contain rounded-full"
+                  className="object-contain"
                 />
               </div>
 
