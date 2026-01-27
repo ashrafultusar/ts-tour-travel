@@ -17,6 +17,7 @@ const universities = [
 ];
 
 const OurUniversities = () => {
+ 
   const doubleUniversities = [...universities, ...universities];
 
   return (
@@ -24,19 +25,15 @@ const OurUniversities = () => {
       <div className={styles.sliderContainer}>
         <div className={styles.sliderTrack}>
           {doubleUniversities.map((uni, index) => (
-            <div
-              key={`${uni.id}-${index}`}
-              className={`${styles.logoItem} relative flex items-center justify-center p-2`}
-            >
+            <div key={`${uni.id}-${index}`} className={styles.logoItem}>
               <Image
                 src={uni.img}
-                alt={`${uni.name} logo`}
+                alt={uni.name}
                 width={150}
-                height={80}
-                className={`${styles.universityLogo} object-contain grayscale hover:grayscale-0 transition-all duration-300`}
+                height={60}
+                className={styles.universityLogo}
+                
                 priority={index < 8}
-                sizes="(max-width: 768px) 100px, 150px"
-                loading={index < 8 ? undefined : "lazy"}
               />
             </div>
           ))}
