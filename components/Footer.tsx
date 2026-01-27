@@ -72,7 +72,7 @@ const Footer = () => {
               </div>
 
               {/* Text Content */}
-              <div className="flex flex-col">
+              <div className="flex flex-col">npm 
                 <span className="text-lg sm:text-xl font-bold text-white leading-tight">
                   TS Tour & Travel
                 </span>
