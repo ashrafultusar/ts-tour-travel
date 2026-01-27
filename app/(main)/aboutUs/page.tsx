@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Target, Award, Heart, CheckCircle2 } from "lucide-react";
 import { getTeamMembers } from "@/lib/data/team";
 import Image from "next/image";
@@ -45,12 +45,12 @@ const values = [
 ];
 
 const AboutUs = async () => {
-  const { members } = await getTeamMembers(1, 100); 
+  const { members } = await getTeamMembers(1, 100);
 
   return (
     <div className="overflow-hidden bg-[#f8fafc]">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]">
+      <section className="py-20 bg-linear-to-r from-[#0d4a7e] via-[#1a8a81] to-[#25a18e]">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             About Us
@@ -79,8 +79,8 @@ const AboutUs = async () => {
                 international students.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                We don't just process visas; we help every student choose the
-                right university and course based on their career goals.
+                We don&apos;t just process visas; we help every student choose
+                the right university and course based on their career goals.
               </p>
               <ul className="grid grid-cols-1 gap-4">
                 {[
@@ -99,11 +99,15 @@ const AboutUs = async () => {
               </ul>
             </div>
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl border-[12px] border-[#f8fafc]">
-                <img
+              <div className="rounded-3xl overflow-hidden shadow-2xl border-12 border-[#f8fafc] relative w-full h-100">
+                <Image
                   src="/assets/aboutUs/image1.jpg"
                   alt="Our Office Environment"
-                  className="w-full h-full object-cover"
+                  fill
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA6prehQAAAABJRU5ErkJggg=="
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
             </div>
@@ -165,10 +169,10 @@ const AboutUs = async () => {
                 index === 0
                   ? "md:col-span-2 md:row-span-2"
                   : index === 2
-                  ? "md:row-span-2"
-                  : index === 4
-                  ? "md:col-span-2"
-                  : "";
+                    ? "md:row-span-2"
+                    : index === 4
+                      ? "md:col-span-2"
+                      : "";
 
               return (
                 <div
@@ -179,11 +183,13 @@ const AboutUs = async () => {
                     src={image.src}
                     alt={image.alt}
                     fill
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA6prehQAAAABJRU5ErkJggg=="
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   {/* Overlay Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d4a7e]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0d4a7e]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <div className="absolute bottom-6 left-6">
                       <p className="text-white font-semibold text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                         {image.alt}
@@ -215,12 +221,17 @@ const AboutUs = async () => {
                   key={member._id}
                   className="bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="aspect-[4/5] overflow-hidden rounded-xl mb-6 bg-gray-100">
+                  <div className="aspect-4/5 overflow-hidden rounded-xl mb-6 bg-gray-100 relative">
                     {member.image ? (
-                      <img
+                      <Image
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        className="object-cover transition-opacity duration-300"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA6prehQAAAABJRU5ErkJggg=="
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
