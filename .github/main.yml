@@ -24,7 +24,7 @@ jobs:
       
       - name: 🔐 Create .env file
         run: |
-          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.production
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env.production
           echo "NODE_ENV=production" >> .env.production
           echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
       
