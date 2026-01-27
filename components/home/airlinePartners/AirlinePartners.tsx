@@ -29,7 +29,7 @@ const AirlinePartners = () => {
     <section className="relative w-full py-10 md:py-16 px-4 overflow-hidden min-h-75 flex items-center">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80"
+          src="/assets/airlinePartners/bg.jpg"
           alt="Background"
           fill
           priority
