@@ -5,14 +5,15 @@ const counselorImage = "/assets/counselor/image1.png";
 
 const MeetCounselors = () => {
   const counselor = {
-    name: "Engr. Md. Jahirul Islam Piash",
+    name: "John deo",
     title: "General Manager",
     description:
-      "Engr. Jahirul Islam Piash serves as the General Manager of Tawakkul Malaysia Education Consultancy, overseeing all operations in Bangladesh. With a solid background in engineering and management, he plays a crucial role in ensuring that the company's services are executed smoothly and meet high standards.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas illum nam ad nihil quaerat. Ipsa eum vitae ex facere commodi aperiam maxime architecto id amet explicabo. Deleniti eum tempora veritatis."
   };
+  
 
   return (
-    // min-h-screen সরিয়ে দিয়ে h-auto বা নির্দিষ্ট প্যাডিং দেওয়া হয়েছে যেন হাইট কমে যায়
+ 
     <section className="relative h-auto overflow-hidden bg-[#f0f4f7] flex flex-col items-center justify-center py-12 md:py-24">
       {/* 1. Background Pattern */}
       <div
@@ -29,9 +30,7 @@ const MeetCounselors = () => {
       />
 
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4">
-        
-        {/* --- Image Section --- */}
-        {/* z-index মোবাইলে পেছনে (z-0) এবং বড় স্ক্রিনে সামনে (lg:z-20) */}
+    
         <div className="relative z-0 lg:z-20 order-1 lg:order-2">
           <div className="relative w-[280px] h-[350px] md:w-[400px] md:h-[550px] lg:w-[480px] lg:h-[600px]">
             <Image
@@ -44,8 +43,6 @@ const MeetCounselors = () => {
           </div>
         </div>
 
-        {/* --- Text Card Section --- */}
-        {/* মোবাইলে কার্ডটি ইমেজের উপরে ভেসে থাকার জন্য -mt-24 এবং z-10 রাখা হয়েছে */}
         <div className="relative z-10 bg-white rounded-xl shadow-2xl p-6 md:p-10 lg:p-14 
                         max-w-[340px] md:max-w-2xl lg:max-w-3xl 
                         -mt-24 md:-mt-32 lg:mt-0 lg:-mr-32 order-2 lg:order-1 
