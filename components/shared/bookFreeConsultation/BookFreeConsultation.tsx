@@ -127,7 +127,7 @@ const BookFreeConsultation: React.FC = () => {
               value={formData.message}
               onChange={handleChange}
               placeholder="How can we help you?"
-              className="bg-slate-50/50 min-h-[120px]"
+              className="bg-slate-50/50 min-h-30"
             />
           </div>
 
