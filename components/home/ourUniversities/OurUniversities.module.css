@@ -9,15 +9,15 @@
   position: relative;
   width: 100%;
   display: flex;
-  align-items: center;
 }
+
 
 .sliderContainer::before,
 .sliderContainer::after {
   content: "";
   height: 100%;
   position: absolute;
-  width: 100px;
+  width: 150px;
   z-index: 2;
   pointer-events: none;
 }
@@ -35,26 +35,32 @@
 .sliderTrack {
   display: flex;
   width: max-content;
-  animation: scroll 10s linear infinite;
+  
+  gap: 60px; 
+  animation: scroll 30s linear infinite;
+  
+  will-change: transform;
 }
 
 .logoItem {
   flex-shrink: 0;
-  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 150px; 
 }
 
 .universityLogo {
   height: 60px;
-  width: 150px;
+  width: auto;
   object-fit: contain;
+  
+  filter: grayscale(0); 
   transition: transform 0.3s ease;
 }
 
-.logoItem:hover .universityLogo {
-  transform: scale(1.05);
+.sliderTrack:hover {
+  animation-play-state: paused;
 }
 
 @keyframes scroll {
@@ -62,24 +68,24 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+   
+    transform: translateX(calc(-50% - 30px)); 
   }
 }
 
-.sliderTrack:hover {
-  animation-play-state: paused;
-}
-
-/* Mobile Responsive */
 @media (max-width: 768px) {
-  .universityLogo {
-    height: 40px;
-    width: 100px;
+  .sliderTrack {
+    gap: 30px;
+    animation: scroll 20s linear infinite;
   }
   .logoItem {
-    padding: 0 20px;
+    width: 100px;
   }
-  .sliderWrapper {
-    padding: 30px 0;
+  .universityLogo {
+    height: 40px;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 15px)); }
   }
 }

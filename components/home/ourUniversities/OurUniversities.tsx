@@ -14,25 +14,27 @@ const universities = [
   { id: 10, img: "/assets/universities/10_logo.jpg", name: "UTMSPACE" },
   { id: 11, img: "/assets/universities/11_logo.jpg", name: "UTMSPACE" },
   { id: 12, img: "/assets/universities/12_logo.png", name: "UTMSPACE" },
-]; 
+];
 
 const OurUniversities = () => {
+ 
+  const doubleUniversities = [...universities, ...universities];
+
   return (
     <section className={styles.sliderWrapper}>
       <div className={styles.sliderContainer}>
         <div className={styles.sliderTrack}>
-          {[...universities, ...universities].map((uni, index) => (
+          {doubleUniversities.map((uni, index) => (
             <div key={`${uni.id}-${index}`} className={styles.logoItem}>
-              <div className="relative">
-                <Image
-                  src={uni.img}
-                  alt={uni.name}
-                  width={150}
-                  height={60}
-                  className={styles.universityLogo}
-                  priority={index < 5}
-                />
-              </div>
+              <Image
+                src={uni.img}
+                alt={uni.name}
+                width={150}
+                height={60}
+                className={styles.universityLogo}
+                
+                priority={index < 8}
+              />
             </div>
           ))}
         </div>
