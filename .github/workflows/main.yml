@@ -80,7 +80,7 @@ jobs:
           
           echo "✅ Deployment package ready"
 
-      # 8️⃣ Upload to cPanel
+      # 8️⃣ Upload to cPanel 
       - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
