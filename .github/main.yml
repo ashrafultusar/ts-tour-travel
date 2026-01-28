@@ -8,63 +8,79 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: 📥 Checkout code
+      # 1️⃣ Repo code checkout
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
-      
+
+      # 2️⃣ Node.js setup
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-      
+          node-version: 20
+          cache: npm
+
+      # 3️⃣ Install dependencies
       - name: 📦 Install dependencies
         run: npm ci
-      
-      - name: 🔐 Create .env file
+
+      # 4️⃣ Create production env file (BUILD + RUNTIME)
+      - name: 🔐 Create .env.production
         run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env.production
-          echo "NODE_ENV=production" >> .env.production
+          echo "NODE_ENV=production" > .env.production
           echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
-      
-      - name: 🏗️ Build Next.js
+
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env.production
+
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
+          echo "AUTH_URL=https://tstourtravels.com" >> .env.production
+          echo "AUTH_URL_INTERNAL=http://localhost:3000" >> .env.production
+
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
+
+      # 5️⃣ Build Next.js (standalone)
+      - name: 🏗️ Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
-      
+
+      # 6️⃣ Prepare deploy directory for cPanel
       - name: 📂 Prepare deployment files
         run: |
-          # Create a clean deploy directory
           mkdir -p deploy
-          
-          # 1. Standalone output folder theke main files copy kora
-          cp -r .next/standalone/. deploy/
-          
-          # 2. Standalone-er bhitorer .next folder e static files gulo thake na, tai manually add kora
+
+          # Next.js standalone server
+          cp -r .next/standalone/* deploy/
+
+          # Static assets
           mkdir -p deploy/.next
           cp -r .next/static deploy/.next/static
-          
-          # 3. Public folder copy kora (Images, Favicons etc.)
+
+          # Public assets
           cp -r public deploy/public
-          
-          # 4. Production env file-ti deploy folder-e neya
+
+          # Env file for runtime
           cp .env.production deploy/.env
-          
-          # 5. cPanel-er dorkar hote pare emon extra files (Optional)
+
+          # package.json (cPanel Node app detection)
           cp package.json deploy/
-          
-      - name: 🚀 Deploy via FTP
+
+      # 7️⃣ Upload to cPanel via FTP
+      - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./deploy/
-          server-dir: /tstourtravels.com/
+          local-dir: deploy/
+          server-dir: /home/texagigc/tstourtravels.com/
           protocol: ftp
           port: 21
           dangerous-clean-slate: false
-          
-      - name: ✅ Deployment Complete
-        run: echo "🎉 Deployment successful! Now Restart the app from cPanel Node.js Selector."
+
+      # 8️⃣ Done
+      - name: ✅ Deployment finished
+        run: echo "Deployment successful. Restart Node app from cPanel."
