@@ -2,7 +2,7 @@ name: Deploy Next.js to cPanel
 
 on:
   push:
-    branches: [ main ] # আপনার ব্রাঞ্চের নাম অন্য কিছু হলে সেটি এখানে দিন
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -26,7 +26,6 @@ jobs:
         run: npm ci
 
       # ৪. এনভায়রনমেন্ট ফাইল (.env) তৈরি করা
-      # আপনার সব Secrets গুলো GitHub Settings > Secrets > Actions এ যোগ করে নিন
       - name: 🔐 Create .env
         run: |
           echo "NODE_ENV=production" > .env
@@ -54,14 +53,13 @@ jobs:
           cp -r .next deploy/
           cp -r public deploy/
           
-          # ২. রানটাইম ফাইল কপি
-          cp server.js deploy/
+          # ২. রানটাইম ফাইল কপি (server.ts কে server.js হিসেবে কপি করা হচ্ছে)
+          cp server.ts deploy/server.js 
           cp package.json deploy/
           cp package-lock.json deploy/
           cp .env deploy/
           
           # ৩. ES Modules (import) সাপোর্ট নিশ্চিত করা
-          # এটি package.json এর শুরুতে "type": "module" যোগ করবে
           sed -i '1s/^{/{\n  "type": "module",/' deploy/package.json
           
           # ৪. রিস্টার্ট ট্রিগার ফাইল তৈরি
@@ -77,10 +75,10 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: deploy/
-          server-dir: ./ # ডোমেইনের রুট ডিরেক্টরি
+          server-dir: ./ 
           protocol: ftp
           port: 21
-          dangerous-clean-slate: false # এটি ট্রু করলে সার্ভারের অন্য ফাইল ডিলিট হতে পারে, তাই ফলস রাখাই ভালো
+          dangerous-clean-slate: false
 
       - name: ✅ Done
         run: echo "Deployment completed successfully!"
