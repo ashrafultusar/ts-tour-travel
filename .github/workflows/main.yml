@@ -2,7 +2,7 @@ name: Deploy Next.js to cPanel
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -44,48 +44,34 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Install PRODUCTION dependencies only
-      - name: 📦 Install production dependencies
-        run: |
-          rm -rf node_modules
-          npm ci --omit=dev
-
-      # 7️⃣ Prepare deploy
+      # 6️⃣ Prepare deploy - CORRECT STRUCTURE
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
           
-          # Copy standalone build
-          cp -r .next/standalone/* deploy/
+          # First: Copy the ENTIRE standalone folder
+          cp -r .next/standalone/. deploy/
           
-          # Copy complete .next folder
-          cp -r .next deploy/.next
+          # Second: Copy static assets INTO the existing .next folder
+          cp -r .next/static deploy/.next/static
           
-          # Copy public assets
+          # Third: Copy public assets (overwrite if exists)
           if [ -d public ]; then
-            cp -r public deploy/public
+            cp -r public/. deploy/public/
           fi
           
-          # Copy production node_modules
-          cp -r node_modules deploy/node_modules
-          
-          # Copy required files
+          # Fourth: Copy environment file
           cp .env.production deploy/.env
-          cp package.json deploy/
-          cp package-lock.json deploy/
           
-          # Create .ftpignore to exclude problematic files
-          cat > deploy/.ftpignore << 'EOF'
-          .git/
-          .github/
-          .gitignore
-          README.md
-          EOF
+          # Verify structure
+          echo "📋 Verifying deployment structure:"
+          ls -la deploy/
+          ls -la deploy/.next/
           
           echo "✅ Deployment package ready"
 
-      # 8️⃣ Upload to cPanel  with clean slate
-      - name: 🚀 Deploy to cPanel (Clean Deployment)
+      # 7️⃣ Upload to cPanel
+      - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -95,32 +81,48 @@ jobs:
           server-dir: ./
           protocol: ftp
           port: 21
-          dangerous-clean-slate: true
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**/.cache
-            .ftpignore
+          dangerous-clean-slate: false
 
-      # 9️⃣ Done
+      # 8️⃣ Done
       - name: ✅ Deployment Complete
         run: |
           echo "================================================"
-          echo "✅ DEPLOYMENT SUCCESSFUL!"
+          echo "✅ CODE UPLOADED SUCCESSFULLY!"
           echo "================================================"
           echo ""
-          echo "🎉 Your app is now live!"
+          echo "🔧 FINAL STEPS (in cPanel Setup Node.js App):"
           echo ""
-          echo "🔧 FINAL STEPS (in cPanel):"
-          echo ""
-          echo "1. Login to cPanel"
-          echo "2. Go to: Setup Node.js App"
-          echo "3. Click: 'Restart' button"
-          echo "4. Wait 30 seconds"
-          echo "5. Done! 🎉"
+          echo "1. Application Root: /home/yourusername/public_html"
+          echo "2. Application URL: https://tstourtravels.com"
+          echo "3. Application Startup File: server.js"
+          echo "4. Click 'Run NPM Install' (if needed)"
+          echo "5. Click 'Restart'"
           echo ""
           echo "Your site: https://tstourtravels.com"
-          echo ""
-          echo "⚠️  This deployment used clean slate"
-          echo "   Old files were removed before upload"
           echo "================================================"
+```
+
+## 🔧 cPanel এ যা করতে হবে:
+
+### 1. **Node.js App Setup এ যান**
+   - Application Root: `/home/yourusername/public_html` (আপনার actual path)
+   - Application URL: `https://tstourtravels.com`
+   - Application Startup File: `server.js`
+   - Node.js version: `20.x`
+
+### 2. **Environment Variables যোগ করুন** (যদি না থাকে):
+   - `NODE_ENV` = `production`
+   - `PORT` = `3000` (বা cPanel যে port assign করে)
+
+### 3. **Stop → Restart করুন**
+
+### 4. **যদি এখনো error দেয়, FTP/File Manager দিয়ে check করুন**:
+```
+your-app-folder/
+├── server.js          ← এটা আছে কিনা?
+├── .next/
+│   ├── BUILD_ID       ← এটা আছে কিনা?
+│   ├── static/        ← এটা আছে কিনা?
+│   └── server/
+├── public/
+└── .env
