@@ -44,25 +44,29 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy (FIXED VERSION)
+      # 6️⃣ Prepare deploy - CORRECT STRUCTURE
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
           
-          # Copy standalone output (includes server.js)
-          cp -r .next/standalone/* deploy/
+          # First: Copy the ENTIRE standalone folder
+          cp -r .next/standalone/. deploy/
           
-          # Copy static assets (CRITICAL!)
-          mkdir -p deploy/.next/static
+          # Second: Copy static assets INTO the existing .next folder
           cp -r .next/static deploy/.next/static
           
-          # Copy public folder
+          # Third: Copy public assets (overwrite if exists)
           if [ -d public ]; then
-            cp -r public deploy/public
+            cp -r public/. deploy/public/
           fi
           
-          # Copy environment file
+          # Fourth: Copy environment file
           cp .env.production deploy/.env
+          
+          # Verify structure
+          echo "📋 Verifying deployment structure:"
+          ls -la deploy/
+          ls -la deploy/.next/
           
           echo "✅ Deployment package ready"
 
@@ -86,16 +90,39 @@ jobs:
           echo "✅ CODE UPLOADED SUCCESSFULLY!"
           echo "================================================"
           echo ""
-          echo "🔧 FINAL STEPS (in cPanel):"
+          echo "🔧 FINAL STEPS (in cPanel Setup Node.js App):"
           echo ""
-          echo "1. Login to cPanel"
-          echo "2. Go to: Setup Node.js App"
-          echo "3. Set Application Root: /home/username/your-app-folder"
-          echo "4. Set Application Startup File: server.js"
-          echo "5. Click: 'Run NPM Install' button"
-          echo "6. Wait ~2-3 minutes"
-          echo "7. Click: 'Restart' button"
-          echo "8. Done! 🎉"
+          echo "1. Application Root: /home/yourusername/public_html"
+          echo "2. Application URL: https://tstourtravels.com"
+          echo "3. Application Startup File: server.js"
+          echo "4. Click 'Run NPM Install' (if needed)"
+          echo "5. Click 'Restart'"
           echo ""
           echo "Your site: https://tstourtravels.com"
           echo "================================================"
+```
+
+## 🔧 cPanel এ যা করতে হবে:
+
+### 1. **Node.js App Setup এ যান**
+   - Application Root: `/home/yourusername/public_html` (আপনার actual path)
+   - Application URL: `https://tstourtravels.com`
+   - Application Startup File: `server.js`
+   - Node.js version: `20.x`
+
+### 2. **Environment Variables যোগ করুন** (যদি না থাকে):
+   - `NODE_ENV` = `production`
+   - `PORT` = `3000` (বা cPanel যে port assign করে)
+
+### 3. **Stop → Restart করুন**
+
+### 4. **যদি এখনো error দেয়, FTP/File Manager দিয়ে check করুন**:
+```
+your-app-folder/
+├── server.js          ← এটা আছে কিনা?
+├── .next/
+│   ├── BUILD_ID       ← এটা আছে কিনা?
+│   ├── static/        ← এটা আছে কিনা?
+│   └── server/
+├── public/
+└── .env
