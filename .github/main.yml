@@ -10,61 +10,92 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 📥 Checkout code
+      # 1️⃣ Checkout
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
-      
+
+      # 2️⃣ Setup Node.js
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-      
+          node-version: 20
+          cache: npm
+
+      # 3️⃣ Install dependencies
       - name: 📦 Install dependencies
         run: npm ci
-      
-      - name: 🔐 Create .env file
+
+      # 4️⃣ Create env file
+      - name: 🔐 Create .env.production
         run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env.production
-          echo "NODE_ENV=production" >> .env.production
+          echo "NODE_ENV=production" > .env.production
           echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
-      
-      - name: 🏗️ Build Next.js
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env.production
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
+          echo "AUTH_URL=https://tstourtravels.com" >> .env.production
+          echo "AUTH_URL_INTERNAL=http://localhost:3000" >> .env.production
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
+
+      # 5️⃣ Build
+      - name: 🏗️ Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
-      
+
+      # 6️⃣ Prepare deploy (FIXED VERSION)
       - name: 📂 Prepare deployment files
         run: |
-          # Create a clean deploy directory
           mkdir -p deploy
           
-          # 1. Standalone output folder theke main files copy kora
-          cp -r .next/standalone/. deploy/
+          # Copy standalone output (includes server.js)
+          cp -r .next/standalone/* deploy/
           
-          # 2. Standalone-er bhitorer .next folder e static files gulo thake na, tai manually add kora
-          mkdir -p deploy/.next
+          # Copy static assets (CRITICAL!)
+          mkdir -p deploy/.next/static
           cp -r .next/static deploy/.next/static
           
-          # 3. Public folder copy kora (Images, Favicons etc.)
-          cp -r public deploy/public
+          # Copy public folder
+          if [ -d public ]; then
+            cp -r public deploy/public
+          fi
           
-          # 4. Production env file-ti deploy folder-e neya
+          # Copy environment file
           cp .env.production deploy/.env
           
-          # 5. cPanel-er dorkar hote pare emon extra files (Optional)
-          cp package.json deploy/
-          
-      - name: 🚀 Deploy via FTP
+          echo "✅ Deployment package ready"
+
+      # 7️⃣ Upload to cPanel
+      - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./deploy/
-          server-dir: /tstourtravels.com/
+          local-dir: deploy/
+          server-dir: ./
           protocol: ftp
           port: 21
           dangerous-clean-slate: false
-          
+
+      # 8️⃣ Done
       - name: ✅ Deployment Complete
-        run: echo "🎉 Deployment successful! Now Restart the app from cPanel Node.js Selector."
+        run: |
+          echo "================================================"
+          echo "✅ CODE UPLOADED SUCCESSFULLY!"
+          echo "================================================"
+          echo ""
+          echo "🔧 FINAL STEPS (in cPanel):"
+          echo ""
+          echo "1. Login to cPanel"
+          echo "2. Go to: Setup Node.js App"
+          echo "3. Set Application Root: /home/username/your-app-folder"
+          echo "4. Set Application Startup File: server.js"
+          echo "5. Click: 'Run NPM Install' button"
+          echo "6. Wait ~2-3 minutes"
+          echo "7. Click: 'Restart' button"
+          echo "8. Done! 🎉"
+          echo ""
+          echo "Your site: https://tstourtravels.com"
+          echo "================================================"
