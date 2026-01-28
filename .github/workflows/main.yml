@@ -2,13 +2,13 @@ name: Deploy Next.js to cPanel
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       # 1️⃣ Checkout
       - name: 📥 Checkout repository
@@ -44,30 +44,43 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy
+      # 6️⃣ Install PRODUCTION dependencies only
+      - name: 📦 Install production dependencies
+        run: |
+          rm -rf node_modules
+          npm ci --omit=dev
+
+      # 7️⃣ Prepare deploy
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
-
-          # Standalone files
+          
+          # Copy standalone build
           cp -r .next/standalone/* deploy/
-
-          # Complete .next folder
+          
+          # Copy complete .next folder
           cp -r .next deploy/.next
-
-          # Public assets
+          
+          # Copy public assets
           if [ -d public ]; then
             cp -r public deploy/public
           fi
-
-          # Required files
+          
+          # Copy production node_modules
+          cp -r node_modules deploy/node_modules
+          
+          # Copy required files
           cp .env.production deploy/.env
           cp package.json deploy/
           cp package-lock.json deploy/
+          
+          # Create a deployment info file
+          echo "Deployed at: $(date)" > deploy/DEPLOYMENT_INFO.txt
+          echo "Build completed successfully" >> deploy/DEPLOYMENT_INFO.txt
+          
+          echo "✅ Deployment package ready"
 
-          echo "✅ Deployment ready"
-
-      # 7️⃣ Upload to cPanel
+      # 8️⃣ Upload to cPanel
       - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -80,21 +93,24 @@ jobs:
           port: 21
           dangerous-clean-slate: false
 
-      # 8️⃣ Done
+      # 9️⃣ Done
       - name: ✅ Deployment Complete
         run: |
           echo "================================================"
-          echo "✅ CODE UPLOADED SUCCESSFULLY!"
+          echo "✅ DEPLOYMENT SUCCESSFUL!"
           echo "================================================"
+          echo ""
+          echo "🎉 Your app is now live with all dependencies!"
           echo ""
           echo "🔧 FINAL STEPS (in cPanel):"
           echo ""
           echo "1. Login to cPanel"
           echo "2. Go to: Setup Node.js App"
-          echo "3. Click: 'Run NPM Install' button"
-          echo "4. Wait ~2-3 minutes"
-          echo "5. Click: 'Restart' button"
-          echo "6. Done! 🎉"
+          echo "3. Click: 'Restart' button"
+          echo "4. Done! Your site should work now! 🎉"
           echo ""
           echo "Your site: https://tstourtravels.com"
+          echo ""
+          echo "⚠️  Note: NO need to click 'Run NPM Install'"
+          echo "   (Dependencies are already included)"
           echo "================================================"
