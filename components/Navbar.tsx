@@ -80,16 +80,16 @@ export default function Navbar() {
                 href="/"
                 className="flex items-center gap-2 group active:scale-95 transition-transform"
               >
-               <div className="relative h-16 w-16 sm:h-24 sm:w-24 shrink-0">
-  <Image
-    src="/assets/logo/logo.png"
-    alt="Agency Logo"
-    fill
-    sizes="(max-width: 768px) 80px, 96px"
-    priority
-    className="object-contain"
-  />
-</div>
+                <div className="relative h-16 w-16 sm:h-24 sm:w-24 shrink-0">
+                  <Image
+                    src="/assets/logo/logo.png"
+                    alt="Agency Logo"
+                    fill
+                    sizes="(max-width: 768px) 80px, 96px"
+                    priority
+                    className="object-contain"
+                  />
+                </div>
               </Link>
             </div>
 
@@ -202,14 +202,16 @@ export default function Navbar() {
       >
         <div className="p-6 flex justify-between items-center border-b">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex items-center justify-center">
+            <div className="w-10 h-10 flex items-center justify-center relative">
               <Image
-                src="/assets/logo/logo1.png"
+                src="/assets/logo/logo.png"
                 alt="TS TOUR AND TRAVEL"
                 width={40}
                 height={40}
-                className="rounded-full object-contain"
                 priority
+                style={{ height: "auto", width: "auto" }}
+                className="rounded-full object-contain"
+                sizes="40px"
               />
             </div>
             <span className="font-bold text-slate-800 text-lg">Menu</span>

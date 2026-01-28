@@ -1,0 +1,70 @@
+name: Deploy Next.js to cPanel
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 🔐 Create .env file
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env.production
+          echo "NODE_ENV=production" >> .env.production
+          echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
+      
+      - name: 🏗️ Build Next.js
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: 📂 Prepare deployment files
+        run: |
+          # Create a clean deploy directory
+          mkdir -p deploy
+          
+          # 1. Standalone output folder theke main files copy kora
+          cp -r .next/standalone/. deploy/
+          
+          # 2. Standalone-er bhitorer .next folder e static files gulo thake na, tai manually add kora
+          mkdir -p deploy/.next
+          cp -r .next/static deploy/.next/static
+          
+          # 3. Public folder copy kora (Images, Favicons etc.)
+          cp -r public deploy/public
+          
+          # 4. Production env file-ti deploy folder-e neya
+          cp .env.production deploy/.env
+          
+          # 5. cPanel-er dorkar hote pare emon extra files (Optional)
+          cp package.json deploy/
+          
+      - name: 🚀 Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./deploy/
+          server-dir: /tstourtravels.com/
+          protocol: ftp
+          port: 21
+          dangerous-clean-slate: false
+          
+      - name: ✅ Deployment Complete
+        run: echo "🎉 Deployment successful! Now Restart the app from cPanel Node.js Selector."
