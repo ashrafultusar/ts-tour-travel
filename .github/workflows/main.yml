@@ -1,0 +1,126 @@
+name: Deploy Next.js to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1️⃣ Checkout
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3️⃣ Install dependencies
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      # 4️⃣ Create env file
+      - name: 🔐 Create .env.production
+        run: |
+          echo "NODE_ENV=production" > .env.production
+          echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env.production
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
+          echo "AUTH_URL=https://tstourtravels.com" >> .env.production
+          echo "AUTH_URL_INTERNAL=http://localhost:3000" >> .env.production
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
+
+      # 5️⃣ Build
+      - name: 🏗️ Build Next.js app
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      # 6️⃣ Install PRODUCTION dependencies only
+      - name: 📦 Install production dependencies
+        run: |
+          rm -rf node_modules
+          npm ci --omit=dev
+
+      # 7️⃣ Prepare deploy
+      - name: 📂 Prepare deployment files
+        run: |
+          mkdir -p deploy
+          
+          # Copy standalone build
+          cp -r .next/standalone/* deploy/
+          
+          # Copy complete .next folder
+          cp -r .next deploy/.next
+          
+          # Copy public assets
+          if [ -d public ]; then
+            cp -r public deploy/public
+          fi
+          
+          # Copy production node_modules
+          cp -r node_modules deploy/node_modules
+          
+          # Copy required files
+          cp .env.production deploy/.env
+          cp package.json deploy/
+          cp package-lock.json deploy/
+          
+          # Create .ftpignore to exclude problematic files
+          cat > deploy/.ftpignore << 'EOF'
+          .git/
+          .github/
+          .gitignore
+          README.md
+          EOF
+          
+          echo "✅ Deployment package ready"
+
+      # 8️⃣ Upload to cPanel  with clean slate
+      - name: 🚀 Deploy to cPanel (Clean Deployment)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: deploy/
+          server-dir: ./
+          protocol: ftp
+          port: 21
+          dangerous-clean-slate: true
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**/.cache
+            .ftpignore
+
+      # 9️⃣ Done
+      - name: ✅ Deployment Complete
+        run: |
+          echo "================================================"
+          echo "✅ DEPLOYMENT SUCCESSFUL!"
+          echo "================================================"
+          echo ""
+          echo "🎉 Your app is now live!"
+          echo ""
+          echo "🔧 FINAL STEPS (in cPanel):"
+          echo ""
+          echo "1. Login to cPanel"
+          echo "2. Go to: Setup Node.js App"
+          echo "3. Click: 'Restart' button"
+          echo "4. Wait 30 seconds"
+          echo "5. Done! 🎉"
+          echo ""
+          echo "Your site: https://tstourtravels.com"
+          echo ""
+          echo "⚠️  This deployment used clean slate"
+          echo "   Old files were removed before upload"
+          echo "================================================"
