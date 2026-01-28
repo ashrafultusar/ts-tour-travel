@@ -2,7 +2,7 @@ name: Deploy Next.js to cPanel
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ] # আপনার ব্রাঞ্চের নাম অন্য কিছু হলে সেটি এখানে দিন
   workflow_dispatch:
 
 jobs:
@@ -10,82 +10,77 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # 1️⃣ Checkout b
+      # ১. রিপোজিটরি ক্লোন করা
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
+      # ২. নোড জেএস সেটআপ (ভার্সন ২০)
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      # 3️⃣ Install dependencies
+      # ৩. ডিপেন্ডেন্সি ইন্সটল করা
       - name: 📦 Install dependencies
         run: npm ci
 
-      # 4️⃣ Create env file
-      - name: 🔐 Create .env.production
+      # ৪. এনভায়রনমেন্ট ফাইল (.env) তৈরি করা
+      # আপনার সব Secrets গুলো GitHub Settings > Secrets > Actions এ যোগ করে নিন
+      - name: 🔐 Create .env
         run: |
-          echo "NODE_ENV=production" > .env.production
-          echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env.production
-          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
-          echo "AUTH_URL=https://tstourtravels.com" >> .env.production
-          echo "AUTH_URL_INTERNAL=http://localhost:3000" >> .env.production
-          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
-          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
-          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
+          echo "NODE_ENV=production" > .env
+          echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
+          echo "AUTH_URL=https://tstourtravels.com" >> .env
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
 
-      # 5️⃣ Build
+      # ৫. নেক্সট জেএস প্রজেক্ট বিল্ড করা
       - name: 🏗️ Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy
+      # ৬. ডেপ্লয়মেন্টের জন্য ফাইল গুছিয়ে নেওয়া
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
-          cp -r .next/standalone/. deploy/
-          cp -r .next/static deploy/.next/static
-          if [ -d public ]; then
-            cp -r public/. deploy/public/
-          fi
-          cp .env.production deploy/.env
-          echo "📋 Verifying deployment structure:"
-          ls -la deploy/
-          ls -la deploy/.next/
+          mkdir -p deploy/tmp
+          
+          # ১. বিল্ড হওয়া ফাইল কপি
+          cp -r .next deploy/
+          cp -r public deploy/
+          
+          # ২. রানটাইম ফাইল কপি
+          cp server.js deploy/
+          cp package.json deploy/
+          cp package-lock.json deploy/
+          cp .env deploy/
+          
+          # ৩. ES Modules (import) সাপোর্ট নিশ্চিত করা
+          # এটি package.json এর শুরুতে "type": "module" যোগ করবে
+          sed -i '1s/^{/{\n  "type": "module",/' deploy/package.json
+          
+          # ৪. রিস্টার্ট ট্রিগার ফাইল তৈরি
+          touch deploy/tmp/restart.txt
+          
           echo "✅ Deployment package ready"
 
-      # 7️⃣ Upload to cPanel
-      - name: 🚀 Deploy to cPanel
+      # ৭. FTP এর মাধ্যমে cPanel এ আপলোড করা
+      - name: 🚀 Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: deploy/
-          server-dir: ./
+          server-dir: ./ # ডোমেইনের রুট ডিরেক্টরি
           protocol: ftp
           port: 21
-          dangerous-clean-slate: false
+          dangerous-clean-slate: false # এটি ট্রু করলে সার্ভারের অন্য ফাইল ডিলিট হতে পারে, তাই ফলস রাখাই ভালো
 
-      # 8️⃣ Done
-      - name: ✅ Deployment Complete
-        run: |
-          echo "================================================"
-          echo "✅ CODE UPLOADED SUCCESSFULLY!"
-          echo "================================================"
-          echo ""
-          echo "🔧 FINAL STEPS (in cPanel Setup Node.js App):"
-          echo ""
-          echo "1. Application Root: /home/yourusername/public_html"
-          echo "2. Application URL: https://tstourtravels.com"
-          echo "3. Application Startup File: server.js"
-          echo "4. Click 'Run NPM Install' (if needed)"
-          echo "5. Click 'Restart'"
-          echo ""
-          echo "Your site: https://tstourtravels.com"
-          echo "================================================"
+      - name: ✅ Done
+        run: echo "Deployment completed successfully!"
