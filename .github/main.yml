@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       # 1️⃣ Checkout
       - name: 📥 Checkout repository
@@ -44,28 +44,27 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy
+      # 6️⃣ Prepare deploy (FIXED VERSION)
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
-
-          # Standalone files
+          
+          # Copy standalone output (includes server.js)
           cp -r .next/standalone/* deploy/
-
-          # Complete .next folder
-          cp -r .next deploy/.next
-
-          # Public assets
+          
+          # Copy static assets (CRITICAL!)
+          mkdir -p deploy/.next/static
+          cp -r .next/static deploy/.next/static
+          
+          # Copy public folder
           if [ -d public ]; then
             cp -r public deploy/public
           fi
-
-          # Required files
+          
+          # Copy environment file
           cp .env.production deploy/.env
-          cp package.json deploy/
-          cp package-lock.json deploy/
-
-          echo "✅ Deployment ready"
+          
+          echo "✅ Deployment package ready"
 
       # 7️⃣ Upload to cPanel
       - name: 🚀 Deploy to cPanel
@@ -91,10 +90,12 @@ jobs:
           echo ""
           echo "1. Login to cPanel"
           echo "2. Go to: Setup Node.js App"
-          echo "3. Click: 'Run NPM Install' button"
-          echo "4. Wait ~2-3 minutes"
-          echo "5. Click: 'Restart' button"
-          echo "6. Done! 🎉"
+          echo "3. Set Application Root: /home/username/your-app-folder"
+          echo "4. Set Application Startup File: server.js"
+          echo "5. Click: 'Run NPM Install' button"
+          echo "6. Wait ~2-3 minutes"
+          echo "7. Click: 'Restart' button"
+          echo "8. Done! 🎉"
           echo ""
           echo "Your site: https://tstourtravels.com"
           echo "================================================"
