@@ -47,7 +47,7 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy directory - COMPLETE FIX
+      # 6️⃣ Prepare deploy directory - WITH NODE_MODULES
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
@@ -55,8 +55,11 @@ jobs:
           # Copy ALL standalone server files
           cp -r .next/standalone/* deploy/
 
-          # Copy ENTIRE .next folder (this is the key fix!)
+          # Copy ENTIRE .next folder
           cp -r .next deploy/.next
+
+          # 🔥 CRITICAL: Copy node_modules (for mongoose, etc.)
+          cp -r node_modules deploy/node_modules
 
           # Public assets
           if [ -d public ]; then
@@ -66,12 +69,15 @@ jobs:
           # Env file for runtime
           cp .env.production deploy/.env
 
-          # package.json (cPanel Node app detection)
+          # package.json & package-lock.json
           cp package.json deploy/
+          cp package-lock.json deploy/
 
-          # Verify important files exist
-          echo "✅ Checking deployment structure..."
-          ls -la deploy/.next/ | head -20
+          # Verify structure
+          echo "✅ Deployment structure:"
+          ls -la deploy/ | head -15
+          echo "✅ Node modules present:"
+          ls deploy/node_modules | head -10
 
       # 7️⃣ Upload to cPanel via FTP
       - name: 🚀 Deploy to cPanel
@@ -88,4 +94,4 @@ jobs:
 
       # 8️⃣ Done
       - name: ✅ Deployment finished
-        run: echo "Deployment successful. Restart Node app from cPanel."
+        run: echo "✅ Deployment successful with node_modules! Restart Node app from cPanel."
