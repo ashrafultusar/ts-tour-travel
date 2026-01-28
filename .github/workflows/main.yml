@@ -47,40 +47,16 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy directory for cPanel (FIXED)
+      # 6️⃣ Prepare deploy directory - COMPLETE FIX
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
 
-          # Copy standalone server files to root
+          # Copy ALL standalone server files
           cp -r .next/standalone/* deploy/
 
-          # Create .next folder in deploy directory
-          mkdir -p deploy/.next
-
-          # Copy static folder inside .next
-          cp -r .next/static deploy/.next/static
-
-          # Copy the BUILD_ID and other required files from .next
-          if [ -f .next/BUILD_ID ]; then
-            cp .next/BUILD_ID deploy/.next/
-          fi
-          
-          if [ -f .next/package.json ]; then
-            cp .next/package.json deploy/.next/
-          fi
-
-          if [ -d .next/server ]; then
-            cp -r .next/server deploy/.next/
-          fi
-
-          if [ -f .next/routes-manifest.json ]; then
-            cp .next/routes-manifest.json deploy/.next/
-          fi
-
-          if [ -f .next/required-server-files.json ]; then
-            cp .next/required-server-files.json deploy/.next/
-          fi
+          # Copy ENTIRE .next folder (this is the key fix!)
+          cp -r .next deploy/.next
 
           # Public assets
           if [ -d public ]; then
@@ -92,6 +68,10 @@ jobs:
 
           # package.json (cPanel Node app detection)
           cp package.json deploy/
+
+          # Verify important files exist
+          echo "✅ Checking deployment structure..."
+          ls -la deploy/.next/ | head -20
 
       # 7️⃣ Upload to cPanel via FTP
       - name: 🚀 Deploy to cPanel
