@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Repo code checkout
+      # 1️⃣ Checkout
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Node.js setup
+      # 2️⃣ Setup Node.js
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,61 +25,49 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      # 4️⃣ Create production env file (BUILD + RUNTIME)
+      # 4️⃣ Create env file
       - name: 🔐 Create .env.production
         run: |
           echo "NODE_ENV=production" > .env.production
           echo "NEXT_PUBLIC_SITE_URL=https://tstourtravels.com" >> .env.production
-
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env.production
-
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.production
           echo "AUTH_URL=https://tstourtravels.com" >> .env.production
           echo "AUTH_URL_INTERNAL=http://localhost:3000" >> .env.production
-
           echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env.production
           echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env.production
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env.production
 
-      # 5️⃣ Build Next.js (standalone)
+      # 5️⃣ Build
       - name: 🏗️ Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy directory - WITH NODE_MODULES
+      # 6️⃣ Prepare deploy
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
 
-          # Copy ALL standalone server files
+          # Standalone files
           cp -r .next/standalone/* deploy/
 
-          # Copy ENTIRE .next folder
+          # Complete .next folder
           cp -r .next deploy/.next
-
-          # 🔥 CRITICAL: Copy node_modules (for mongoose, etc.)
-          cp -r node_modules deploy/node_modules
 
           # Public assets
           if [ -d public ]; then
             cp -r public deploy/public
           fi
 
-          # Env file for runtime
+          # Required files
           cp .env.production deploy/.env
-
-          # package.json & package-lock.json
           cp package.json deploy/
           cp package-lock.json deploy/
 
-          # Verify structure
-          echo "✅ Deployment structure:"
-          ls -la deploy/ | head -15
-          echo "✅ Node modules present:"
-          ls deploy/node_modules | head -10
+          echo "✅ Deployment ready"
 
-      # 7️⃣ Upload to cPanel via FTP
+      # 7️⃣ Upload to cPanel
       - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -93,5 +81,20 @@ jobs:
           dangerous-clean-slate: false
 
       # 8️⃣ Done
-      - name: ✅ Deployment finished
-        run: echo "✅ Deployment successful with node_modules! Restart Node app from cPanel."
+      - name: ✅ Deployment Complete
+        run: |
+          echo "================================================"
+          echo "✅ CODE UPLOADED SUCCESSFULLY!"
+          echo "================================================"
+          echo ""
+          echo "🔧 FINAL STEPS (in cPanel):"
+          echo ""
+          echo "1. Login to cPanel"
+          echo "2. Go to: Setup Node.js App"
+          echo "3. Click: 'Run NPM Install' button"
+          echo "4. Wait ~2-3 minutes"
+          echo "5. Click: 'Restart' button"
+          echo "6. Done! 🎉"
+          echo ""
+          echo "Your site: https://tstourtravels.com"
+          echo "================================================"
