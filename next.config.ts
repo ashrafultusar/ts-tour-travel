@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["mongoose"],
   images: {
     remotePatterns: [
       {
@@ -16,7 +17,7 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    serverComponentsExternalPackages: ["mongoose"],
+    // serverComponentsExternalPackages: ["mongoose"],
     serverActions: {
       bodySizeLimit: "2mb",
     },
