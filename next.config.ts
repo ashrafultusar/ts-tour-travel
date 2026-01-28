@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    // serverComponentsExternalPackages: ["mongoose"],
+    serverComponentsExternalPackages: ["mongoose"],
     serverActions: {
       bodySizeLimit: "2mb",
     },
