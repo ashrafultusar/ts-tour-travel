@@ -47,20 +47,45 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Prepare deploy directory for cPanel
+      # 6️⃣ Prepare deploy directory for cPanel (FIXED)
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
 
-          # Next.js standalone server
+          # Copy standalone server files to root
           cp -r .next/standalone/* deploy/
 
-          # Static assets
+          # Create .next folder in deploy directory
           mkdir -p deploy/.next
+
+          # Copy static folder inside .next
           cp -r .next/static deploy/.next/static
 
+          # Copy the BUILD_ID and other required files from .next
+          if [ -f .next/BUILD_ID ]; then
+            cp .next/BUILD_ID deploy/.next/
+          fi
+          
+          if [ -f .next/package.json ]; then
+            cp .next/package.json deploy/.next/
+          fi
+
+          if [ -d .next/server ]; then
+            cp -r .next/server deploy/.next/
+          fi
+
+          if [ -f .next/routes-manifest.json ]; then
+            cp .next/routes-manifest.json deploy/.next/
+          fi
+
+          if [ -f .next/required-server-files.json ]; then
+            cp .next/required-server-files.json deploy/.next/
+          fi
+
           # Public assets
-          cp -r public deploy/public
+          if [ -d public ]; then
+            cp -r public deploy/public
+          fi
 
           # Env file for runtime
           cp .env.production deploy/.env
