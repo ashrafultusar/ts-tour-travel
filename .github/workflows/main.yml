@@ -74,14 +74,18 @@ jobs:
           cp package.json deploy/
           cp package-lock.json deploy/
           
-          # Create a deployment info file
-          echo "Deployed at: $(date)" > deploy/DEPLOYMENT_INFO.txt
-          echo "Build completed successfully" >> deploy/DEPLOYMENT_INFO.txt
+          # Create .ftpignore to exclude problematic files
+          cat > deploy/.ftpignore << 'EOF'
+          .git/
+          .github/
+          .gitignore
+          README.md
+          EOF
           
           echo "✅ Deployment package ready"
 
-      # 8️⃣ Upload to cPanel
-      - name: 🚀 Deploy to cPanel
+      # 8️⃣ Upload to cPanel with clean slate
+      - name: 🚀 Deploy to cPanel (Clean Deployment)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -91,7 +95,12 @@ jobs:
           server-dir: ./
           protocol: ftp
           port: 21
-          dangerous-clean-slate: false
+          dangerous-clean-slate: true
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**/.cache
+            .ftpignore
 
       # 9️⃣ Done
       - name: ✅ Deployment Complete
@@ -100,17 +109,18 @@ jobs:
           echo "✅ DEPLOYMENT SUCCESSFUL!"
           echo "================================================"
           echo ""
-          echo "🎉 Your app is now live with all dependencies!"
+          echo "🎉 Your app is now live!"
           echo ""
           echo "🔧 FINAL STEPS (in cPanel):"
           echo ""
           echo "1. Login to cPanel"
           echo "2. Go to: Setup Node.js App"
           echo "3. Click: 'Restart' button"
-          echo "4. Done! Your site should work now! 🎉"
+          echo "4. Wait 30 seconds"
+          echo "5. Done! 🎉"
           echo ""
           echo "Your site: https://tstourtravels.com"
           echo ""
-          echo "⚠️  Note: NO need to click 'Run NPM Install'"
-          echo "   (Dependencies are already included)"
+          echo "⚠️  This deployment used clean slate"
+          echo "   Old files were removed before upload"
           echo "================================================"
