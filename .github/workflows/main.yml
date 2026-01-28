@@ -2,7 +2,7 @@ name: Deploy Next.js to cPanel
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -44,48 +44,30 @@ jobs:
         env:
           NODE_ENV: production
 
-      # 6️⃣ Install PRODUCTION dependencies only
-      - name: 📦 Install production dependencies
-        run: |
-          rm -rf node_modules
-          npm ci --omit=dev
-
-      # 7️⃣ Prepare deploy
+      # 6️⃣ Prepare deploy (FIXED VERSION)
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy
           
-          # Copy standalone build
+          # Copy standalone output (includes server.js)
           cp -r .next/standalone/* deploy/
           
-          # Copy complete .next folder
-          cp -r .next deploy/.next
+          # Copy static assets (CRITICAL!)
+          mkdir -p deploy/.next/static
+          cp -r .next/static deploy/.next/static
           
-          # Copy public assets
+          # Copy public folder
           if [ -d public ]; then
             cp -r public deploy/public
           fi
           
-          # Copy production node_modules
-          cp -r node_modules deploy/node_modules
-          
-          # Copy required files
+          # Copy environment file
           cp .env.production deploy/.env
-          cp package.json deploy/
-          cp package-lock.json deploy/
-          
-          # Create .ftpignore to exclude problematic files
-          cat > deploy/.ftpignore << 'EOF'
-          .git/
-          .github/
-          .gitignore
-          README.md
-          EOF
           
           echo "✅ Deployment package ready"
 
-      # 8️⃣ Upload to cPanel  with clean slate
-      - name: 🚀 Deploy to cPanel (Clean Deployment)
+      # 7️⃣ Upload to cPanel
+      - name: 🚀 Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -95,32 +77,25 @@ jobs:
           server-dir: ./
           protocol: ftp
           port: 21
-          dangerous-clean-slate: true
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**/.cache
-            .ftpignore
+          dangerous-clean-slate: false
 
-      # 9️⃣ Done
+      # 8️⃣ Done
       - name: ✅ Deployment Complete
         run: |
           echo "================================================"
-          echo "✅ DEPLOYMENT SUCCESSFUL!"
+          echo "✅ CODE UPLOADED SUCCESSFULLY!"
           echo "================================================"
-          echo ""
-          echo "🎉 Your app is now live!"
           echo ""
           echo "🔧 FINAL STEPS (in cPanel):"
           echo ""
           echo "1. Login to cPanel"
           echo "2. Go to: Setup Node.js App"
-          echo "3. Click: 'Restart' button"
-          echo "4. Wait 30 seconds"
-          echo "5. Done! 🎉"
+          echo "3. Set Application Root: /home/username/your-app-folder"
+          echo "4. Set Application Startup File: server.js"
+          echo "5. Click: 'Run NPM Install' button"
+          echo "6. Wait ~2-3 minutes"
+          echo "7. Click: 'Restart' button"
+          echo "8. Done! 🎉"
           echo ""
           echo "Your site: https://tstourtravels.com"
-          echo ""
-          echo "⚠️  This deployment used clean slate"
-          echo "   Old files were removed before upload"
           echo "================================================"
