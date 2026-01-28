@@ -84,7 +84,7 @@ jobs:
           
           echo "✅ Deployment package ready"
 
-      # 8️⃣ Upload to cPanel with clean slate
+      # 8️⃣ Upload to cPanel  with clean slate
       - name: 🚀 Deploy to cPanel (Clean Deployment)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
