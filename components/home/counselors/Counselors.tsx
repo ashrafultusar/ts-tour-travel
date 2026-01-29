@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const counselorImage = "/assets/counselor/image1.png";
+const counselorImage = "/assets/counselor/ounselors.png";
 
 const MeetCounselors = () => {
   const counselor = {
@@ -20,7 +20,7 @@ const MeetCounselors = () => {
 
       <div className="relative z-10 mb-12 text-center px-4">
         <h2 className="text-4xl md:text-6xl font-extrabold text-[#2D3142] tracking-tight">
-          Our <span className="text-[#14919B]">Leadership</span>
+          Our <span className="text-[#14919B]">Counselors</span>
         </h2>
         <div className="h-1.5 w-24 bg-[#14919B] mx-auto mt-4 rounded-full" />
       </div>
@@ -54,15 +54,6 @@ const MeetCounselors = () => {
                       border border-white/50"
         >
           <div className="relative">
-            {/* Quote Icon */}
-            <svg
-              className="absolute -top-6 -left-6 md:-top-10 md:-left-10 w-12 h-12 md:w-20 md:h-20 text-[#14919B] opacity-10"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9125 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12C14.017 12.5523 13.5693 13 13.017 13H12.017V21H14.017ZM6.01701 21L6.01701 18C6.01701 16.8954 6.91244 16 8.01701 16H11.017C11.5693 16 12.017 15.5523 12.017 15V9C12.017 8.44772 11.5693 8 11.017 8H7.01701C6.46473 8 6.01701 8.44772 6.01701 9V12C6.01701 12.5523 5.56928 13 5.01701 13H4.01701V21H6.01701Z" />
-            </svg>
-
             <p className="text-slate-600 text-lg md:text-xl leading-relaxed font-medium italic relative z-10 text-justify">
               <span className="text-[#14919B] text-2xl font-serif">“</span>
               {counselor.description}
