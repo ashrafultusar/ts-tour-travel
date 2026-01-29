@@ -20,7 +20,7 @@ const MeetCounselors = () => {
 
       <div className="relative z-10 mb-12 text-center px-4">
         <h2 className="text-4xl md:text-6xl font-extrabold text-[#2D3142] tracking-tight">
-          Our <span className="text-[#14919B]">Counselors</span>
+          Our <span className="text-[#14919B]">Counselor</span>
         </h2>
         <div className="h-1.5 w-24 bg-[#14919B] mx-auto mt-4 rounded-full" />
       </div>

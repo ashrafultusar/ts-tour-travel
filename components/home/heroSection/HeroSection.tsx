@@ -16,6 +16,8 @@ const HeroSection = () => {
     "/assets/home/singapor.jpg",
     "/assets/home/srilanka.jpg",
     "/assets/home/thailand.jpg",
+    "/assets/office/image6.jpeg",
+    "/assets/office/image2.jpeg",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
