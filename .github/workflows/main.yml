@@ -10,22 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Repository checkout
+      # 1️⃣ Checkout repository
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Node.js setup
+      # 2️⃣ Setup Node (only for tooling, build not required here)
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      # 3️⃣ Install dependencies
-      - name: 📦 Install dependencies
-        run: npm ci
-
-      # 4️⃣ Create environment file
+      # 3️⃣ Create production .env
       - name: 🔐 Create .env
         run: |
           echo "NODE_ENV=production" > .env
@@ -37,26 +32,23 @@ jobs:
           echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
 
-      # 5️⃣ Build Next.js project
-      - name: 🏗️ Build Next.js app
-        run: npm run build
-        env:
-          NODE_ENV: production
-
-      # 6️⃣ Prepare deployment package
+      # 4️⃣ Prepare FULL project for deploy
       - name: 📂 Prepare deployment files
         run: |
           mkdir -p deploy/tmp
-          cp -r .next deploy/
-          cp -r public deploy/
-          cp package.json deploy/
-          cp package-lock.json deploy/
-          cp .env deploy/
-          touch deploy/tmp/restart.txt
-          echo "✅ Deployment package ready"
 
-      # 7️⃣ Upload to cPanel via FTP
-      - name:  Deploy to cPanel via FTP
+          # Copy everything except node_modules and git files
+          rsync -av \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=.github \
+            ./ deploy/
+
+          touch deploy/tmp/restart.txt
+          echo "✅ Full project ready"
+
+      # 5️⃣ Upload to cPanel
+      - name: 🚀 Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
