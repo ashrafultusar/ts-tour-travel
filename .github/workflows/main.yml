@@ -2,7 +2,7 @@ name: Deploy Next.js to cPanel
 
 on:
   push:
-    branches: [ main ]
+    branches: [ deploy ]
   workflow_dispatch:
 
 jobs:
@@ -56,7 +56,7 @@ jobs:
           echo "✅ Deployment package ready"
 
       # 7️⃣ Upload to cPanel via FTP
-      - name: 🚀 Deploy to cPanel via FTP
+      - name:  Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
