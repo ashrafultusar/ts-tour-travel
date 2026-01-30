@@ -8,24 +8,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # ১. রিপোজিটরি ক্লোন করা
+      # 1️⃣ Repository checkout
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      # ২. নোড জেএস সেটআপ (ভার্সন ২০)
+      # 2️⃣ Node.js setup
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      # ৩. ডিপেন্ডেন্সি ইন্সটল করা
+      # 3️⃣ Install dependencies
       - name: 📦 Install dependencies
         run: npm ci
 
-      # ৪. এনভায়রনমেন্ট ফাইল (.env) তৈরি করা
+      # 4️⃣ Create environment file
       - name: 🔐 Create .env
         run: |
           echo "NODE_ENV=production" > .env
@@ -37,37 +37,25 @@ jobs:
           echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
 
-      # ৫. নেক্সট জেএস প্রজেক্ট বিল্ড করা
+      # 5️⃣ Build Next.js project
       - name: 🏗️ Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
 
-      # ৬. ডেপ্লয়মেন্টের জন্য ফাইল গুছিয়ে নেওয়া
+      # 6️⃣ Prepare deployment package
       - name: 📂 Prepare deployment files
         run: |
-          mkdir -p deploy
           mkdir -p deploy/tmp
-          
-          # ১. বিল্ড হওয়া ফাইল কপি
           cp -r .next deploy/
           cp -r public deploy/
-          
-          # ২. রানটাইম ফাইল কপি (server.ts কে server.js হিসেবে কপি করা হচ্ছে)
-          cp server.ts deploy/server.js 
           cp package.json deploy/
           cp package-lock.json deploy/
           cp .env deploy/
-          
-          # ৩. ES Modules (import) সাপোর্ট নিশ্চিত করা
-          sed -i '1s/^{/{\n  "type": "module",/' deploy/package.json
-          
-          # ৪. রিস্টার্ট ট্রিগার ফাইল তৈরি
           touch deploy/tmp/restart.txt
-          
           echo "✅ Deployment package ready"
 
-      # ৭. FTP এর মাধ্যমে cPanel এ আপলোড করা
+      # 7️⃣ Upload to cPanel via FTP
       - name: 🚀 Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -75,7 +63,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: deploy/
-          server-dir: ./ 
+          server-dir: ./
           protocol: ftp
           port: 21
           dangerous-clean-slate: false
