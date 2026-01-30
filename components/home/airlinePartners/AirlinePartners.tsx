@@ -4,24 +4,43 @@ const AirlinePartners = () => {
   const airlines = [
     {
       name: "Malaysia Airlines",
-      logo: "/assets/airlinePartners/malaysia-airlines-logo.png",
+      logo: "/assets/airlinePartners/malaysia.jpg",
     },
     {
       name: "Batik Air Malaysia",
-      logo: "/assets/airlinePartners/batik_air_malaysia.png",
+      logo: "/assets/airlinePartners/batik_air_malaysia.jpg",
     },
     {
-      name: "Biman Bangladesh",
-      logo: "/assets/airlinePartners/Biman-Bangladesh-Airlines-Logo.png",
-    },
-    { name: "Emirates", logo: "/assets/airlinePartners/Emirates-airlines.jpg" },
-    {
-      name: "US-Bangla-Airlines",
-      logo: "/assets/airlinePartners/US-Bangla-Airlines-Logo-png.png",
+      name: "bimanbd",
+      logo: "/assets/airlinePartners/bimanbd.jpg",
     },
     {
-      name: "Saudi Arabian Airlines",
-      logo: "/assets/airlinePartners/Saudi-Arabian-Airlines-Logo.png",
+      name: "Emirates-airlines",
+      logo: "/assets/airlinePartners/Emirates-airlines.jpg",
+    },
+    {
+      name: "US-Bangla",
+      logo: "/assets/airlinePartners/usbd.jpg",
+    },
+    {
+      name: "Saudi-Arabian Airlines",
+      logo: "/assets/airlinePartners/Saudi-Arabian.jpg",
+    },
+    {
+      name: "Novoair",
+      logo: "/assets/airlinePartners/Novoair.jpg",
+    },
+    {
+      name: "AirAsia",
+      logo: "/assets/airlinePartners/AirAsia.jpg",
+    },
+    {
+      name: "quaterair",
+      logo: "/assets/airlinePartners/quaterair.jpg",
+    },
+    {
+      name: "tarkish Airlines",
+      logo: "/assets/airlinePartners/tarkish.jpg",
     },
   ];
 
@@ -46,7 +65,7 @@ const AirlinePartners = () => {
           <div className="w-20 md:w-32 h-0.5 bg-blue-500 mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {airlines.map((airline, index) => (
             <div
               key={index}

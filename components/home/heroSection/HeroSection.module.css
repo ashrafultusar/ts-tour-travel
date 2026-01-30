@@ -84,13 +84,13 @@
 
 .statCard3 {
   position: absolute;
-  bottom: -15%;
-  right: 0;
+  bottom: -40px; 
+  right: -20px;
   z-index: 20;
   background: white;
-  width: clamp(160px, 20vw, 240px);
-  padding: clamp(12px, 1.8vw, 24px);
-  border-radius: clamp(16px, 2.5vw, 32px);
+  width: clamp(160px, 18vw, 220px); 
+  padding: clamp(10px, 1.5vw, 20px);
+  border-radius: clamp(12px, 2vw, 24px);
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
   animation: floatCard 4s ease-in-out infinite;
 }
@@ -103,7 +103,20 @@
 @media (max-width: 1024px) {
   .statCard1 { left: -5%; }
   .statCard2 { right: -5%; }
-  .statCard3 { bottom: -20%; }
+  .statCard3 { 
+    bottom: -30px; 
+    right: 10px;  
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 640px) {
+  .statCard3 {
+    bottom: -20px;
+    right: 0;
+    width: 150px;
+    padding: 10px;
+  }
 }
 
 @media (max-width: 640px) {
