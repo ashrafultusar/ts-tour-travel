@@ -117,7 +117,6 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* --- Right Side: Buttons & User Actions --- */}
             <div className="flex items-center gap-2 sm:gap-4">
               {/* Profile / Login Logic */}
               <div className="flex items-center gap-3">
@@ -141,11 +140,11 @@ export default function Navbar() {
                     {profileOpen && (
                       <>
                         <div
-                          className="fixed inset-0 z-10"
+                          className="fixed inset-0 z-10 "
                           onClick={() => setProfileOpen(false)}
                         ></div>
                         <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                          <div className="p-4 border-b bg-linear-to-br from-slate-50 to-white">
+                          <div className="p-4 border-b  bg-linear-to-br from-slate-50 to-white">
                             <p className="text-sm font-bold text-slate-900 truncate">
                               {session?.user?.name}
                             </p>
@@ -227,7 +226,7 @@ export default function Navbar() {
         <nav className="py-4 px-3 h-[calc(100vh-100px)] overflow-y-auto">
           <div className="border-t border-slate-100 my-4" />
 
-          {navLinks.map((link) => {
+          {navLinks?.map((link) => {
             const isActive = pathName === link.href;
             return (
               <Link

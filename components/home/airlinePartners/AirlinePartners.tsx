@@ -23,12 +23,12 @@ const AirlinePartners = () => {
       logo: "/assets/airlinePartners/usbd.jpg",
     },
     {
-      name: "Saudi-Arabian Airlines",
+      name: "Saudi-Arabian",
       logo: "/assets/airlinePartners/Saudi-Arabian.jpg",
     },
     {
-      name: "Novoair",
-      logo: "/assets/airlinePartners/Novoair.jpg",
+      name: "airastra",
+      logo: "/assets/airlinePartners/airastra.jpg",
     },
     {
       name: "AirAsia",
