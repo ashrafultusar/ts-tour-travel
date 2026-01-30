@@ -32,14 +32,29 @@ const UniversityCard = ({ uni }: { uni: any }) => (
         </p>
         <div className="flex flex-wrap gap-2 mt-2">
           <span
-            className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border ${uni.offerType === "Free" ? "text-green-600 border-green-200 bg-green-50" : "text-orange-600 border-orange-200 bg-orange-50"}`}
+            className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border ${
+              uni.offerType === "Free"
+                ? "text-green-600 border-green-200 bg-green-50"
+                : "text-orange-600 border-orange-200 bg-orange-50"
+            }`}
           >
             {uni?.offerType || "Paid"}
           </span>
 
-          <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border text-blue-600 border-blue-200 bg-blue-50">
-            {uni?.level?.[0] || "Degree"}
-          </span>
+          {uni?.level && Array.isArray(uni.level) ? (
+            uni.level.map((lvl: string, index: number) => (
+              <span
+                key={index}
+                className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border text-blue-600 border-blue-200 bg-blue-50"
+              >
+                {lvl}
+              </span>
+            ))
+          ) : (
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border text-blue-600 border-blue-200 bg-blue-50">
+              {uni?.level || "Degree"}
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -75,7 +90,7 @@ export default async function UniversitySearch({ searchParams }: PageProps) {
     search,
     location,
     level,
-    offerType,
+    offerType
   );
 
   return (
